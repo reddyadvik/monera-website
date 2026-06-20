@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Jost:wght@200;300;400;500;600&display=swap" rel="stylesheet" />
+<style>@font-face{font-family:'Saira';src:url('assets/Saira-VariableFont.ttf') format('truetype');font-weight:100 900;font-style:normal;}</style>
 
 <!-- Three.js + GSAP -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -22,19 +23,19 @@
   --void:#040406;
   --ink:#08080d;
   --panel:#0b0b12;
-  --gold:#c9a86a;
-  --gold-bright:#e6cd96;
-  --gold-deep:#8c7038;
+  --gold:#8a8a8a;
+  --gold-bright:#b0b0b0;
+  --gold-deep:#555555;
   --star:#f4efe6;
   --mist:rgba(244,239,230,.62);
   --faint:rgba(244,239,230,.32);
-  --line:rgba(201,168,106,.18);
-  --serif:'Cormorant Garamond', Georgia, serif;
-  --sans:'Jost', system-ui, sans-serif;
+  --line:rgba(160,160,160,.18);
+  --serif:'Saira', sans-serif;
+  --sans:'Saira', sans-serif;
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:auto;-webkit-font-smoothing:antialiased}
+html{scroll-behavior:auto;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 body{
   background:var(--void);
   color:var(--star);
@@ -45,6 +46,36 @@ body{
   line-height:1.6;
 }
 a{color:inherit;text-decoration:none}
+
+/* ── SCANLINES ── */
+body::before{
+  content:'';pointer-events:none;position:fixed;inset:0;z-index:99999;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,255,255,.018) 3px,rgba(255,255,255,.018) 4px);
+}
+
+/* ── GRAIN / NOISE ── */
+body::after{
+  content:'';pointer-events:none;position:fixed;inset:0;z-index:99998;opacity:.045;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size:160px 160px;
+}
+
+/* ── HUD CORNER BRACKETS ── */
+.proj-img-placeholder,.team-member-photo,.contact-form{position:relative}
+.proj-img-placeholder::before,.team-member-photo::before{
+  content:'';pointer-events:none;position:absolute;inset:0;z-index:2;
+  background:
+    linear-gradient(#fff,#fff) top left / 14px 1px no-repeat,
+    linear-gradient(#fff,#fff) top left / 1px 14px no-repeat,
+    linear-gradient(#fff,#fff) top right / 14px 1px no-repeat,
+    linear-gradient(#fff,#fff) top right / 1px 14px no-repeat,
+    linear-gradient(#fff,#fff) bottom left / 14px 1px no-repeat,
+    linear-gradient(#fff,#fff) bottom left / 1px 14px no-repeat,
+    linear-gradient(#fff,#fff) bottom right / 14px 1px no-repeat,
+    linear-gradient(#fff,#fff) bottom right / 1px 14px no-repeat;
+  opacity:.25;
+  border-radius:inherit;
+}
 img{max-width:100%;display:block}
 ::selection{background:var(--gold);color:#000}
 
@@ -61,15 +92,15 @@ img{max-width:100%;display:block}
 .cursor-dot{
   width:7px;height:7px;margin:-3.5px 0 0 -3.5px;
   background:radial-gradient(circle,#fff 0%,var(--gold-bright) 60%,transparent 75%);
-  box-shadow:0 0 12px 3px rgba(230,205,150,.9);
+  box-shadow:0 0 12px 3px rgba(160,160,160,.9);
 }
 .cursor-ring{
   width:38px;height:38px;margin:-19px 0 0 -19px;
-  border:1px solid rgba(201,168,106,.55);
+  border:1px solid rgba(140,140,140,.55);
   transition:width .25s,height .25s,margin .25s,border-color .25s,background .25s;
 }
-.cursor-ring.hover{width:64px;height:64px;margin:-32px 0 0 -32px;border-color:var(--gold-bright);background:rgba(201,168,106,.06)}
-.cursor-star{position:fixed;z-index:99998;pointer-events:none;width:3px;height:3px;border-radius:50%;background:var(--gold-bright);box-shadow:0 0 6px 1px rgba(230,205,150,.8);opacity:0}
+.cursor-ring.hover{width:64px;height:64px;margin:-32px 0 0 -32px;border-color:var(--gold-bright);background:rgba(140,140,140,.06)}
+.cursor-star{position:fixed;z-index:99998;pointer-events:none;width:3px;height:3px;border-radius:50%;background:var(--gold-bright);box-shadow:0 0 6px 1px rgba(160,160,160,.8);opacity:0}
 @media (pointer:coarse){.cursor-dot,.cursor-ring,.cursor-star{display:none}body{cursor:auto}}
 
 /* ---------- Loader ---------- */
@@ -103,18 +134,24 @@ nav.scrolled{background:rgba(6,6,10,.62);backdrop-filter:blur(16px);-webkit-back
 .nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:none}
 .nav-toggle span{width:26px;height:1.5px;background:var(--star);transition:.3s}
 @media(max-width:860px){
-  .nav-links{position:fixed;inset:0;background:rgba(4,4,7,.96);backdrop-filter:blur(20px);flex-direction:column;justify-content:center;gap:34px;transform:translateY(-100%);transition:transform .6s cubic-bezier(.7,0,.2,1);z-index:901}
-  .nav-links.open{transform:translateY(0)}
-  .nav-links a{font-size:1.1rem}
+  /* hide nav links entirely — display:none is more reliable than transform on mobile browsers */
+  .nav-links{display:none;position:fixed;inset:0;background:rgba(4,4,6,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);flex-direction:column;justify-content:center;align-items:center;gap:36px;z-index:901}
+  .nav-links.open{display:flex;animation:navFadeIn .3s ease forwards}
+  @keyframes navFadeIn{from{opacity:0}to{opacity:1}}
+  .nav-links a{font-size:1.2rem;letter-spacing:.18em;text-align:center}
   .nav-toggle{display:flex;z-index:902;position:relative}
   nav.menu-open .nav-toggle span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
   nav.menu-open .nav-toggle span:nth-child(2){opacity:0}
   nav.menu-open .nav-toggle span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+  /* hide custom cursor on touch devices */
+  .cursor-dot,.cursor-ring,.cursor-star{display:none}
+  body{cursor:auto}
+  .nav-toggle{cursor:pointer}
 }
 
 /* ---------- Page-transition veil ---------- */
 #veil{position:fixed;inset:0;z-index:950;pointer-events:none;opacity:0;
-  background:radial-gradient(circle at center, rgba(201,168,106,.10), rgba(4,4,7,.96) 60%);
+  background:radial-gradient(circle at center, rgba(140,140,140,.10), rgba(4,4,7,.96) 60%);
   display:flex;align-items:center;justify-content:center}
 #veil .veil-mark{font-family:var(--serif);font-size:2rem;letter-spacing:.5em;padding-left:.5em;color:var(--gold);opacity:0}
 
@@ -126,7 +163,7 @@ section{position:relative;z-index:2}
 .display{font-family:var(--serif);font-weight:400;line-height:.98;letter-spacing:-.01em}
 
 /* ---------- HERO ---------- */
-#home{height:100svh;min-height:620px;position:relative;overflow:hidden;z-index:2;
+#home{width:100%;aspect-ratio:16/9;min-height:340px;max-height:100svh;position:relative;overflow:hidden;z-index:2;
   background:#000 center/cover no-repeat url('assets/hero-poster.jpg')}
 #home video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:1;background:#000 center/cover no-repeat url('assets/hero-poster.jpg')}
 .hero-grade{position:absolute;inset:0;z-index:2;pointer-events:none;background:
@@ -146,18 +183,19 @@ section{position:relative;z-index:2}
 .about-canvas{width:100%;height:200px;display:block}
 .about-heading-real{
   position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;
-  font-family:var(--serif);font-size:clamp(2.4rem,7vw,6.2rem);font-weight:400;line-height:1;color:var(--star);
-  opacity:0;pointer-events:none;letter-spacing:-.01em;
+  font-family:'Saira',sans-serif;font-size:clamp(2rem,5.5vw,4.5rem);font-weight:400;line-height:1;color:#fff;
+  opacity:0;pointer-events:none;letter-spacing:.15em;text-transform:uppercase;
 }
-.about-heading-real em{color:var(--gold-bright);font-style:italic}
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,90px);margin-top:40px;align-items:start}
-.about-lead{font-family:var(--serif);font-size:clamp(1.4rem,2.4vw,2rem);line-height:1.4;color:var(--star);font-weight:300}
-.about-lead em{color:var(--gold-bright);font-style:italic}
-.about-body p{color:var(--mist);font-size:1rem;margin-bottom:18px;max-width:46ch}
-.about-stats{display:flex;gap:clamp(24px,5vw,64px);margin-top:46px;flex-wrap:wrap}
-.stat .n{font-family:var(--serif);font-size:clamp(2.2rem,4vw,3.4rem);color:var(--gold-bright);line-height:1}
-.stat .l{font-size:.64rem;letter-spacing:.28em;text-transform:uppercase;color:var(--faint);margin-top:8px}
-@media(max-width:820px){.about-grid{grid-template-columns:1fr;gap:36px}}
+.about-heading-real em{color:#fff;font-style:normal;font-weight:400}
+.about-grid{display:flex;flex-direction:column;align-items:center;margin-top:40px;gap:48px;width:100%}
+.about-grid>div{width:100%;display:flex;flex-direction:column;align-items:center;text-align:center}
+.about-lead{font-family:'Saira',sans-serif;font-size:clamp(1.1rem,1.8vw,1.5rem);line-height:1.6;color:var(--star);font-weight:300;max-width:56ch;text-align:center}
+.about-lead em{color:var(--gold-bright);font-style:normal;font-weight:400}
+.about-stats{display:flex;flex-direction:row;flex-wrap:nowrap;width:100%;margin-top:0;align-items:flex-start;justify-content:center}
+.stat{display:flex;flex-direction:column;flex:1;align-items:center;padding:0 clamp(16px,3vw,40px)}
+.stat+.stat{border-left:1px solid rgba(255,255,255,0.15)}
+.stat .n{font-family:'Saira',sans-serif;font-size:clamp(3rem,6vw,5.5rem);font-weight:400;color:#fff;line-height:1;letter-spacing:.05em}
+.stat .l{font-family:'Saira',sans-serif;font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:10px;font-weight:300;text-align:center}
 
 /* ---------- TEAM (scroll-rotated moon) ---------- */
 #team{position:relative;z-index:2}
@@ -174,29 +212,27 @@ section{position:relative;z-index:2}
 .team-dot i{position:absolute;inset:0;width:0;background:var(--gold);transition:width .5s;display:block}
 .team-dot.active i{width:100%}
 .team-scrollhint{margin-top:38px;font-size:.58rem;letter-spacing:.4em;text-transform:uppercase;color:var(--faint)}
+.team-layout{display:flex;align-items:center;gap:clamp(32px,5vw,80px)}
+.team-photos{flex-shrink:0;width:clamp(160px,18vw,260px);aspect-ratio:3/4;position:relative}
+.team-member-photo{position:absolute;inset:0;border-radius:4px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);opacity:0;transition:opacity .8s ease;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.team-member-photo::before{content:'';position:absolute;inset:0;background:linear-gradient(160deg,rgba(255,255,255,.04) 0%,transparent 60%)}
+.team-member-photo::after{content:'';position:absolute;bottom:0;left:0;right:0;height:40%;background:linear-gradient(transparent,rgba(0,0,0,.5))}
+.team-member-photo.active{opacity:1}
 
 /* the moon — BIG, anchored to the right edge so only the left semicircle shows */
 .moon-wrap{position:absolute;top:50%;right:0;--msize:min(94vh,860px);width:var(--msize);height:var(--msize);transform:translate(50%,-50%);z-index:1}
-.moon-glow{position:absolute;inset:-15%;border-radius:50%;background:radial-gradient(circle at 35% 50%,rgba(201,168,106,.20),rgba(201,168,106,.05) 40%,transparent 64%);filter:blur(10px);z-index:0}
-.moon-ring{position:absolute;inset:-5%;border-radius:50%;border:1px dashed rgba(201,168,106,.22);z-index:1;will-change:transform}
-.moon-ring::before{content:'✦';position:absolute;top:50%;left:0;transform:translate(-50%,-50%);color:var(--gold-bright);font-size:1.1rem;text-shadow:0 0 14px rgba(230,205,150,.9)}
+.moon-glow{position:absolute;inset:-15%;border-radius:50%;background:radial-gradient(circle at 35% 50%,rgba(244,239,230,.15),rgba(244,239,230,.04) 40%,transparent 64%);filter:blur(10px);z-index:0}
+.moon-ring{position:absolute;inset:-5%;border-radius:50%;border:1px dashed rgba(140,140,140,.22);z-index:1;will-change:transform}
+.moon-ring::before{content:'✦';position:absolute;top:50%;left:0;transform:translate(-50%,-50%);color:var(--gold-bright);font-size:1.1rem;text-shadow:0 0 14px rgba(160,160,160,.9)}
 .moon{
   position:absolute;inset:0;border-radius:50%;overflow:hidden;z-index:2;
-  background:radial-gradient(circle at 30% 48%, #20202b 0%, #101019 52%, #06060a 88%);
-  border:1px solid rgba(201,168,106,.28);
-  box-shadow:inset 0 0 160px rgba(0,0,0,.85), 0 0 90px rgba(201,168,106,.18), 0 0 200px rgba(201,168,106,.08);
+  box-shadow:0 0 90px rgba(140,140,140,.18), 0 0 200px rgba(140,140,140,.08);
 }
+#moonImg{position:absolute;width:115%;height:115%;top:-7.5%;left:-7.5%;border-radius:50%;object-fit:cover;will-change:transform;}
 /* portrait placeholder bust — sits inside the VISIBLE (left) half of the moon */
-.moon-photo{position:absolute;inset:0;border-radius:50%;overflow:hidden;opacity:0;transition:opacity 1s ease;z-index:1}
+.moon-photo{position:absolute;inset:0;border-radius:50%;overflow:hidden;opacity:0;transition:opacity 1s ease;z-index:1;background:none}
 .moon-photo.active{opacity:1}
-.moon-photo[data-ph="0"]{background:radial-gradient(circle at 30% 40%, #2a2733, #0b0b12 66%)}
-.moon-photo[data-ph="1"]{background:radial-gradient(circle at 30% 40%, #2c2a25, #0b0b12 66%)}
-.moon-photo[data-ph="2"]{background:radial-gradient(circle at 30% 40%, #232a30, #0b0b12 66%)}
-.bust{position:absolute;left:14%;bottom:8%;width:34%;height:64%;filter:drop-shadow(0 0 30px rgba(201,168,106,.22))}
-.bust::before{content:'';position:absolute;left:50%;top:4%;transform:translateX(-50%);width:62%;padding-bottom:62%;border-radius:50%;
-  background:linear-gradient(160deg,#d9c79a,#8c7038 60%,#4a3c1f);box-shadow:inset -10px -12px 26px rgba(0,0,0,.4)}
-.bust::after{content:'';position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:130%;height:52%;border-radius:50% 50% 0 0/74% 74% 0 0;
-  background:linear-gradient(160deg,#cdb98c,#7d6432 70%,#3f3219);box-shadow:inset -12px -10px 30px rgba(0,0,0,.42)}
+.bust{display:none}
 /* rotating cratered surface (sells the spin) */
 .moon-texture{position:absolute;inset:0;border-radius:50%;z-index:2;pointer-events:none;mix-blend-mode:overlay;will-change:transform;
   background:
@@ -215,7 +251,7 @@ section{position:relative;z-index:2}
   .team-pin{min-height:100svh;padding:clamp(90px,14vh,150px) 0}
   .team-copy{max-width:62%}
   .moon-wrap{--msize:min(86vh,560px)}
-  .moon-glow{background:radial-gradient(circle at 35% 50%,rgba(201,168,106,.16),transparent 60%)}
+  .moon-glow{background:radial-gradient(circle at 35% 50%,rgba(140,140,140,.16),transparent 60%)}
 }
 @media(max-width:640px){
   .team-copy{max-width:80%}
@@ -223,44 +259,6 @@ section{position:relative;z-index:2}
   .bust{left:10%}
 }
 
-/* ---------- PROJECTS (shooting-star pinned) ---------- */
-#projects{position:relative;z-index:2}
-.proj-pin{height:100svh;min-height:620px;position:relative;overflow:hidden;display:flex;align-items:center}
-.proj-sky{position:absolute;inset:0;z-index:1}
-.comet{position:absolute;top:0;left:0;width:22px;height:22px;border-radius:50%;z-index:6;
-  background:radial-gradient(circle,#fff 0%,#fff 22%,var(--gold-bright) 50%,transparent 72%);
-  box-shadow:0 0 20px 6px #fff,0 0 48px 16px rgba(230,205,150,.8);will-change:transform}
-.comet::after{content:'';position:absolute;inset:-6px;border-radius:50%;border:1px solid rgba(255,255,255,.5);animation:cometPulse 1.4s infinite ease-out}
-@keyframes cometPulse{0%{transform:scale(.6);opacity:.9}100%{transform:scale(2.4);opacity:0}}
-.comet-tail{position:absolute;top:0;left:0;height:5px;width:520px;transform-origin:left center;z-index:5;
-  background:linear-gradient(90deg,transparent,rgba(201,168,106,.4) 40%,rgba(230,205,150,.95));border-radius:5px;filter:blur(1px);will-change:transform;opacity:.95}
-.comet-tail::before{content:'';position:absolute;right:0;top:50%;transform:translateY(-50%);height:1.5px;width:60%;background:linear-gradient(90deg,transparent,#fff);filter:blur(.3px)}
-.proj-glow{position:absolute;width:680px;height:680px;border-radius:50%;z-index:3;pointer-events:none;
-  background:radial-gradient(circle, rgba(230,205,150,.30),rgba(201,168,106,.12) 38%, transparent 64%);transform:translate(-50%,-50%);will-change:transform,opacity}
-/* sweeping light beam that points from the star onto the project */
-.proj-beam{position:absolute;top:0;left:0;width:780px;height:170px;transform-origin:left center;z-index:4;pointer-events:none;opacity:.55;will-change:transform,opacity;
-  background:linear-gradient(90deg, rgba(230,205,150,.30), rgba(230,205,150,.05) 55%, transparent 78%);
-  -webkit-mask-image:linear-gradient(90deg,#000,transparent);mask-image:linear-gradient(90deg,#000,transparent)}
-.proj-flash{position:absolute;inset:0;z-index:5;pointer-events:none;opacity:0;background:radial-gradient(circle at 50% 45%, rgba(230,205,150,.18), transparent 60%)}
-.proj-stage{position:relative;z-index:4;width:100%}
-.proj-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:50px;flex-wrap:wrap;gap:16px}
-.proj-head h2{font-family:var(--serif);font-size:clamp(2.6rem,7vw,6rem);font-weight:400;line-height:.95}
-.proj-track{position:relative;min-height:300px}
-.proj-card{position:absolute;inset:0;opacity:0;transform:translateY(40px) scale(.98);transition:opacity .8s ease,transform .8s ease;pointer-events:none}
-.proj-card.active{opacity:1;transform:none;pointer-events:auto}
-.proj-card .pc-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(30px,6vw,80px);align-items:center}
-.proj-index{font-family:var(--serif);font-size:clamp(5rem,16vw,13rem);color:transparent;-webkit-text-stroke:1px rgba(201,168,106,.55);line-height:.8}
-.proj-sector{font-size:.66rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
-.proj-title{font-family:var(--serif);font-size:clamp(2rem,4.2vw,3.4rem);font-weight:400;line-height:1.05;margin-bottom:20px;color:var(--star)}
-.proj-title em{color:var(--gold-bright);font-style:italic}
-.proj-desc{color:var(--mist);max-width:48ch;margin-bottom:24px}
-.proj-meta{display:flex;gap:30px;flex-wrap:wrap}
-.proj-meta span{font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:var(--faint)}
-.proj-meta b{display:block;font-family:var(--serif);font-size:1.4rem;color:var(--gold-bright);font-weight:400;letter-spacing:0;text-transform:none;margin-top:4px}
-.proj-progress{position:absolute;bottom:6vh;left:clamp(20px,5vw,64px);right:clamp(20px,5vw,64px);z-index:5;display:flex;gap:14px}
-.proj-progress i{flex:1;height:1px;background:rgba(244,239,230,.14);position:relative;overflow:hidden}
-.proj-progress i b{position:absolute;inset:0;width:0;background:var(--gold);display:block}
-@media(max-width:820px){.proj-card .pc-grid{grid-template-columns:1fr;gap:24px}.proj-index{display:none}}
 
 /* ---------- CONTACT / FOOTER ---------- */
 #contact{position:relative;z-index:2;padding:clamp(110px,16vh,200px) 0 50px;background:linear-gradient(to bottom,transparent, rgba(8,8,14,.6));overflow:hidden}
@@ -269,26 +267,38 @@ section{position:relative;z-index:2}
 .contact-orbits{position:absolute;top:clamp(140px,22vh,260px);left:50%;width:0;height:0;z-index:0;pointer-events:none}
 .orbit-tilt{position:absolute;top:0;left:0;transform:translate(-50%,-50%) rotate(var(--tilt))}
 .orbit{position:absolute;top:0;left:0;transform:translate(-50%,-50%);border-radius:50%}
-.orbit.o1{width:min(820px,92vw);height:min(330px,38vw);border:1px solid rgba(201,168,106,.20)}
-.orbit.o2{width:min(600px,68vw);height:min(240px,28vw);border:1px solid rgba(201,168,106,.28)}
+.orbit.o1{width:min(820px,92vw);height:min(330px,38vw);border:1px solid rgba(140,140,140,.20)}
+.orbit.o2{width:min(600px,68vw);height:min(240px,28vw);border:1px solid rgba(140,140,140,.28)}
 .orbit.o3{width:min(1000px,108vw);height:min(400px,46vw);border:1px solid rgba(244,239,230,.07)}
 .spin{position:absolute;inset:0;will-change:transform}
 .o1 .spin{animation:orbSpin 32s linear infinite}
 .o2 .spin{animation:orbSpin 22s linear infinite reverse}
 .o3 .spin{animation:orbSpin 46s linear infinite}
 .spin i{position:absolute;top:50%;left:100%;width:7px;height:7px;margin:-3.5px;border-radius:50%;
-  background:radial-gradient(circle,#fff,var(--gold-bright) 60%,transparent);box-shadow:0 0 14px 4px rgba(230,205,150,.85)}
+  background:radial-gradient(circle,#fff,var(--gold-bright) 60%,transparent);box-shadow:0 0 14px 4px rgba(160,160,160,.85)}
 .o3 .spin i{width:5px;height:5px;box-shadow:0 0 10px 3px rgba(244,239,230,.6)}
 .orbit-core{position:absolute;top:0;left:0;width:120px;height:120px;transform:translate(-50%,-50%);border-radius:50%;
-  background:radial-gradient(circle,rgba(230,205,150,.22),transparent 68%);filter:blur(6px)}
+  background:radial-gradient(circle,rgba(160,160,160,.22),transparent 68%);filter:blur(6px)}
 @keyframes orbSpin{to{transform:rotate(360deg)}}
 @media(prefers-reduced-motion:reduce){.spin{animation:none}}
-.contact-top{text-align:center;margin-bottom:80px;position:relative;z-index:2}
-.contact-top .eyebrow{justify-content:center;margin-bottom:30px}
-.contact-cta{font-family:var(--serif);font-size:clamp(2.6rem,8vw,7rem);font-weight:300;line-height:1;letter-spacing:-.01em}
-.contact-cta em{color:var(--gold-bright);font-style:italic}
-.contact-mail{display:inline-flex;align-items:center;gap:16px;margin-top:40px;font-family:var(--serif);font-size:clamp(1.3rem,3vw,2.2rem);color:var(--gold-bright);border-bottom:1px solid var(--line);padding-bottom:8px;transition:border-color .4s,gap .4s}
-.contact-mail:hover{border-color:var(--gold-bright);gap:26px}
+.contact-top{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,100px);align-items:center;margin-bottom:80px;position:relative;z-index:2}
+.contact-left .eyebrow{margin-bottom:24px}
+.contact-cta{font-family:'Saira',sans-serif;font-size:clamp(1.8rem,3.8vw,3.4rem);font-weight:300;line-height:1.15;letter-spacing:.01em}
+.contact-cta em{color:var(--gold-bright);font-style:normal;font-weight:400}
+.contact-mail{display:inline-flex;align-items:center;gap:12px;margin-top:28px;font-family:'Saira',sans-serif;font-size:clamp(.9rem,1.4vw,1.1rem);color:var(--gold-bright);border-bottom:1px solid var(--line);padding-bottom:6px;transition:border-color .4s,gap .4s}
+.contact-mail:hover{border-color:var(--gold-bright);gap:20px}
+/* contact form */
+.contact-form{background:#f5f0e8;border-radius:8px;padding:clamp(28px,4vw,48px);display:flex;flex-direction:column;gap:18px}
+.contact-form h3{font-family:'Saira',sans-serif;font-size:1.1rem;font-weight:600;color:#000;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.cf-field{display:flex;flex-direction:column;gap:6px}
+.cf-field label{font-family:'Saira',sans-serif;font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:#555;font-weight:400}
+.cf-field input,.cf-field select,.cf-field textarea{font-family:'Saira',sans-serif;font-size:.9rem;color:#000;background:#f5f0e8;border:1px solid #000;border-radius:3px;padding:10px 14px;outline:none;transition:border-color .2s;width:100%}
+.cf-field textarea{resize:vertical;min-height:90px}
+.cf-field input:focus,.cf-field select:focus,.cf-field textarea:focus{border-color:#444}
+.cf-field select{appearance:none;cursor:pointer}
+.cf-submit{font-family:'Saira',sans-serif;font-size:.75rem;letter-spacing:.22em;text-transform:uppercase;font-weight:600;color:#fff;background:#000;border:none;border-radius:3px;padding:14px 28px;cursor:pointer;transition:background .2s;align-self:flex-start}
+.cf-submit:hover{background:#222}
+@media(max-width:820px){.contact-top{grid-template-columns:1fr}}
 .contact-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;border-top:1px solid var(--line);padding-top:60px;margin-top:70px}
 .foot-brand .nb{font-family:var(--serif);font-size:1.8rem;letter-spacing:.3em;padding-left:.3em}
 .foot-brand p{color:var(--faint);font-size:.9rem;max-width:34ch;margin-top:16px}
@@ -301,10 +311,93 @@ section{position:relative;z-index:2}
 .socials a{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mist)}
 @media(max-width:820px){.contact-grid{grid-template-columns:1fr;gap:40px}}
 
+/* ============================================================
+   MOBILE — comprehensive fixes
+============================================================ */
+@media(max-width:600px){
+
+  /* --- about --- */
+  .about-stage{min-height:120px}
+  .about-heading-real{font-size:clamp(1.6rem,8vw,2.6rem);letter-spacing:.08em}
+  .about-grid{gap:32px;margin-top:28px}
+  .about-stats{gap:0}
+  .stat .n{font-size:clamp(2rem,10vw,3rem)}
+  .stat .l{font-size:.58rem}
+  .stat{padding:0 clamp(10px,3vw,20px)}
+  .about-lead{font-size:1rem}
+
+  /* --- team --- */
+  .team-layout{flex-direction:column;gap:28px}
+  .team-photos{width:100%;aspect-ratio:3/2;position:relative;flex-shrink:0}
+  .moon-wrap{--msize:min(90vw,340px);right:50%;transform:translate(50%,-50%);z-index:0;opacity:.28}
+  .team-copy{max-width:100%;width:100%}
+  .team-name{font-size:clamp(1.8rem,7vw,2.8rem)}
+  .team-bio{font-size:.9rem;min-height:auto}
+
+  /* --- projects --- */
+  .proj-panel{padding:80px 20px 24px}
+  .proj-panel-top{flex-direction:column;gap:12px}
+  .proj-index{font-size:clamp(3rem,16vw,5rem);width:auto}
+  .proj-title{font-size:clamp(1.4rem,6vw,2rem)}
+  .proj-desc{font-size:.88rem;max-width:100%}
+  .proj-img-placeholder{max-height:32vh}
+  .proj-dots{bottom:14px}
+
+  /* --- contact --- */
+  .contact-cta{font-size:clamp(1.4rem,6vw,2.2rem)}
+  .contact-form{padding:24px 20px}
+  .foot-bottom{flex-direction:column;align-items:flex-start;gap:18px}
+  .socials{flex-wrap:wrap;gap:14px}
+
+  /* --- general --- */
+  .wrap{padding:0 20px}
+  section{padding-left:0;padding-right:0}
+}
+
 /* ---------- reveal util ---------- */
 .reveal{opacity:0;transform:translateY(40px)}
 .split-line{overflow:hidden;display:block}
 .split-line > span{display:inline-block;will-change:transform}
+
+/* ---------- PROJECTS (card grid) ---------- */
+#projects{position:relative;z-index:2;padding:clamp(100px,14vh,160px) 0}
+#projects .section-label{margin-bottom:clamp(48px,7vh,80px)}
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.proj-card{
+  border:1px solid var(--line);border-radius:8px;
+  padding:clamp(28px,3.5vw,44px) clamp(24px,3vw,40px);
+  background:rgba(255,255,255,.018);
+  display:flex;flex-direction:column;
+  transition:background .28s,border-color .28s;
+  text-decoration:none;cursor:pointer;
+}
+.proj-card:not(.proj-card--soon):hover{background:rgba(255,255,255,.046);border-color:rgba(160,160,160,.38)}
+.proj-card--soon{cursor:default;opacity:.55}
+.proj-card-num{
+  font-family:'Saira',sans-serif;font-size:clamp(3rem,5vw,4.5rem);font-weight:200;
+  color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.13);
+  line-height:1;margin-bottom:22px;
+}
+.proj-card-sector{font-size:.58rem;letter-spacing:.38em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:11px}
+.proj-card-title{
+  font-family:'Saira',sans-serif;font-size:clamp(1.4rem,2vw,1.9rem);
+  font-weight:300;color:#fff;line-height:1.06;margin-bottom:14px;letter-spacing:.01em;
+}
+.proj-card-title em{color:var(--gold-bright);font-style:normal}
+.proj-card-desc{color:var(--mist);font-size:.88rem;line-height:1.72;margin-bottom:26px;flex:1}
+.proj-card-meta{display:flex;gap:22px;flex-wrap:wrap;margin-bottom:30px}
+.proj-card-meta span{font-size:.56rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.28)}
+.proj-card-meta b{display:block;font-family:'Saira',sans-serif;font-size:1.05rem;color:#fff;font-weight:300;margin-top:3px}
+.proj-card-cta{
+  display:inline-flex;align-items:center;gap:8px;align-self:flex-start;
+  font-family:'Saira',sans-serif;font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--gold-bright);border-bottom:1px solid rgba(160,160,160,.22);padding-bottom:4px;
+  transition:gap .24s,border-color .24s;
+}
+.proj-card:not(.proj-card--soon):hover .proj-card-cta{gap:14px;border-color:var(--gold-bright)}
+.proj-card-cta--soon{color:rgba(255,255,255,.22);border-color:transparent}
+@media(max-width:900px){.proj-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.proj-grid{grid-template-columns:1fr}.proj-card{padding:26px 20px}}
 </style>
 </head>
 <body>
@@ -341,7 +434,7 @@ section{position:relative;z-index:2}
 
 <!-- ====== ACT 1 — HERO ====== -->
 <section id="home">
-  <video id="heroVideo" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="assets/hero-poster.jpg">
+  <video id="heroVideo" autoplay muted playsinline webkit-playsinline preload="auto" poster="assets/hero-poster.jpg">
     <source src="assets/hero.mp4" type="video/mp4" />
   </video>
   <div class="hero-grade"></div>
@@ -353,44 +446,95 @@ section{position:relative;z-index:2}
   <div class="wrap">
     <div class="about-stage">
       <canvas class="about-canvas" id="aboutCanvas"></canvas>
-      <div class="about-heading-real" id="aboutReal">Built for <em>Industries</em></div>
+      <div class="about-heading-real" id="aboutReal"><span>Built&nbsp;for&nbsp;<em>Industries</em></span></div>
     </div>
     <div class="about-grid">
       <div class="reveal">
         <span class="eyebrow">Who We Are</span>
-        <p class="about-lead" style="margin-top:24px">Monera builds <em>AI-native software</em> shaped around the deep logic of a sector — so the intelligence is already fluent in your world the moment it arrives.</p>
+        <p class="about-lead" style="margin-top:24px">Monera builds <em>AI-native software</em> engineered for entire industries — not individual clients.<br><br>We encode the workflows, terminology, regulations, and edge-cases of a sector into a single intelligent platform. Every operator who adopts it gets software that already speaks their language — without a custom build, without starting over.<br><br>One platform. Infinite operators. The intelligence compounds every time.</p>
       </div>
       <div class="about-body reveal">
-        <p>Most software is rebuilt from zero for every client — the same problems solved again and again, slower and more expensively each time. We took the opposite path.</p>
-        <p>We engineer once, for an entire industry. Our platforms encode the workflows, language, and edge-cases of a sector into adaptive AI systems that configure themselves to each operator — without starting over.</p>
-        <p>The result is software that feels custom, but carries the accumulated intelligence of a whole field behind it.</p>
         <div class="about-stats">
-          <div class="stat"><div class="n" data-count="12">12</div><div class="l">Industries Mapped</div></div>
-          <div class="stat"><div class="n" data-count="98">98</div><div class="l">% Less Rebuild</div></div>
-          <div class="stat"><div class="n" data-count="1">1</div><div class="l">Platform, Many Operators</div></div>
+          <div class="stat"><div class="l">Started</div><div class="n" data-count="2026">2026</div></div>
+          <div class="stat"><div class="l">Industries</div><div class="n" data-count="3">3</div></div>
+          <div class="stat"><div class="l">Tasks Automated</div><div class="n" data-count="20" data-suffix="+">20+</div></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ====== ACT 3a — TEAM (scroll-rotated moon) ====== -->
+<!-- ====== ACT 3 — PROJECTS (card grid) ====== -->
+<section id="projects">
+  <div class="wrap">
+    <span class="eyebrow">Our Projects</span>
+    <div class="proj-grid">
+
+      <a href="proposalhub.html" class="proj-card">
+        <div class="proj-card-num">01</div>
+        <div class="proj-card-sector">Pharma CRO · AI Software</div>
+        <h3 class="proj-card-title">Proposal<em>Hub</em></h3>
+        <p class="proj-card-desc">AI-powered proposal management for pharma CROs. Encodes the full department workflow — BD, R&amp;D, Manufacturing, Quality, Supply Chain — into one intelligent system. Proposals that took weeks now take hours.</p>
+        <div class="proj-card-meta">
+          <span>Scope<b>Pharma CRO</b></span>
+          <span>Status<b>Live</b></span>
+          <span>Dept.<b>7</b></span>
+        </div>
+        <span class="proj-card-cta">Explore ProposalHub →</span>
+      </a>
+
+      <div class="proj-card proj-card--soon">
+        <div class="proj-card-num">02</div>
+        <div class="proj-card-sector">Industry · Placeholder</div>
+        <h3 class="proj-card-title">Project <em>Two</em></h3>
+        <p class="proj-card-desc">Swap in the real story — what the sector needed, how the platform configured itself per operator, and the measurable result it delivered at scale.</p>
+        <div class="proj-card-meta">
+          <span>Scope<b>—</b></span>
+          <span>Year<b>20XX</b></span>
+          <span>Impact<b>—</b></span>
+        </div>
+        <span class="proj-card-cta proj-card-cta--soon">Coming Soon</span>
+      </div>
+
+      <div class="proj-card proj-card--soon">
+        <div class="proj-card-num">03</div>
+        <div class="proj-card-sector">Industry · Placeholder</div>
+        <h3 class="proj-card-title">Project <em>Three</em></h3>
+        <p class="proj-card-desc">Replace with your flagship engagement — the breadth of the platform and how one build served an entire industry at scale.</p>
+        <div class="proj-card-meta">
+          <span>Scope<b>—</b></span>
+          <span>Year<b>20XX</b></span>
+          <span>Impact<b>—</b></span>
+        </div>
+        <span class="proj-card-cta proj-card-cta--soon">Coming Soon</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ====== ACT 3b — TEAM (scroll-rotated moon) ====== -->
 <section id="team">
   <div class="team-pin" id="teamPin">
     <div class="moon-wrap">
       <div class="moon-glow"></div>
       <div class="moon-ring" id="moonRing"></div>
       <div class="moon" id="moon">
+        <img id="moonImg" src="assets/moon.png" alt="moon" />
         <div class="moon-photo active" data-ph="0"><div class="bust"></div></div>
         <div class="moon-photo" data-ph="1"><div class="bust"></div></div>
         <div class="moon-photo" data-ph="2"><div class="bust"></div></div>
-        <div class="moon-texture" id="moonTexture"></div>
         <div class="moon-terminator" id="moonTerminator"></div>
         <div class="moon-sheen"></div>
       </div>
     </div>
     <div class="wrap">
       <div class="team-layout">
+        <div class="team-photos">
+          <div class="team-member-photo active" data-mp="0"></div>
+          <div class="team-member-photo" data-mp="1"></div>
+          <div class="team-member-photo" data-mp="2"></div>
+        </div>
         <div class="team-copy">
           <span class="eyebrow">Our Team</span>
           <div class="team-num" id="teamNum">01 / 03</div>
@@ -409,84 +553,6 @@ section{position:relative;z-index:2}
   </div>
 </section>
 
-<!-- ====== ACT 3b — PROJECTS (shooting star) ====== -->
-<section id="projects">
-  <div class="proj-pin" id="projPin">
-    <div class="proj-sky"></div>
-    <div class="proj-flash" id="projFlash"></div>
-    <div class="proj-glow" id="projGlow"></div>
-    <div class="proj-beam" id="projBeam"></div>
-    <div class="comet-tail" id="cometTail"></div>
-    <div class="comet" id="comet"></div>
-
-    <div class="proj-stage">
-      <div class="wrap">
-        <div class="proj-head">
-          <div>
-            <span class="eyebrow">Our Projects</span>
-            <h2 class="display" style="margin-top:18px">Selected<br>Work</h2>
-          </div>
-          <p style="max-width:30ch;color:var(--mist);font-size:.95rem">Three industry platforms, lit one by one as the star passes. Titles and details are placeholders — ready for your real case studies.</p>
-        </div>
-
-        <div class="proj-track">
-          <article class="proj-card active" data-p="0">
-            <div class="pc-grid">
-              <div class="proj-index">01</div>
-              <div>
-                <div class="proj-sector">Industry · Placeholder</div>
-                <h3 class="proj-title">Project <em>One</em></h3>
-                <p class="proj-desc">Placeholder description for the first project. Describe the industry platform you built, the intelligence at its core, and the outcome it delivered across every operator who adopted it.</p>
-                <div class="proj-meta">
-                  <span>Scope<b>Placeholder</b></span>
-                  <span>Year<b>20XX</b></span>
-                  <span>Impact<b>—</b></span>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="proj-card" data-p="1">
-            <div class="pc-grid">
-              <div class="proj-index">02</div>
-              <div>
-                <div class="proj-sector">Industry · Placeholder</div>
-                <h3 class="proj-title">Project <em>Two</em></h3>
-                <p class="proj-desc">Placeholder description for the second project. Swap in the real story — what the sector needed, how the adaptive AI configured itself per operator, and the measurable result.</p>
-                <div class="proj-meta">
-                  <span>Scope<b>Placeholder</b></span>
-                  <span>Year<b>20XX</b></span>
-                  <span>Impact<b>—</b></span>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="proj-card" data-p="2">
-            <div class="pc-grid">
-              <div class="proj-index">03</div>
-              <div>
-                <div class="proj-sector">Industry · Placeholder</div>
-                <h3 class="proj-title">Project <em>Three</em></h3>
-                <p class="proj-desc">Placeholder description for the third project. Replace with your flagship engagement — the breadth of the platform and how one build served an entire industry.</p>
-                <div class="proj-meta">
-                  <span>Scope<b>Placeholder</b></span>
-                  <span>Year<b>20XX</b></span>
-                  <span>Impact<b>—</b></span>
-                </div>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </div>
-
-    <div class="proj-progress">
-      <i><b data-pp="0"></b></i><i><b data-pp="1"></b></i><i><b data-pp="2"></b></i>
-    </div>
-  </div>
-</section>
-
 <!-- ====== ACT 4 — CONTACT / FOOTER ====== -->
 <section id="contact">
   <div class="wrap">
@@ -497,9 +563,37 @@ section{position:relative;z-index:2}
       <div class="orbit-core"></div>
     </div>
     <div class="contact-top">
-      <span class="eyebrow">Contact Us</span>
-      <h2 class="contact-cta reveal">Let's build the<br><em>intelligence</em> of your industry.</h2>
-      <a href="mailto:hello@monera.ai" class="contact-mail" data-link>hello@monera.ai →</a>
+      <div class="contact-left reveal">
+        <span class="eyebrow">Contact Us</span>
+        <h2 class="contact-cta">Let's build the<br><em>intelligence</em><br>of your industry.</h2>
+        <a href="mailto:hello@monera.ai" class="contact-mail" data-link>hello@monera.ai →</a>
+      </div>
+      <div class="contact-form reveal">
+        <h3>Get in Touch</h3>
+        <div class="cf-field">
+          <label>Full Name</label>
+          <input type="text" placeholder="Your name" />
+        </div>
+        <div class="cf-field">
+          <label>Industry</label>
+          <select>
+            <option value="" disabled selected>Select your industry</option>
+            <option>Pharmaceuticals</option>
+            <option>Healthcare</option>
+            <option>Finance &amp; Banking</option>
+            <option>Retail &amp; E-commerce</option>
+            <option>Manufacturing</option>
+            <option>Logistics</option>
+            <option>Real Estate</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="cf-field">
+          <label>Reason for Contact</label>
+          <textarea placeholder="Tell us what you're looking to build or explore..."></textarea>
+        </div>
+        <button class="cf-submit" type="button">Send Message →</button>
+      </div>
     </div>
 
     <div class="contact-grid">
@@ -615,7 +709,7 @@ let scrollNorm=0;
   // lighter starfield — far fewer points for smooth performance
   const far =makeLayer(560,2400,1.6,.5,0xbfc6d4);
   const mid =makeLayer(260,1600,2.3,.78,0xf4efe6);
-  const near=makeLayer(90,1100,3.4,1,0xe6cd96);
+  const near=makeLayer(90,1100,3.4,1,0xa0a0a0);
 
   let tmx=0,tmy=0,cmx=0,cmy=0;
   addEventListener('mousemove',e=>{tmx=(e.clientX/innerWidth-.5);tmy=(e.clientY/innerHeight-.5);});
@@ -698,99 +792,34 @@ function tryPlayHero(){
   v.muted=true; v.defaultMuted=true;
   const p=v.play();
   if(p&&p.catch) p.catch(()=>{
-    // autoplay blocked → poster (Earth) stays visible; play on first interaction
+    // autoplay blocked → play on first interaction or when tab becomes visible
     const kick=()=>{ v.play().catch(()=>{}); cleanup(); };
-    const cleanup=()=>['click','touchstart','keydown','scroll','mousemove'].forEach(e=>removeEventListener(e,kick));
+    const cleanup=()=>{
+      ['click','touchstart','keydown','scroll','mousemove'].forEach(e=>removeEventListener(e,kick));
+      document.removeEventListener('visibilitychange',onVisible);
+    };
+    const onVisible=()=>{ if(!document.hidden){ v.play().catch(()=>{}); cleanup(); } };
     ['click','touchstart','keydown','scroll','mousemove'].forEach(e=>addEventListener(e,kick,{once:true,passive:true}));
+    document.addEventListener('visibilitychange',onVisible);
   });
 }
-// also attempt as soon as the file is ready, regardless of loader timing
+// attempt as soon as file is ready, in case loader fires before canplay
 (function(){const v=$('#heroVideo'); if(v){v.addEventListener('canplay',tryPlayHero,{once:true});}})();
 // subtle video life on scroll (no text to overlap the logo in the video)
 gsap.to('#heroVideo',{scale:1.12,ease:'none',scrollTrigger:{trigger:'#home',start:'top top',end:'bottom top',scrub:1}});
 gsap.to('.hero-scroll',{opacity:0,ease:'none',scrollTrigger:{trigger:'#home',start:'top top',end:'40% top',scrub:true}});
 
 /* =========================================================
-   6. ABOUT — particles flash in & FORM the heading
+   6. ABOUT — simple float-in heading
 ========================================================= */
 (function(){
-  const canvas=$('#aboutCanvas'),real=$('#aboutReal');
-  const ctx=canvas.getContext('2d');
-  const stage=canvas.parentElement;
-  let particles=[],W=0,H=0,DPR=Math.min(devicePixelRatio,2),raf=null,played=false;
-
-  function buildTargets(){
-    W=stage.clientWidth; H=200;
-    canvas.width=W*DPR; canvas.height=H*DPR;
-    canvas.style.width=W+'px'; canvas.style.height=H+'px';
-    ctx.setTransform(DPR,0,0,DPR,0,0);
-    ctx.clearRect(0,0,W,H);
-    // draw text to sample
-    const fs=clamp(W*0.10,40,118);
-    ctx.fillStyle='#fff';ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.font=`400 ${fs}px 'Cormorant Garamond', Georgia, serif`;
-    ctx.fillText('Built for Industries',W/2,H/2);
-    const img=ctx.getImageData(0,0,W*DPR,H*DPR).data;
-    ctx.clearRect(0,0,W,H);
-    const targets=[];
-    const gap=Math.max(4,Math.round(W/220));
-    for(let y=0;y<H;y+=gap){
-      for(let x=0;x<W;x+=gap){
-        const idx=((Math.floor(y*DPR))*(W*DPR)+Math.floor(x*DPR))*4;
-        if(img[idx+3]>128){ targets.push({x,y}); }
-      }
-    }
-    particles=targets.map(t=>({
-      tx:t.x,ty:t.y,
-      x:Math.random()*W, y:Math.random()*H,
-      // start scattered far + faded
-      sx:(Math.random()-.5)*W*1.4 + W/2,
-      sy:(Math.random()-.5)*H*4,
-      r:Math.random()*1.4+0.6,
-      tw:Math.random()*Math.PI*2,
-      alpha:0, prog:0, delay:Math.random()*0.35
-    }));
-    particles.forEach(p=>{p.x=p.sx;p.y=p.sy;});
-  }
-
-  function animate(){
-    ctx.clearRect(0,0,W,H);
-    let done=0;
-    for(const p of particles){
-      p.prog=clamp(p.prog + 0.022, 0, 1);
-      const e=p.prog<p.delay?0:(p.prog-p.delay)/(1-p.delay);
-      const ease=1-Math.pow(1-e,3);
-      p.x=lerp(p.sx,p.tx,ease);
-      p.y=lerp(p.sy,p.ty,ease);
-      p.alpha=ease;
-      p.tw+=0.2;
-      const fl=0.6+Math.sin(p.tw)*0.4;
-      ctx.beginPath();
-      ctx.fillStyle=`rgba(${230+Math.round(fl*25)},${205+Math.round(fl*20)},${150+Math.round(fl*40)},${p.alpha*fl})`;
-      ctx.arc(p.x,p.y,p.r*(0.6+fl*0.6),0,Math.PI*2);
-      ctx.fill();
-      if(ease>0.985)done++;
-    }
-    if(done>particles.length*0.92 && !real.dataset.shown){
-      real.dataset.shown='1';
-      gsap.to(real,{opacity:1,duration:1,ease:'power2.out'});
-      gsap.to(canvas,{opacity:0,duration:1.2,delay:.25,ease:'power2.out'});
-    }
-    raf=requestAnimationFrame(animate);
-  }
-
-  function play(){
-    if(played)return;played=true;
-    real.querySelector('em'); // ensure parsed
-    buildTargets();
-    if(reduce){real.style.opacity=1;canvas.style.opacity=0;return;}
-    cancelAnimationFrame(raf);animate();
-  }
-  // wait for fonts so sampling matches the serif
-  (document.fonts?document.fonts.ready:Promise.resolve()).then(()=>{
-    ScrollTrigger.create({trigger:'#about',start:'top 68%',once:true,onEnter:play});
-  });
-  addEventListener('resize',()=>{ if(played && real.dataset.shown){ /* keep crisp text only */ } });
+  const real=$('#aboutReal');
+  const canvas=$('#aboutCanvas');
+  if(canvas) canvas.style.display='none';
+  ScrollTrigger.create({trigger:'#about',start:'top 68%',once:true,onEnter:()=>{
+    gsap.fromTo(real,{opacity:0,y:30},{opacity:1,y:0,duration:1.4,ease:'power3.out'});
+    gsap.to(real,{y:-10,repeat:-1,yoyo:true,duration:3,ease:'sine.inOut',delay:1.4});
+  }});
 })();
 
 /* generic reveals + counters */
@@ -800,9 +829,13 @@ gsap.to('.hero-scroll',{opacity:0,ease:'none',scrollTrigger:{trigger:'#home',sta
       scrollTrigger:{trigger:el,start:'top 85%'}});
   });
   $$('.stat .n').forEach(el=>{
-    const end=+el.dataset.count; const o={v:0};
+    const end=+el.dataset.count;
+    const suffix=el.dataset.suffix||'';
+    const isYear=(end>=2000);
+    const o={v: isYear ? end : 0};
     ScrollTrigger.create({trigger:el,start:'top 88%',once:true,onEnter:()=>{
-      gsap.to(o,{v:end,duration:1.6,ease:'power2.out',onUpdate:()=>{el.textContent=Math.round(o.v);}});
+      if(isYear){el.textContent=end+suffix;return;}
+      gsap.to(o,{v:end,duration:1.6,ease:'power2.out',onUpdate:()=>{el.textContent=Math.round(o.v)+suffix;}});
     }});
   });
 })();
@@ -811,8 +844,8 @@ gsap.to('.hero-scroll',{opacity:0,ease:'none',scrollTrigger:{trigger:'#home',sta
    7. TEAM — moon that ROTATES on scroll to reveal members
 ========================================================= */
 (function(){
-  const moon=$('#moon'), tex=$('#moonTexture'), term=$('#moonTerminator'), ring=$('#moonRing');
-  const photos=$$('.moon-photo'), dots=$$('.team-dot');
+  const moon=$('#moon'), tex=$('#moonImg'), term=$('#moonTerminator'), ring=$('#moonRing');
+  const photos=$$('.moon-photo'), dots=$$('.team-dot'), memberPhotos=$$('.team-member-photo');
   const numEl=$('#teamNum'), nameEl=$('#teamName'), roleEl=$('#teamRole'), bioEl=$('#teamBio');
   const data=[
     {num:'01 / 03',name:'Team Member One',role:'Role / Title — Placeholder',
@@ -827,6 +860,7 @@ gsap.to('.hero-scroll',{opacity:0,ease:'none',scrollTrigger:{trigger:'#home',sta
     if(i===cur)return; cur=i; const d=data[i];
     photos.forEach(p=>p.classList.toggle('active',+p.dataset.ph===i));
     dots.forEach(x=>x.classList.toggle('active',+x.dataset.d===i));
+    memberPhotos.forEach(p=>p.classList.toggle('active',+p.dataset.mp===i));
     numEl.textContent=d.num;
     // flash + crossfade the copy as the new face turns into view
     gsap.fromTo([nameEl,roleEl,bioEl],{opacity:0,y:16},{opacity:1,y:0,duration:.7,ease:'power2.out',stagger:.05});
@@ -858,65 +892,15 @@ gsap.to('.hero-scroll',{opacity:0,ease:'none',scrollTrigger:{trigger:'#home',sta
 })();
 
 /* =========================================================
-   8. PROJECTS — pinned shooting star lights each project
-========================================================= */
-(function(){
-  const pin=$('#projPin'), comet=$('#comet'), tail=$('#cometTail'), glow=$('#projGlow');
-  const beam=$('#projBeam'), flash=$('#projFlash');
-  const cards=$$('.proj-card'), bars=$$('[data-pp]');
-  const N=cards.length; let cur=-1;
-  function setActive(i){
-    if(i===cur)return;cur=i;
-    cards.forEach(c=>c.classList.toggle('active',+c.dataset.p===i));
-    // burst of light when the star lights a new project
-    gsap.fromTo(flash,{opacity:0},{opacity:1,duration:.18,ease:'power2.out',
-      onComplete:()=>gsap.to(flash,{opacity:0,duration:.7,ease:'power2.out'})});
-  }
-  setActive(0);
-
-  // path of the comet — a bold sweeping arc across the whole viewport
-  function pos(t){
-    const x = lerp(-0.1, 1.12, t) * innerWidth;
-    const y = (0.16 + t*0.5) * innerHeight;
-    const arc = Math.sin(t*Math.PI)*innerHeight*0.16;
-    return {x, y: y - arc};
-  }
-  // the project content sits roughly here — beam points toward it
-  function cardCenter(){ return {x: innerWidth*0.5, y: innerHeight*0.55}; }
-
-  ScrollTrigger.create({
-    trigger:'#projects',
-    start:'top top',
-    end:()=> '+='+(innerHeight*3),
-    pin:pin, scrub:0.9, anticipatePin:1,
-    onUpdate:self=>{
-      const t=self.progress;
-      const p=pos(t), p2=pos(clamp(t-0.02,0,1));
-      const bright=0.45+Math.sin(t*Math.PI)*0.55;
-      comet.style.transform=`translate(${p.x}px,${p.y}px)`;
-      glow.style.left=p.x+'px'; glow.style.top=p.y+'px';
-      glow.style.opacity=bright;
-      // tail trails behind direction of travel
-      const ang=Math.atan2(p.y-p2.y,p.x-p2.x)*180/Math.PI;
-      tail.style.transform=`translate(${p.x}px,${p.y}px) rotate(${ang+180}deg) scaleX(${0.7+Math.sin(t*Math.PI)*1.1})`;
-      // beam from star toward the project content
-      const c=cardCenter();
-      const bAng=Math.atan2(c.y-p.y,c.x-p.x)*180/Math.PI;
-      beam.style.transform=`translate(${p.x}px,${p.y}px) rotate(${bAng}deg)`;
-      beam.style.opacity=0.25+Math.sin(t*Math.PI)*0.5;
-      // which project is lit
-      const i=clamp(Math.floor(t*N),0,N-1);
-      setActive(i);
-      bars.forEach((b,bi)=>{ b.style.width=(clamp((t*N)-bi,0,1)*100)+'%'; });
-    }
-  });
-})();
 
 /* footer year */
 $('#yr').textContent=new Date().getFullYear();
 
+
 /* refresh triggers once everything (fonts/images) settled */
 addEventListener('load',()=>setTimeout(()=>ScrollTrigger.refresh(),300));
 </script>
+
+
 </body>
 </html>
