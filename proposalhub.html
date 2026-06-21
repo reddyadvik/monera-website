@@ -2,235 +2,727 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ProposalHub — Monera</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexus by Monera — Purpose-Built for CRO/CDMO Proposal Excellence</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <style>
-@font-face{font-family:'Saira';src:url('assets/Saira-VariableFont.ttf') format('truetype');font-weight:100 900;font-display:swap}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --void:#040406;--gold:#8a8a8a;--gold-bright:#b0b0b0;
-  --line:rgba(160,160,160,.18);--star:#f4efe6;--mist:rgba(244,239,230,.62);--faint:rgba(244,239,230,.32);
+  --navy:#0f172a;
+  --navy2:#1e293b;
+  --navy3:#334155;
+  --blue:#3b82f6;
+  --blue2:#2563eb;
+  --blue-light:#eff6ff;
+  --blue-mid:#dbeafe;
+  --text:#1e293b;
+  --text2:#475569;
+  --text3:#94a3b8;
+  --border:#e2e8f0;
+  --white:#ffffff;
+  --green:#10b981;
+  --amber:#f59e0b;
+  --red:#ef4444;
+  --radius:12px;
+  --radius-sm:8px;
+  --shadow:0 1px 3px rgba(0,0,0,.08),0 4px 12px rgba(0,0,0,.06);
+  --shadow-md:0 4px 16px rgba(0,0,0,.10),0 8px 32px rgba(0,0,0,.08);
 }
-html{scroll-behavior:smooth;overflow-x:hidden}
-body{background:var(--void);color:var(--star);font-family:'Saira',sans-serif;font-size:16px;line-height:1.6;min-height:100vh}
 
-/* scanlines */
-body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.03) 4px);pointer-events:none;z-index:9999}
+html{scroll-behavior:smooth;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:var(--text);background:var(--white);line-height:1.6;font-size:15px;}
 
-/* nav */
-nav{position:fixed;top:0;left:0;right:0;z-index:900;padding:22px clamp(20px,5vw,72px);display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to bottom,rgba(4,4,6,.9),transparent)}
-.nav-brand{text-decoration:none;display:flex;flex-direction:column;gap:1px}
-.nav-brand-main{font-family:'Saira',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.32em;color:var(--star);text-transform:uppercase}
-.nav-brand-sub{font-family:'Saira',sans-serif;font-size:.52rem;letter-spacing:.36em;color:var(--gold);text-transform:uppercase}
-.nav-back{font-family:'Saira',sans-serif;font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--mist);text-decoration:none;border:1px solid var(--line);border-radius:3px;padding:7px 16px;transition:color .22s,border-color .22s}
-.nav-back:hover{color:var(--star);border-color:rgba(160,160,160,.4)}
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem;}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px;}
+.nav-logo{font-size:17px;font-weight:600;color:var(--navy);display:flex;align-items:center;gap:8px;text-decoration:none;}
+.nav-logo .by{font-size:13px;font-weight:400;color:var(--text3);margin-left:2px;}
+.nav-links{display:flex;gap:24px;list-style:none;}
+.nav-links a{font-size:13px;color:var(--text2);text-decoration:none;transition:color .2s;}
+.nav-links a:hover{color:var(--blue);}
+.nav-back{font-size:13px;color:var(--text3);text-decoration:none;display:flex;align-items:center;gap:5px;margin-right:16px;transition:color .2s;}
+.nav-back:hover{color:var(--text2);}
+.nav-right{display:flex;align-items:center;}
+.nav-cta{background:var(--blue);color:#fff;font-size:13px;font-weight:500;padding:8px 18px;border-radius:6px;text-decoration:none;transition:background .2s;}
+.nav-cta:hover{background:var(--blue2);}
 
-/* wrap */
-.wrap{max-width:1100px;margin:0 auto;padding:0 clamp(20px,5vw,72px)}
+/* SECTIONS */
+section{padding:80px 2rem;}
+.container{max-width:1200px;margin:0 auto;}
+.section-label{font-size:12px;font-weight:600;color:var(--blue);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;}
+h2{font-size:36px;font-weight:700;color:var(--navy);line-height:1.2;margin-bottom:16px;}
+.sub{font-size:17px;color:var(--text2);max-width:600px;line-height:1.7;}
 
-/* hero */
-.ph-hero{padding:clamp(140px,20vh,200px) 0 clamp(80px,12vh,120px);border-bottom:1px solid var(--line)}
-.ph-eyebrow{font-size:.62rem;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:22px}
-.ph-title{font-family:'Saira',sans-serif;font-size:clamp(3rem,7vw,5.5rem);font-weight:300;line-height:1.02;letter-spacing:-.01em;margin-bottom:28px}
-.ph-title em{color:var(--gold-bright);font-style:normal}
-.ph-tagline{font-size:clamp(.9rem,1.6vw,1.1rem);color:var(--mist);max-width:56ch;line-height:1.75;margin-bottom:48px}
-.ph-meta{display:flex;gap:40px;flex-wrap:wrap}
-.ph-meta-item span{font-size:.56rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:6px}
-.ph-meta-item b{font-family:'Saira',sans-serif;font-size:1.5rem;font-weight:300;color:var(--star)}
+/* HERO */
+#hero{background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 60%,#1e40af 100%);padding:100px 2rem 80px;position:relative;overflow:hidden;}
+#hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");pointer-events:none;}
+.hero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(59,130,246,.2);border:1px solid rgba(59,130,246,.4);border-radius:20px;padding:5px 14px;font-size:12px;color:#93c5fd;margin-bottom:24px;}
+.hero-badge i{font-size:13px;}
+.hero-title{font-size:48px;font-weight:800;color:#fff;line-height:1.1;margin-bottom:20px;}
+.hero-title em{font-style:normal;color:#60a5fa;}
+.hero-desc{font-size:17px;color:#94a3b8;line-height:1.7;margin-bottom:36px;max-width:500px;}
+.hero-stats{display:flex;gap:32px;}
+.stat-item .sv{font-size:28px;font-weight:700;color:#fff;line-height:1;}
+.stat-item .sl{font-size:12px;color:#64748b;margin-top:4px;}
+.hero-img{position:relative;}
+.hero-img img{width:100%;border-radius:12px;box-shadow:0 24px 64px rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.1);}
+.hero-img-badge{position:absolute;bottom:-16px;left:-16px;background:#10b981;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:600;box-shadow:0 8px 24px rgba(16,185,129,.4);}
 
-/* overview */
-.ph-overview{padding:clamp(80px,12vh,130px) 0;border-bottom:1px solid var(--line)}
-.ph-section-label{font-size:.6rem;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);margin-bottom:40px}
-.ph-overview-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,100px);align-items:start}
-.ph-overview-heading{font-family:'Saira',sans-serif;font-size:clamp(1.6rem,3vw,2.5rem);font-weight:300;line-height:1.12;margin-bottom:24px}
-.ph-overview-heading em{color:var(--gold-bright);font-style:normal}
-.ph-overview-body{color:var(--mist);line-height:1.78;font-size:.95rem;margin-bottom:18px}
-.ph-dept-list{list-style:none;display:flex;flex-direction:column;gap:12px}
-.ph-dept-item{display:flex;align-items:center;gap:14px;padding:14px 18px;border:1px solid var(--line);border-radius:6px;font-size:.8rem;color:var(--mist)}
-.ph-dept-num{font-family:'Saira',sans-serif;font-size:.56rem;letter-spacing:.28em;color:var(--gold);min-width:28px}
-@media(max-width:760px){.ph-overview-grid{grid-template-columns:1fr}}
+/* PROBLEM */
+#problem{background:#f8fafc;}
+.problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:48px;align-items:start;}
+.problem-col h3{font-size:18px;font-weight:600;margin-bottom:20px;}
+.problem-col.before h3{color:#dc2626;}
+.problem-col.after h3{color:#059669;}
+.problem-item{display:flex;align-items:flex-start;gap:12px;padding:14px 0;border-bottom:1px solid var(--border);}
+.problem-item:last-child{border-bottom:none;}
+.pi-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.before .pi-icon{background:#fef2f2;}
+.before .pi-icon i{color:#dc2626;font-size:15px;}
+.after .pi-icon{background:#f0fdf4;}
+.after .pi-icon i{color:#059669;font-size:15px;}
+.pi-text{font-size:14px;color:var(--text2);line-height:1.5;}
+.pi-text strong{color:var(--text);display:block;margin-bottom:2px;font-size:13px;}
 
-/* ROI section */
-.ph-roi{padding:clamp(80px,12vh,130px) 0;border-bottom:1px solid var(--line)}
-.ph-roi-intro{max-width:60ch;margin-bottom:52px}
-.ph-roi-intro p{color:var(--mist);font-size:.95rem;line-height:1.78;margin-top:16px}
+/* HOW IT WORKS */
+.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px;counter-reset:step;}
+.step-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:24px;position:relative;cursor:pointer;transition:all .2s;}
+.step-card:hover{box-shadow:var(--shadow-md);border-color:var(--blue);transform:translateY(-2px);}
+.step-num{width:32px;height:32px;background:var(--blue);color:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;margin-bottom:16px;}
+.step-card h4{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:6px;}
+.step-card p{font-size:13px;color:var(--text2);line-height:1.5;}
+.step-card .step-time{display:inline-flex;align-items:center;gap:4px;margin-top:10px;font-size:11px;color:var(--blue);font-weight:500;}
 
-/* calc card */
-.calc-card{background:rgba(255,255,255,.025);border:1px solid var(--line);border-radius:10px;padding:clamp(32px,5vw,56px)}
-.calc-sliders{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:32px}
-.calc-slider-row{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:6px;padding:16px 20px}
-.calc-slider-row label{font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:10px}
-.slider-row-inner{display:flex;align-items:center;gap:12px}
-input[type="range"]{flex:1;accent-color:var(--gold-bright);height:3px;cursor:pointer;background:var(--line)}
-.slider-val{font-family:'Saira',sans-serif;font-size:1rem;color:var(--star);font-weight:300;min-width:52px;text-align:right}
-@media(max-width:640px){.calc-sliders{grid-template-columns:1fr}}
+/* DEPT FEATURES */
+#departments{background:#f8fafc;}
+.dept-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px;}
+.dept-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:22px;cursor:pointer;transition:all .2s;}
+.dept-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);border-color:var(--blue);}
+.dept-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
+.dept-icon i{font-size:22px;}
+.dept-card h4{font-size:15px;font-weight:600;color:var(--navy);margin-bottom:6px;}
+.dept-card p{font-size:13px;color:var(--text2);line-height:1.5;}
+.dept-card .more{display:inline-flex;align-items:center;gap:4px;margin-top:12px;font-size:12px;color:var(--blue);font-weight:500;}
 
-/* dept table */
-.calc-table-wrap{border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-bottom:32px}
-table{width:100%;border-collapse:collapse;font-size:.82rem}
-thead th{padding:10px 14px;text-align:left;font-size:.54rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);background:rgba(255,255,255,.03);border-bottom:1px solid var(--line)}
-thead th:not(:first-child){text-align:center}
-thead th:last-child{text-align:right}
-tbody td{padding:10px 14px;border-bottom:1px solid var(--line);color:var(--mist);vertical-align:middle}
-tbody td:not(:first-child){text-align:center}
-tbody td:last-child{text-align:right;color:var(--star)}
-tbody tr:last-child td{border-bottom:none}
-input[type="number"]{background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:4px;color:var(--star);padding:4px 7px;font-size:.8rem;font-family:'Saira',sans-serif;width:100%;text-align:center}
-input[type="number"]:focus{outline:none;border-color:rgba(160,160,160,.5)}
+/* AI FEATURES */
+.ai-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px;}
+.ai-card{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:28px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;}
+.ai-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(59,130,246,.08),transparent);pointer-events:none;}
+.ai-card:hover{transform:translateY(-3px);box-shadow:0 16px 48px rgba(0,0,0,.3);border-color:rgba(59,130,246,.3);}
+.ai-card-icon{width:48px;height:48px;border-radius:12px;background:rgba(59,130,246,.2);border:1px solid rgba(59,130,246,.3);display:flex;align-items:center;justify-content:center;margin-bottom:20px;}
+.ai-card-icon i{font-size:22px;color:#60a5fa;}
+.ai-card h4{font-size:16px;font-weight:600;color:#f1f5f9;margin-bottom:8px;}
+.ai-card p{font-size:13px;color:#94a3b8;line-height:1.6;}
+.ai-card .ai-more{margin-top:14px;font-size:12px;color:#60a5fa;display:flex;align-items:center;gap:4px;}
+.ai-card .ai-badge{display:inline-block;background:rgba(16,185,129,.15);color:#34d399;font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;margin-bottom:12px;}
 
-/* results */
-.calc-results{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
-.result-card{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:6px;padding:18px 20px}
-.result-card.highlight{border-color:rgba(160,160,160,.35);background:rgba(160,160,160,.06)}
-.result-label{font-size:.52rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
-.result-val{font-family:'Saira',sans-serif;font-size:1.4rem;font-weight:300;color:var(--star)}
-.result-card.highlight .result-val{color:var(--gold-bright)}
-@media(max-width:640px){.calc-results{grid-template-columns:1fr 1fr}}
-@media(max-width:400px){.calc-results{grid-template-columns:1fr}}
+/* SECURITY */
+#security{background:var(--navy);color:#f1f5f9;}
+#security h2{color:#f1f5f9;}
+#security .sub{color:#94a3b8;}
+#security .section-label{color:#60a5fa;}
+.sec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px;}
+.sec-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-sm);padding:20px;}
+.sec-card i{font-size:24px;color:#60a5fa;margin-bottom:12px;}
+.sec-card h4{font-size:14px;font-weight:600;color:#f1f5f9;margin-bottom:6px;}
+.sec-card p{font-size:13px;color:#94a3b8;line-height:1.5;}
+.sec-ss{margin-top:48px;border-radius:var(--radius);overflow:hidden;border:1px solid rgba(255,255,255,.1);}
+.sec-ss img{width:100%;display:block;}
 
-.payback-bar{background:rgba(160,160,160,.06);border:1px solid rgba(160,160,160,.22);border-radius:6px;padding:16px 20px;font-size:.85rem;color:var(--mist);margin-bottom:32px}
-.payback-bar strong{color:var(--gold-bright)}
+/* ANALYTICS */
+#analytics{background:#f8fafc;}
+.analytics-inner{display:grid;grid-template-columns:3fr 2fr;gap:48px;align-items:center;margin-top:48px;}
+.analytics-img img{width:100%;border-radius:var(--radius);box-shadow:var(--shadow-md);border:1px solid var(--border);}
+.analytics-points{display:flex;flex-direction:column;gap:24px;}
+.ap-item{display:flex;gap:16px;}
+.ap-num{width:36px;height:36px;background:var(--blue);color:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0;}
+.ap-item h4{font-size:15px;font-weight:600;color:var(--navy);margin-bottom:4px;}
+.ap-item p{font-size:13px;color:var(--text2);line-height:1.5;}
 
-.calc-cta{display:inline-flex;align-items:center;gap:10px;font-family:'Saira',sans-serif;font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:#000;background:#fff;border-radius:4px;padding:13px 26px;text-decoration:none;transition:background .22s,gap .26s;font-weight:500}
-.calc-cta:hover{background:#e6e6e6;gap:16px}
+/* ROI CALCULATOR */
+#roi{background:linear-gradient(180deg,#f0f7ff 0%,#fff 100%);}
 
-/* contact strip */
-.ph-contact{padding:clamp(80px,12vh,130px) 0}
-.ph-contact-inner{display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap}
-.ph-contact-heading{font-family:'Saira',sans-serif;font-size:clamp(1.4rem,2.5vw,2rem);font-weight:300;line-height:1.15}
-.ph-contact-heading em{color:var(--gold-bright);font-style:normal}
-.ph-contact-btn{display:inline-flex;align-items:center;gap:12px;font-family:'Saira',sans-serif;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--star);border:1px solid var(--line);border-radius:4px;padding:13px 26px;text-decoration:none;transition:border-color .22s,gap .26s;white-space:nowrap}
-.ph-contact-btn:hover{border-color:var(--gold-bright);gap:18px}
+/* CTA */
+#cta{background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 60%,#1e40af 100%);text-align:center;}
+#cta h2{color:#fff;font-size:42px;}
+#cta .sub{color:#94a3b8;margin:0 auto 40px;}
+.cta-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+.btn-primary{background:var(--blue);color:#fff;padding:14px 32px;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s;}
+.btn-primary:hover{background:var(--blue2);transform:translateY(-1px);}
+.btn-outline{background:transparent;color:#fff;padding:14px 32px;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;border:2px solid rgba(255,255,255,.3);display:inline-flex;align-items:center;gap:8px;transition:all .2s;}
+.btn-outline:hover{border-color:#fff;background:rgba(255,255,255,.05);}
+.cta-note{margin-top:20px;font-size:13px;color:#64748b;}
 
-footer{border-top:1px solid var(--line);padding:28px clamp(20px,5vw,72px);display:flex;align-items:center;justify-content:space-between;font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--faint)}
-footer a{color:var(--faint);text-decoration:none}
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:1000;display:none;align-items:center;justify-content:center;padding:2rem;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--white);border-radius:16px;max-width:680px;width:100%;max-height:85vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,.3);}
+.modal-header{padding:28px 32px 20px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:16px;}
+.modal-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.modal-icon i{font-size:24px;}
+.modal-title{font-size:20px;font-weight:700;color:var(--navy);margin-bottom:4px;}
+.modal-subtitle{font-size:14px;color:var(--text2);}
+.modal-close{margin-left:auto;width:32px;height:32px;border:none;background:none;cursor:pointer;color:var(--text3);font-size:20px;display:flex;align-items:center;justify-content:center;border-radius:6px;transition:background .2s;flex-shrink:0;}
+.modal-close:hover{background:var(--border);}
+.modal-body{padding:28px 32px 32px;}
+.modal-body h4{font-size:13px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px;margin-top:24px;}
+.modal-body h4:first-child{margin-top:0;}
+.modal-body ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.modal-body ul li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text2);line-height:1.5;}
+.modal-body ul li::before{content:'\ea5e';font-family:'tabler-icons';font-size:14px;color:var(--green);flex-shrink:0;margin-top:1px;}
+.modal-body p{font-size:14px;color:var(--text2);line-height:1.7;}
+
+/* ROI section styles */
+.roi-wrap{max-width:900px;margin:0 auto;}
+.roi-header{text-align:center;margin-bottom:40px;}
+.roi-card{background:var(--white);border-radius:var(--radius);border:1px solid var(--border);padding:20px 24px;box-shadow:var(--shadow);}
+.r-row{display:flex;align-items:center;gap:16px;margin-bottom:16px;}
+.r-row label{font-size:13px;color:var(--text2);min-width:180px;}
+.r-row .rv{font-size:16px;font-weight:500;min-width:40px;text-align:right;}
+input[type="range"]{flex:1;accent-color:var(--blue);height:4px;cursor:pointer;}
+input[type="number"]{background:#f8fafc;border:1px solid var(--border);border-radius:6px;color:var(--text);padding:4px 7px;font-size:13px;font-family:inherit;}
+input[type="number"]:focus{outline:none;border-color:var(--blue);}
+.r-tbl-wrap{border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:16px;}
+.r-tbl{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed;}
+.r-tbl colgroup col:nth-child(1){width:28%;}
+.r-tbl colgroup col:nth-child(2){width:12%;}
+.r-tbl colgroup col:nth-child(3){width:18%;}
+.r-tbl colgroup col:nth-child(4){width:24%;}
+.r-tbl colgroup col:nth-child(5){width:18%;}
+.r-tbl thead th{padding:9px 14px;font-weight:500;font-size:11px;color:var(--text2);background:#f8fafc;border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:.05em;text-align:left;}
+.r-tbl thead th:not(:first-child){text-align:center;}
+.r-tbl thead th:last-child{text-align:right;}
+.r-tbl tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.r-tbl tbody td:not(:first-child){text-align:center;}
+.r-tbl tbody td:last-child{text-align:right;font-weight:500;}
+.r-tbl tbody tr:last-child td{border-bottom:none;}
+.r-results{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px;}
+.r-card{background:#f8fafc;border-radius:8px;padding:14px 16px;border:1px solid var(--border);}
+.r-card.green{background:#f0fdf4;border-color:#bbf7d0;}
+.r-label{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
+.r-card.green .r-label{color:#059669;}
+.r-value{font-size:20px;font-weight:600;color:var(--navy);}
+.r-card.green .r-value{color:#059669;}
+.r-paybar{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+.r-paybar i{font-size:20px;color:#059669;flex-shrink:0;}
+.r-paybar p{font-size:14px;color:#059669;margin:0;}
+.r-paybar strong{font-weight:600;}
+.r-tier-badge{display:inline-flex;align-items:center;gap:6px;background:#eff6ff;color:#1e40af;font-size:12px;font-weight:500;padding:5px 14px;border-radius:20px;margin-bottom:16px;}
+.r-extra{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.r-extra-card{background:#f8fafc;border-radius:8px;padding:14px 15px;border:1px solid var(--border);}
+.r-extra-card .ret{font-size:13px;font-weight:500;color:var(--navy);margin-bottom:4px;display:flex;align-items:center;gap:6px;}
+.r-extra-card .reb{font-size:12px;color:var(--text2);line-height:1.5;}
+
+/* Responsive */
+@media(max-width:900px){
+  .hero-inner,.problem-grid,.analytics-inner{grid-template-columns:1fr;}
+  .steps-grid,.dept-grid{grid-template-columns:repeat(2,1fr);}
+  .ai-grid,.sec-grid{grid-template-columns:1fr 1fr;}
+  .r-results{grid-template-columns:1fr 1fr;}
+  h2{font-size:28px;}
+  .hero-title{font-size:36px;}
+  .hero-img{display:none;}
+}
+@media(max-width:600px){
+  .steps-grid,.dept-grid,.ai-grid,.sec-grid{grid-template-columns:1fr;}
+  .r-results,.r-extra{grid-template-columns:1fr;}
+  .nav-links{display:none;}
+}
 </style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
-  <a href="index.html" class="nav-brand">
-    <span class="nav-brand-main">Monera</span>
-    <span class="nav-brand-sub">Private Limited</span>
-  </a>
-  <a href="index.html" class="nav-back">← Back to Site</a>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><i class="ti ti-file-text" style="color:var(--blue);font-size:20px;"></i>Nexus <span class="by">by Monera</span></a>
+    <ul class="nav-links">
+      <li><a href="#problem">Why Nexus</a></li>
+      <li><a href="#how-it-works">How It Works</a></li>
+      <li><a href="#departments">Features</a></li>
+      <li><a href="#ai">AI Engine</a></li>
+      <li><a href="#analytics">Analytics</a></li>
+      <li><a href="#roi">ROI</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="index.html" class="nav-back"><i class="ti ti-arrow-left" style="font-size:13px;"></i> Back to Monera</a>
+      <a href="#cta" class="nav-cta">Request a Demo</a>
+    </div>
+  </div>
 </nav>
 
-<!-- Hero -->
-<section class="ph-hero">
-  <div class="wrap">
-    <div class="ph-eyebrow">Monera · Product 01</div>
-    <h1 class="ph-title">Proposal<em>Hub</em></h1>
-    <p class="ph-tagline">AI-powered proposal management for pharma CROs. The entire cross-department workflow — from BD intake to supply chain sign-off — encoded into one intelligent platform.</p>
-    <div class="ph-meta">
-      <div class="ph-meta-item"><span>Industry</span><b>Pharma CRO</b></div>
-      <div class="ph-meta-item"><span>Status</span><b>Live</b></div>
-      <div class="ph-meta-item"><span>Departments</span><b>7</b></div>
-      <div class="ph-meta-item"><span>Built by</span><b>Monera</b></div>
-    </div>
-  </div>
-</section>
-
-<!-- Overview -->
-<section class="ph-overview">
-  <div class="wrap">
-    <div class="ph-section-label">What it does</div>
-    <div class="ph-overview-grid">
-      <div>
-        <h2 class="ph-overview-heading">The entire proposal<br>workflow, <em>automated</em></h2>
-        <p class="ph-overview-body">Pharma CROs spend weeks on every proposal — coordinating across BD, R&D, Manufacturing, Quality, Supply Chain, and EHS just to get a costing together. ProposalHub encodes that entire workflow into one AI-native system.</p>
-        <p class="ph-overview-body">The AI drafts the proposal based on the study type and requirements. Each department reviews their section, fills in time and cost, and signs off sequentially. No email chains. No Excel. No chasing people.</p>
-        <p class="ph-overview-body">Every proposal is tracked, every turnaround is measured, and the entire institutional knowledge lives in one place — not in individual inboxes.</p>
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge"><i class="ti ti-sparkles"></i> Built exclusively for CRO &amp; CDMO organizations</div>
+      <h1 class="hero-title">Proposals that win,<br><em>in a fraction</em><br>of the time.</h1>
+      <p class="hero-desc">Nexus replaces your Excel and email chaos with a single intelligent platform — where every department contributes, AI fills the technical tables, and management approves in a clear audit trail.</p>
+      <div class="hero-stats">
+        <div class="stat-item"><div class="sv">35s</div><div class="sl">AI table generation</div></div>
+        <div class="stat-item"><div class="sv">7</div><div class="sl">Departments unified</div></div>
+        <div class="stat-item"><div class="sv">100%</div><div class="sl">Audit-ready</div></div>
+        <div class="stat-item"><div class="sv">0</div><div class="sl">Excel files</div></div>
       </div>
-      <ul class="ph-dept-list">
-        <li class="ph-dept-item"><span class="ph-dept-num">01</span>Business Development</li>
-        <li class="ph-dept-item"><span class="ph-dept-num">02</span>Proposal Management</li>
-        <li class="ph-dept-item"><span class="ph-dept-num">03</span>R&amp;D / Scientific Affairs</li>
-        <li class="ph-dept-item"><span class="ph-dept-num">04</span>Manufacturing</li>
-        <li class="ph-dept-item"><span class="ph-dept-num">05</span>Quality Assurance</li>
-        <li class="ph-dept-item"><span class="ph-dept-num">06</span>Supply Chain</li>
-        <li class="ph-dept-item"><span class="ph-dept-num">07</span>EHS</li>
-      </ul>
+    </div>
+    <div class="hero-img">
+      <img src="./ss-proposals-list.png" alt="Nexus proposals dashboard">
+      <div class="hero-img-badge"><i class="ti ti-check" style="margin-right:4px;"></i> Live dashboard — real proposals</div>
     </div>
   </div>
 </section>
 
-<!-- ROI Calculator -->
-<section class="ph-roi">
-  <div class="wrap">
-    <div class="ph-section-label">ROI Calculator</div>
-    <div class="ph-roi-intro">
-      <h2 class="ph-overview-heading">What is this <em>worth to you?</em></h2>
-      <p>Enter your team's numbers. We'll calculate exactly how much time and money ProposalHub returns — by department, per month, with a payback timeline.</p>
-    </div>
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="container">
+    <div class="section-label">The Problem</div>
+    <h2>CRO/CDMO proposals are broken by design</h2>
+    <p class="sub">Seven departments. Seven Excel sheets. One PM chasing everyone by email. Proposals take weeks. Errors cost deals.</p>
 
-    <div class="calc-card">
-      <!-- Sliders -->
-      <div class="calc-sliders">
-        <div class="calc-slider-row">
-          <label>Proposals per month</label>
-          <div class="slider-row-inner">
-            <input type="range" id="vol" min="5" max="80" value="20" step="1" oninput="calc()">
-            <span class="slider-val" id="volOut">20</span>
-          </div>
+    <div class="problem-grid">
+      <div class="problem-col before">
+        <h3><i class="ti ti-circle-x" style="margin-right:6px;"></i> Without Nexus</h3>
+        <div class="problem-item">
+          <div class="pi-icon"><i class="ti ti-clock"></i></div>
+          <div class="pi-text"><strong>1–2 weeks per proposal</strong>Each department fills their own Excel, sends it back, PM reconciles manually.</div>
         </div>
-        <div class="calc-slider-row">
-          <label>Review time per person (min)</label>
-          <div class="slider-row-inner">
-            <input type="range" id="rev" min="15" max="120" value="45" step="5" oninput="calc()">
-            <span class="slider-val" id="revOut">45 min</span>
-          </div>
+        <div class="problem-item">
+          <div class="pi-icon"><i class="ti ti-file-spreadsheet"></i></div>
+          <div class="pi-text"><strong>Silent formula errors</strong>Wrong CAPEX allocation or missed RM cost discovered after proposal is submitted.</div>
+        </div>
+        <div class="problem-item">
+          <div class="pi-icon"><i class="ti ti-eye-off"></i></div>
+          <div class="pi-text"><strong>Zero visibility</strong>PM has no idea which department is the bottleneck until they follow up manually.</div>
+        </div>
+        <div class="problem-item">
+          <div class="pi-icon"><i class="ti ti-user-x"></i></div>
+          <div class="pi-text"><strong>Knowledge leaves with people</strong>When R&D head leaves, historical costing logic disappears with them.</div>
+        </div>
+        <div class="problem-item">
+          <div class="pi-icon"><i class="ti ti-chart-off"></i></div>
+          <div class="pi-text"><strong>No win-rate analytics</strong>No data on which molecule types win, which departments slow proposals down.</div>
+        </div>
+        <div class="problem-item">
+          <div class="pi-icon"><i class="ti ti-shield-off"></i></div>
+          <div class="pi-text"><strong>No audit trail</strong>Management cannot verify who changed what or when — critical for GMP environments.</div>
+        </div>
+        <div class="problem-item">
+          <div class="pi-icon"><i class="ti ti-robot-off"></i></div>
+          <div class="pi-text"><strong>Manual table generation</strong>R&D spends 8–12 hours per proposal filling reagent, equipment, and validation tables from scratch.</div>
         </div>
       </div>
 
-      <!-- Dept table -->
-      <div class="calc-table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Department</th>
-              <th>People</th>
-              <th>Hrs / proposal</th>
-              <th>Salary (₹/mo)</th>
-              <th>Monthly cost</th>
-            </tr>
-          </thead>
-          <tbody id="deptBody"></tbody>
-        </table>
+      <div class="problem-col after">
+        <h3><i class="ti ti-circle-check" style="margin-right:6px;"></i> With Nexus</h3>
+        <div class="problem-item">
+          <div class="pi-icon"><i class="ti ti-bolt"></i></div>
+          <div class="pi-text"><strong>Days, not weeks</strong>Parallel department workflow — BD, PM, R&D, Mfg, Quality, SC, EHS all work simultaneously.</div>
+        </div>
+        <div class="problem-item">
+          <div class="pi-icon"><i class="ti ti-calculator"></i></div>
+          <div class="pi-text"><strong>Structured costing, no formula risk</strong>All cost computations happen server-side with validated logic — no hidden cell errors.</div>
+        </div>
+        <div class="problem-item">
+          <div class="pi-icon"><i class="ti ti-eye"></i></div>
+          <div class="pi-text"><strong>Live turnaround tracking</strong>Every department's submission time recorded. Bottlenecks visible to PM in real time.</div>
+        </div>
+        <div class="problem-item">
+          <div class="pi-icon"><i class="ti ti-brain"></i></div>
+          <div class="pi-text"><strong>Institutional memory built in</strong>All past proposals, reagents, costs, and outcomes stored and searchable forever.</div>
+        </div>
+        <div class="problem-item">
+          <div class="pi-icon"><i class="ti ti-chart-bar"></i></div>
+          <div class="pi-text"><strong>Full analytics suite</strong>Win rates, volume trends, department load, proposal value — decisions from real data.</div>
+        </div>
+        <div class="problem-item">
+          <div class="pi-icon"><i class="ti ti-shield-check"></i></div>
+          <div class="pi-text"><strong>Tamper-evident audit log</strong>Every action SHA-256 hashed. Who changed what, when — immutable and GMP-ready.</div>
+        </div>
+        <div class="problem-item">
+          <div class="pi-icon"><i class="ti ti-robot"></i></div>
+          <div class="pi-text"><strong>AI generates in 35 seconds</strong>R&D table, quality consumables, manufacturing inputs — AI prefills everything. Team reviews, not fills.</div>
+        </div>
       </div>
-
-      <!-- Results -->
-      <div class="calc-results">
-        <div class="result-card"><div class="result-label">Monthly cost now</div><div class="result-val" id="rBefore">—</div></div>
-        <div class="result-card"><div class="result-label">Cost with ProposalHub</div><div class="result-val" id="rAfter">—</div></div>
-        <div class="result-card"><div class="result-label">Subscription</div><div class="result-val" id="rSub">—</div></div>
-        <div class="result-card highlight"><div class="result-label">Labor savings / mo</div><div class="result-val" id="rSavings">—</div></div>
-        <div class="result-card highlight"><div class="result-label">Net benefit / mo</div><div class="result-val" id="rNet">—</div></div>
-        <div class="result-card"><div class="result-label">ROI multiple</div><div class="result-val" id="rRoi">—</div></div>
-      </div>
-      <div class="payback-bar" id="paybackBar">—</div>
-      <a href="mailto:hello@monera.ai?subject=ProposalHub%20enquiry" class="calc-cta">Get in touch →</a>
     </div>
   </div>
 </section>
 
-<!-- Contact strip -->
-<section class="ph-contact">
-  <div class="wrap">
-    <div class="ph-contact-inner">
-      <h2 class="ph-contact-heading">Ready to see it <em>live?</em></h2>
-      <a href="mailto:hello@monera.ai?subject=ProposalHub%20demo" class="ph-contact-btn">Request a demo →</a>
+<!-- HOW IT WORKS -->
+<section id="how-it-works">
+  <div class="container">
+    <div class="section-label">Workflow</div>
+    <h2>From RFP to approved proposal — end to end</h2>
+    <p class="sub">A structured, gated workflow ensures every department contributes in the right order with full traceability.</p>
+
+    <div class="steps-grid">
+      <div class="step-card" onclick="openModal('step1')">
+        <div class="step-num">1</div>
+        <h4>BD receives RFP</h4>
+        <p>BD creates the proposal, uploads client brief, molecule details, and regulatory context.</p>
+        <div class="step-time"><i class="ti ti-clock"></i> ~15 min</div>
+      </div>
+      <div class="step-card" onclick="openModal('step2')">
+        <div class="step-num">2</div>
+        <h4>PM assigns &amp; coordinates</h4>
+        <p>PM Head assigns the proposal, sets deadlines, and all 6 departments are notified instantly.</p>
+        <div class="step-time"><i class="ti ti-clock"></i> ~10 min</div>
+      </div>
+      <div class="step-card" onclick="openModal('step3')">
+        <div class="step-num">3</div>
+        <h4>R&D generates table</h4>
+        <p>AI generates the complete R&D costing table — reagents, equipment, validation, FTE — in 35 seconds.</p>
+        <div class="step-time"><i class="ti ti-sparkles"></i> AI: 35s + review</div>
+      </div>
+      <div class="step-card" onclick="openModal('step4')">
+        <div class="step-num">4</div>
+        <h4>All depts fill in parallel</h4>
+        <p>Manufacturing, Quality, Supply Chain, and EHS fill their inputs simultaneously — no waiting.</p>
+        <div class="step-time"><i class="ti ti-clock"></i> ~2–4 hrs total</div>
+      </div>
+      <div class="step-card" onclick="openModal('step5')">
+        <div class="step-num">5</div>
+        <h4>Dept heads approve</h4>
+        <p>Each department head reviews and approves their section. Any issues raised as concerns — tracked and resolved.</p>
+        <div class="step-time"><i class="ti ti-clock"></i> Same day</div>
+      </div>
+      <div class="step-card" onclick="openModal('step6')">
+        <div class="step-num">6</div>
+        <h4>AI builds coordinator brief</h4>
+        <p>AI synthesizes all inputs into a management-ready boardroom brief with risk flags and financial summary.</p>
+        <div class="step-time"><i class="ti ti-sparkles"></i> AI: ~60s</div>
+      </div>
+      <div class="step-card" onclick="openModal('step7')">
+        <div class="step-num">7</div>
+        <h4>Management approves</h4>
+        <p>Upper management reviews the complete proposal with cost sheet, AI brief, and approves or raises concerns.</p>
+        <div class="step-time"><i class="ti ti-clock"></i> ~30 min</div>
+      </div>
+      <div class="step-card" onclick="openModal('step8')">
+        <div class="step-num" style="background:var(--green);">✓</div>
+        <h4>Published &amp; tracked</h4>
+        <p>BD receives the published proposal. Win/loss tracked. All data feeds the analytics dashboard.</p>
+        <div class="step-time"><i class="ti ti-chart-bar"></i> Auto-tracked</div>
+      </div>
     </div>
   </div>
 </section>
 
-<footer>
-  <span>© <span id="yr"></span> Monera Private Limited</span>
-  <a href="index.html">monera.ai</a>
-</footer>
+<!-- DEPT FEATURES -->
+<section id="departments">
+  <div class="container">
+    <div class="section-label">Department Features</div>
+    <h2>Built for every team, not just PM</h2>
+    <p class="sub">Every department gets their own tailored interface — inputs scoped to their role, locked from other departments.</p>
+
+    <div class="dept-grid">
+      <div class="dept-card" onclick="openModal('dept-bd')">
+        <div class="dept-icon" style="background:#fef3c7;"><i class="ti ti-briefcase" style="color:#d97706;"></i></div>
+        <h4>Business Development</h4>
+        <p>Proposal creation, client brief, BD documents, molecule details, and win/loss tracking.</p>
+        <div class="more"><i class="ti ti-chevron-right"></i> See details</div>
+      </div>
+      <div class="dept-card" onclick="openModal('dept-pm')">
+        <div class="dept-icon" style="background:#ede9fe;"><i class="ti ti-layout-dashboard" style="color:#7c3aed;"></i></div>
+        <h4>Proposal Management</h4>
+        <p>Central coordination hub — assignments, deadlines, status visibility across all departments.</p>
+        <div class="more"><i class="ti ti-chevron-right"></i> See details</div>
+      </div>
+      <div class="dept-card" onclick="openModal('dept-rd')">
+        <div class="dept-icon" style="background:#eff6ff;"><i class="ti ti-flask" style="color:#2563eb;"></i></div>
+        <h4>R&amp;D</h4>
+        <p>AI-powered synthesis table generation: reagents, solvents, equipment, validation, FTE — by stage.</p>
+        <div class="more"><i class="ti ti-chevron-right"></i> See details</div>
+      </div>
+      <div class="dept-card" onclick="openModal('dept-mfg')">
+        <div class="dept-icon" style="background:#f0fdf4;"><i class="ti ti-building-factory-2" style="color:#059669;"></i></div>
+        <h4>Manufacturing</h4>
+        <p>Batch size tiering, reactor sizing, CAPEX/OPEX inputs — with AI prefill for standard processes.</p>
+        <div class="more"><i class="ti ti-chevron-right"></i> See details</div>
+      </div>
+      <div class="dept-card" onclick="openModal('dept-quality')">
+        <div class="dept-icon" style="background:#fef2f2;"><i class="ti ti-shield-check" style="color:#dc2626;"></i></div>
+        <h4>Quality</h4>
+        <p>ICH guidelines, stability studies, analytical method validation — AI-prefilled, stage-aware costing.</p>
+        <div class="more"><i class="ti ti-chevron-right"></i> See details</div>
+      </div>
+      <div class="dept-card" onclick="openModal('dept-sc')">
+        <div class="dept-icon" style="background:#fff7ed;"><i class="ti ti-truck" style="color:#ea580c;"></i></div>
+        <h4>Supply Chain</h4>
+        <p>Raw material rates, RM cost calculation, contribution percentage — per stage, per proposal.</p>
+        <div class="more"><i class="ti ti-chevron-right"></i> See details</div>
+      </div>
+      <div class="dept-card" onclick="openModal('dept-ehs')">
+        <div class="dept-icon" style="background:#f0fdfa;"><i class="ti ti-leaf" style="color:#0d9488;"></i></div>
+        <h4>EHS</h4>
+        <p>Safety classification, waste handling, environmental compliance — documented per proposal.</p>
+        <div class="more"><i class="ti ti-chevron-right"></i> See details</div>
+      </div>
+      <div class="dept-card" onclick="openModal('dept-mgmt')">
+        <div class="dept-icon" style="background:#f5f3ff;"><i class="ti ti-chart-pie" style="color:#6d28d9;"></i></div>
+        <h4>Upper Management</h4>
+        <p>Full proposal visibility, financial summary, AI boardroom brief, approval with complete audit trail.</p>
+        <div class="more"><i class="ti ti-chevron-right"></i> See details</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI FEATURES -->
+<section id="ai" style="background:var(--navy);padding:80px 2rem;">
+  <div class="container">
+    <div class="section-label" style="color:#60a5fa;">AI Engine</div>
+    <h2 style="color:#f1f5f9;">AI that understands pharmaceutical chemistry</h2>
+    <p class="sub" style="color:#94a3b8;">Not a generic chatbot. Nexus's AI is trained on CRO/CDMO domain knowledge — it knows ICH guidelines, reactor sizing, and synthesis route economics.</p>
+
+    <div class="ai-grid">
+      <div class="ai-card" onclick="openModal('ai-rd')">
+        <div class="ai-badge">R&amp;D Module</div>
+        <div class="ai-card-icon"><i class="ti ti-flask-2"></i></div>
+        <h4>R&amp;D Table Generation</h4>
+        <p>Enter molecule, route, and stages — AI generates complete reagent lists, solvent quantities, column usage, equipment needs, FTE estimates, and validation steps per stage.</p>
+        <div class="ai-more"><i class="ti ti-chevron-right"></i> See what it generates</div>
+      </div>
+      <div class="ai-card" onclick="openModal('ai-eval')">
+        <div class="ai-badge">PM Head</div>
+        <div class="ai-card-icon"><i class="ti ti-clipboard-check"></i></div>
+        <h4>AI Proposal Evaluation</h4>
+        <p>AI auditor scores the generated proposal against 31 pharmaceutical CRO standards — compliance, completeness, commercial viability, and technical accuracy — and issues a Go/No-Go recommendation.</p>
+        <div class="ai-more"><i class="ti ti-chevron-right"></i> See what it scores</div>
+      </div>
+      <div class="ai-card" onclick="openModal('ai-quality')">
+        <div class="ai-badge">Quality</div>
+        <div class="ai-card-icon"><i class="ti ti-shield-star"></i></div>
+        <h4>Quality Prefill</h4>
+        <p>AI prefills ICH stability studies, analytical method validation consumables, and QC testing requirements — stage-by-stage, batch-size aware.</p>
+        <div class="ai-more"><i class="ti ti-chevron-right"></i> What it prefills</div>
+      </div>
+      <div class="ai-card" onclick="openModal('ai-mfg')">
+        <div class="ai-badge">Manufacturing</div>
+        <div class="ai-card-icon"><i class="ti ti-building-factory"></i></div>
+        <h4>Manufacturing Prefill</h4>
+        <p>CAPEX, OPEX, utilities, and equipment costs prefilled based on chemistry type, batch size, and GMP requirements — editable by your team.</p>
+        <div class="ai-more"><i class="ti ti-chevron-right"></i> What it prefills</div>
+      </div>
+      <div class="ai-card" onclick="openModal('ai-generator')">
+        <div class="ai-badge">PM</div>
+        <div class="ai-card-icon"><i class="ti ti-file-text-ai"></i></div>
+        <h4>AI Proposal Generator</h4>
+        <p>AI writes the full client-facing proposal document — section by section, from executive summary to technical approach — using all department inputs. PM reviews, edits, and approves each section before export.</p>
+        <div class="ai-more"><i class="ti ti-chevron-right"></i> How it works</div>
+      </div>
+      <div class="ai-card" onclick="openModal('ai-chat')">
+        <div class="ai-badge">Memory Agent</div>
+        <div class="ai-card-icon"><i class="ti ti-message-chatbot"></i></div>
+        <h4>Proposal AI Assistant</h4>
+        <p>Conversational AI with full proposal context — ask about costing assumptions, compare to past proposals, draft client responses, or get technical chemistry help.</p>
+        <div class="ai-more"><i class="ti ti-chevron-right"></i> What you can ask</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECURITY -->
+<section id="security">
+  <div class="container">
+    <div class="section-label">Security &amp; Compliance</div>
+    <h2>GMP-ready. Audit-first. No shortcuts.</h2>
+    <p class="sub">Nexus was designed with pharmaceutical compliance in mind — every action is traceable, every record is immutable.</p>
+
+    <div class="sec-grid">
+      <div class="sec-card">
+        <i class="ti ti-hash"></i>
+        <h4>SHA-256 Audit Hash</h4>
+        <p>Every activity log entry is cryptographically hashed. Any tampering is mathematically detectable — immutable audit trail by design.</p>
+      </div>
+      <div class="sec-card">
+        <i class="ti ti-lock"></i>
+        <h4>Row-Level Security</h4>
+        <p>Every database table enforces Supabase RLS policies. No user can read or write data outside their organization — enforced at the database level.</p>
+      </div>
+      <div class="sec-card">
+        <i class="ti ti-users-group"></i>
+        <h4>Role-Based Access</h4>
+        <p>7 distinct roles with scoped permissions: BD, PM, Dept Member, Dept Head, Upper Management, PM Head, and Super Admin.</p>
+      </div>
+      <div class="sec-card">
+        <i class="ti ti-building"></i>
+        <h4>Complete Org Isolation</h4>
+        <p>Your organization's data is completely isolated from every other organization — at API, database, and storage layers.</p>
+      </div>
+      <div class="sec-card">
+        <i class="ti ti-file-certificate"></i>
+        <h4>Document Malware Scanning</h4>
+        <p>All BD uploaded documents are scanned for malware, macro-embedded executables, and magic byte mismatches before storage.</p>
+      </div>
+      <div class="sec-card">
+        <i class="ti ti-status-change"></i>
+        <h4>Status Machine Enforcement</h4>
+        <p>Proposal status can only advance through defined transitions — no user can skip steps or bypass approval gates, even via direct API calls.</p>
+      </div>
+      <div class="sec-card">
+        <i class="ti ti-history"></i>
+        <h4>Complete Activity Log</h4>
+        <p>Every action — submissions, approvals, edits, logins, rejections — logged with actor, timestamp, department, and payload.</p>
+      </div>
+      <div class="sec-card">
+        <i class="ti ti-department"></i>
+        <h4>Dept Cross-Write Prevention</h4>
+        <p>A Quality user cannot modify Manufacturing data, even if they know the endpoint. All writes enforce department scoping server-side.</p>
+      </div>
+      <div class="sec-card">
+        <i class="ti ti-key"></i>
+        <h4>Zero Client-Side Secrets</h4>
+        <p>No service keys, admin credentials, or sensitive data ever reaches the browser. All privileged operations run exclusively on the server.</p>
+      </div>
+    </div>
+
+    <div class="sec-ss">
+      <img src="./ss-activity-log.png" alt="Nexus tamper-evident activity log">
+    </div>
+  </div>
+</section>
+
+<!-- ANALYTICS -->
+<section id="analytics">
+  <div class="container">
+    <div class="section-label">Analytics</div>
+    <h2>Run the business on data, not gut feel</h2>
+    <p class="sub">Nexus turns your proposal pipeline into a live business intelligence dashboard — the first of its kind in the CRO/CDMO space.</p>
+
+    <div class="analytics-inner">
+      <div class="analytics-img">
+        <img src="./ss-analytics.png" alt="Nexus analytics dashboard">
+      </div>
+      <div class="analytics-points">
+        <div class="ap-item">
+          <div class="ap-num">1</div>
+          <div>
+            <h4>Win rate by molecule type &amp; service</h4>
+            <p>Know exactly which chemistry categories your organization wins. Stop bidding on proposals you're unlikely to win.</p>
+          </div>
+        </div>
+        <div class="ap-item">
+          <div class="ap-num">2</div>
+          <div>
+            <h4>Turnaround time per department</h4>
+            <p>Every department's average submission time tracked over time. Identify and fix your bottlenecks with data, not blame.</p>
+          </div>
+        </div>
+        <div class="ap-item">
+          <div class="ap-num">3</div>
+          <div>
+            <h4>Pipeline value &amp; volume trends</h4>
+            <p>Total proposal value in pipeline, monthly volume trends, and BD performance — all in one live dashboard.</p>
+          </div>
+        </div>
+        <div class="ap-item">
+          <div class="ap-num">4</div>
+          <div>
+            <h4>Precedent chemical database</h4>
+            <p>Every molecule and costing approach stored and searchable. Build on past work — never start a proposal from zero again.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROI CALCULATOR -->
+<section id="roi">
+  <div class="container">
+    <div class="roi-header">
+      <div class="section-label" style="text-align:center;">ROI Calculator</div>
+      <h2 style="text-align:center;">What does your proposal process actually cost?</h2>
+      <p class="sub" style="margin:0 auto;text-align:center;">Enter your team's actual numbers. The savings calculate automatically.</p>
+    </div>
+
+    <div class="roi-wrap">
+      <div class="roi-card" style="margin-bottom:16px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+          <div style="font-size:13px;font-weight:500;color:var(--text2);">Proposals per month</div>
+          <span class="r-tier-badge" id="roi-tier-badge">Starter &middot; &#8377;40,000/mo</span>
+        </div>
+        <div class="r-row" style="margin-bottom:0;">
+          <input type="range" id="roi-vol" min="5" max="80" value="20" step="1" oninput="roiCalc()">
+          <span class="rv" id="roi-vol-out">20</span>
+        </div>
+      </div>
+
+      <div class="roi-card" style="margin-bottom:16px;">
+        <div style="font-size:13px;font-weight:500;color:var(--text2);margin-bottom:14px;">Your team — current time per proposal</div>
+        <div class="r-tbl-wrap">
+          <table class="r-tbl">
+            <colgroup><col><col><col><col><col></colgroup>
+            <thead>
+              <tr>
+                <th>Department</th>
+                <th>People</th>
+                <th>Hrs / proposal</th>
+                <th>Salary (&#8377;/mo)</th>
+                <th>Monthly cost</th>
+              </tr>
+            </thead>
+            <tbody id="roi-tbody"></tbody>
+          </table>
+        </div>
+        <div class="r-row" style="margin-top:4px;margin-bottom:0;">
+          <label style="font-size:13px;color:var(--text2);min-width:260px;"><i class="ti ti-sparkles" style="color:var(--blue);font-size:13px;margin-right:4px;"></i>Review time with Nexus (min)</label>
+          <input type="range" id="roi-rev" min="15" max="120" value="45" step="5" oninput="roiCalc()">
+          <span class="rv"><span id="roi-rev-out">45</span> min</span>
+        </div>
+      </div>
+
+      <div class="r-results" style="margin-bottom:12px;">
+        <div class="r-card"><div class="r-label">Monthly cost now</div><div class="r-value" id="roi-before">—</div></div>
+        <div class="r-card"><div class="r-label">With Nexus</div><div class="r-value" id="roi-after">—</div></div>
+        <div class="r-card"><div class="r-label">Subscription</div><div class="r-value" id="roi-sub">—</div></div>
+      </div>
+      <div class="r-results" style="margin-bottom:12px;">
+        <div class="r-card green"><div class="r-label">Labor savings / mo</div><div class="r-value" id="roi-sav">—</div></div>
+        <div class="r-card green"><div class="r-label">Net benefit / mo</div><div class="r-value" id="roi-net">—</div></div>
+        <div class="r-card"><div class="r-label">ROI multiple</div><div class="r-value" id="roi-roi">—</div></div>
+      </div>
+      <div class="r-paybar">
+        <i class="ti ti-calendar-check"></i>
+        <p>Subscription pays for itself in <strong id="roi-payback">—</strong>. Annual net benefit: <strong id="roi-annual">—</strong>.</p>
+      </div>
+
+      <div class="r-extra">
+        <div class="r-extra-card"><div class="ret"><i class="ti ti-chart-bar" style="color:var(--blue);"></i> Performance accountability</div><div class="reb">Full turnaround tracking per member, department, PM. Bottlenecks visible, no blame games.</div></div>
+        <div class="r-extra-card"><div class="ret"><i class="ti ti-shield-check" style="color:var(--green);"></i> Zero Excel error risk</div><div class="reb">AI-generated, server-validated cost outputs. No silent formula mistakes.</div></div>
+        <div class="r-extra-card"><div class="ret"><i class="ti ti-bulb" style="color:var(--amber);"></i> Company-wide intelligence</div><div class="reb">Win rates, trends, departmental load — this industry runs blind on Excel. Nexus doesn't.</div></div>
+        <div class="r-extra-card"><div class="ret"><i class="ti ti-database" style="color:var(--blue);"></i> Institutional memory</div><div class="reb">All proposals, costs, and outcomes stored centrally. Knowledge stays when people leave.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="container">
+    <div class="section-label" style="text-align:center;color:#60a5fa;">Get Started</div>
+    <h2>Ready to see it on your proposals?</h2>
+    <p class="sub">We'll walk through a live demo using your own molecule type and proposal volume. No generic slides — your actual workflow.</p>
+    <div class="cta-buttons">
+      <a href="mailto:advikreddy.bommineni@gmail.com?subject=Nexus Demo Request&body=Hi,%0A%0AI'd like to schedule a demo of Nexus by Monera for our organization.%0A%0AOrganization: %0AName: %0ARole: %0AProposals per month (approx): " class="btn-primary"><i class="ti ti-calendar"></i> Schedule a Demo</a>
+      <a href="mailto:advikreddy.bommineni@gmail.com?subject=Nexus Trial Access&body=Hi,%0A%0AI'd like to request trial access to Nexus by Monera.%0A%0AOrganization: %0AName: %0ARole: " class="btn-outline"><i class="ti ti-player-play"></i> Request Trial Access</a>
+    </div>
+    <div class="cta-note">Setup takes under 48 hours. We configure your departments, roles, and workflows — you don't touch any code.</div>
+  </div>
+</section>
+
+<!-- MODALS -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal-content">
+    <div class="modal-header" id="modal-header"></div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
 
 <script>
-var D=[
+/* ======= ROI CALCULATOR ======= */
+var RD=[
   {n:'BD',p:1,h:4,s:70000},
   {n:'Proposal management',p:2,h:16,s:60000},
   {n:'R&D',p:1,h:12,s:80000},
@@ -239,53 +731,425 @@ var D=[
   {n:'Supply chain',p:1,h:4,s:65000},
   {n:'EHS',p:1,h:3,s:60000}
 ];
-var TIERS=[{m:20,l:'Starter',c:49999},{m:40,l:'Growth',c:79999},{m:60,l:'Scale',c:99999},{m:1e9,l:'Enterprise',c:129999}];
-function INR(n){return '₹'+Math.round(n).toLocaleString('en-IN')}
-function tier(v){return TIERS.find(function(t){return v<=t.m})}
-
-(function init(){
-  var tb=document.getElementById('deptBody');
-  D.forEach(function(d,i){
+var TIERS=[{m:20,l:'Starter',c:40000},{m:40,l:'Growth',c:70000},{m:60,l:'Scale',c:90000},{m:1e9,l:'Enterprise',c:120000}];
+function INR(n){return '₹'+Math.round(n).toLocaleString('en-IN');}
+function getTier(v){return TIERS.find(function(t){return v<=t.m;});}
+(function initROI(){
+  var tb=document.getElementById('roi-tbody');
+  RD.forEach(function(d,i){
     var tr=document.createElement('tr');
     tr.innerHTML='<td>'+d.n+'</td>'
-      +'<td><input type="number" min="1" max="20" value="'+d.p+'" style="width:54px" oninput="D['+i+'].p=Math.max(1,+this.value||1);calc()"></td>'
-      +'<td><input type="number" min="0.5" max="40" step="0.5" value="'+d.h+'" style="width:70px" oninput="D['+i+'].h=Math.max(.5,+this.value||.5);calc()"></td>'
-      +'<td><input type="number" min="20000" max="500000" step="5000" value="'+d.s+'" style="width:100px" oninput="D['+i+'].s=Math.max(20000,+this.value||20000);calc()"></td>'
-      +'<td id="c'+i+'">—</td>';
+      +'<td><input type="number" min="1" max="20" value="'+d.p+'" style="width:48px;" oninput="RD['+i+'].p=Math.max(1,+this.value||1);roiCalc()"></td>'
+      +'<td><input type="number" min="0.5" max="40" step="0.5" value="'+d.h+'" style="width:60px;" oninput="RD['+i+'].h=Math.max(.5,+this.value||.5);roiCalc()"></td>'
+      +'<td><input type="number" min="20000" max="500000" step="5000" value="'+d.s+'" style="width:90px;" oninput="RD['+i+'].s=Math.max(20000,+this.value||20000);roiCalc()"></td>'
+      +'<td id="rc'+i+'">—</td>';
     tb.appendChild(tr);
   });
 })();
-
-function calc(){
-  var vol=+document.getElementById('vol').value;
-  var rev=+document.getElementById('rev').value/60;
-  document.getElementById('volOut').textContent=vol;
-  document.getElementById('revOut').textContent=document.getElementById('rev').value+' min';
-  var t=tier(vol);
+function roiCalc(){
+  var vol=+document.getElementById('roi-vol').value;
+  var rev=+document.getElementById('roi-rev').value/60;
+  document.getElementById('roi-vol-out').textContent=vol;
+  document.getElementById('roi-rev-out').textContent=document.getElementById('roi-rev').value;
+  var t=getTier(vol);
+  document.getElementById('roi-tier-badge').textContent=t.l+' · '+INR(t.c)+'/mo';
   var before=0,after=0;
-  D.forEach(function(d,i){
+  RD.forEach(function(d,i){
     var rate=d.s/176;
     var mb=d.p*d.h*rate*vol;
     var ma=d.p*rev*rate*vol;
     before+=mb; after+=ma;
-    var el=document.getElementById('c'+i);
-    if(el) el.textContent=INR(mb);
+    var el=document.getElementById('rc'+i);
+    if(el)el.textContent=INR(mb);
   });
-  var sub=t.c;
   var sav=before-after;
+  var sub=t.c;
   var net=sav-sub;
-  var roi=sav/sub;
   var payDays=Math.round(sub/sav*30);
-  document.getElementById('rBefore').textContent=INR(before);
-  document.getElementById('rAfter').textContent=INR(after);
-  document.getElementById('rSub').textContent=INR(sub)+'/mo';
-  document.getElementById('rSavings').textContent=INR(sav);
-  document.getElementById('rNet').textContent=(net>=0?'+':'')+INR(net);
-  document.getElementById('rRoi').textContent=roi.toFixed(1)+'×';
-  document.getElementById('paybackBar').innerHTML='Subscription pays for itself in <strong>'+(payDays<1?'< 1 day':payDays+' days')+'</strong>. Annual net benefit: <strong>'+INR(Math.max(0,net)*12)+'</strong>.';
+  document.getElementById('roi-before').textContent=INR(before);
+  document.getElementById('roi-after').textContent=INR(after);
+  document.getElementById('roi-sub').textContent=INR(sub);
+  document.getElementById('roi-sav').textContent=INR(sav);
+  document.getElementById('roi-net').textContent=(net>=0?'+':'')+INR(net);
+  document.getElementById('roi-roi').textContent=(sav/sub).toFixed(1)+'×';
+  document.getElementById('roi-annual').textContent=INR(Math.max(0,net)*12)+'/year';
+  document.getElementById('roi-payback').textContent=payDays<1?'< 1 day':payDays+' days';
 }
-calc();
-document.getElementById('yr').textContent=new Date().getFullYear();
+roiCalc();
+
+/* ======= MODAL SYSTEM ======= */
+var MODALS={
+  'step1':{icon:'ti ti-briefcase',iconBg:'#fef3c7',iconColor:'#d97706',title:'Step 1: BD Creates the Proposal',subtitle:'Business Development initiates every proposal',body:`
+    <h4>What BD does in Nexus</h4>
+    <ul>
+      <li>Creates the proposal with molecule name, therapeutic area, and regulatory target</li>
+      <li>Uploads client RFP document, NDAs, and background chemistry documents</li>
+      <li>Fills BD-specific commercial context: client name, deal potential, strategic priority</li>
+      <li>Sets required completion date visible to all departments</li>
+    </ul>
+    <h4>What happens next</h4>
+    <ul>
+      <li>Proposal appears in PM Head's dashboard for assignment</li>
+      <li>BD receives real-time status updates as departments complete their sections</li>
+      <li>On completion, BD marks proposal as won/lost with outcome notes</li>
+    </ul>
+  `},
+  'step2':{icon:'ti ti-layout-dashboard',iconBg:'#ede9fe',iconColor:'#7c3aed',title:'Step 2: PM Assigns & Coordinates',subtitle:'Proposal management activates all departments simultaneously',body:`
+    <h4>PM Head actions</h4>
+    <ul>
+      <li>Reviews incoming proposal from BD and assigns it to an active PM</li>
+      <li>All 6 departments (R&D, Mfg, Quality, SC, EHS, plus BD) are notified instantly via in-app notifications</li>
+      <li>PM can see live status of every department's submission in real time</li>
+      <li>Identifies bottlenecks before they become deadline problems</li>
+    </ul>
+    <h4>Coordination tools</h4>
+    <ul>
+      <li>Proposal timeline showing each department's submission time</li>
+      <li>Concern tracking — any department can raise a concern visible to PM</li>
+      <li>Kill request flow for proposals that become commercially unviable</li>
+    </ul>
+  `},
+  'step3':{icon:'ti ti-flask',iconBg:'#eff6ff',iconColor:'#2563eb',title:'Step 3: R&D AI Table Generation',subtitle:'AI generates the complete synthesis costing table in 35 seconds',body:`
+    <h4>What the AI generates</h4>
+    <ul>
+      <li>All reagents and solvents per synthesis stage, with quantities and cost estimates</li>
+      <li>Chromatography column usage (GC, HPLC, chiral) per stage</li>
+      <li>Analytical equipment requirements and runtime estimates</li>
+      <li>Validation study requirements (method validation, ICH Q2 compliance)</li>
+      <li>FTE estimates for R&D scientists per stage</li>
+      <li>Miscellaneous consumables and lab supplies</li>
+    </ul>
+    <h4>How R&D uses it</h4>
+    <ul>
+      <li>AI output appears prefilled — R&D reviews and edits, not fills from scratch</li>
+      <li>Stage-by-stage structure: each synthesis step is a separate costing section</li>
+      <li>Reaction scheme builder: draw or import SMILES structures per stage</li>
+      <li>Process engineering canvas: visual reactor and equipment layout</li>
+    </ul>
+  `},
+  'step4':{icon:'ti ti-users',iconBg:'#f0fdf4',iconColor:'#059669',title:'Step 4: All Departments Work in Parallel',subtitle:'No more sequential waiting — everyone works simultaneously',body:`
+    <h4>Parallel workflow</h4>
+    <ul>
+      <li>Manufacturing fills batch sizes, reactor selection, CAPEX/OPEX inputs</li>
+      <li>Quality fills ICH stability requirements, analytical validation, QC costs</li>
+      <li>Supply chain enters raw material rates per stage</li>
+      <li>EHS documents safety classification, waste handling, compliance requirements</li>
+    </ul>
+    <h4>Data integrity</h4>
+    <ul>
+      <li>Each department can only edit their own section — cross-department writes blocked</li>
+      <li>All inputs feed automatically into the central costing engine</li>
+      <li>Department members can raise concerns visible to their head and PM</li>
+    </ul>
+  `},
+  'step5':{icon:'ti ti-check',iconBg:'#f0fdf4',iconColor:'#059669',title:'Step 5: Department Head Approval',subtitle:'Each head reviews and approves their team\'s inputs',body:`
+    <h4>Approval flow</h4>
+    <ul>
+      <li>Each department head sees their team's completed inputs with a detailed summary</li>
+      <li>Head can approve, or reject with a written reason (rejection note visible to member)</li>
+      <li>On rejection, member re-edits and resubmits — head approves again</li>
+      <li>All approval actions timestamped and logged in the audit trail</li>
+    </ul>
+    <h4>Concern management</h4>
+    <ul>
+      <li>Concerns raised by dept heads escalate to PM and are tracked until resolved</li>
+      <li>PM Head can mark a concern as "not possible" — triggers proposal kill flow</li>
+      <li>Every concern, resolution, and outcome stored permanently</li>
+    </ul>
+  `},
+  'step6':{icon:'ti ti-report',iconBg:'#eff6ff',iconColor:'#2563eb',title:'Step 6: AI Boardroom Brief',subtitle:'AI synthesizes everything into a management-ready document',body:`
+    <h4>What the brief contains</h4>
+    <ul>
+      <li>Observed findings: key technical and commercial points from all departments</li>
+      <li>Consensus: areas where all departments agree on feasibility and cost</li>
+      <li>Unresolved: any outstanding concerns or data gaps flagged for management</li>
+      <li>Financial summary: total cost, proposed price, expected margin</li>
+    </ul>
+    <h4>How it's used</h4>
+    <ul>
+      <li>Management opens one document — not 7 spreadsheets — to make approval decision</li>
+      <li>FTE estimates from R&D can be applied to fill headcount planning columns</li>
+      <li>Brief is stored with the proposal and accessible in all future analytics</li>
+    </ul>
+  `},
+  'step7':{icon:'ti ti-check-circle',iconBg:'#f0fdf4',iconColor:'#059669',title:'Step 7: Management Approval',subtitle:'Upper management approves with complete context and audit trail',body:`
+    <h4>Management view</h4>
+    <ul>
+      <li>Full proposal with all department inputs, AI brief, and cost sheet</li>
+      <li>Published pricing with tier-based quantities and margin calculations</li>
+      <li>Complete activity log showing every action taken by every department</li>
+      <li>One-click approval or concern escalation</li>
+    </ul>
+    <h4>Audit-ready</h4>
+    <ul>
+      <li>Management approval is timestamped and SHA-256 hashed in the activity log</li>
+      <li>Cannot be backdated, edited, or deleted — permanent record</li>
+      <li>Full approval chain visible: member → head → management → BD</li>
+    </ul>
+  `},
+  'step8':{icon:'ti ti-chart-bar',iconBg:'#eff6ff',iconColor:'#2563eb',title:'Step 8: Published & Tracked',subtitle:'Proposal sent to BD, outcome tracked, analytics updated',body:`
+    <h4>Post-approval flow</h4>
+    <ul>
+      <li>BD receives notification that proposal is approved and ready to send</li>
+      <li>Cost sheet is published — prices frozen as a versioned snapshot</li>
+      <li>BD marks final outcome: closed_won or closed_lost with client feedback</li>
+    </ul>
+    <h4>Analytics impact</h4>
+    <ul>
+      <li>Win/loss data feeds analytics dashboard immediately</li>
+      <li>Costing data becomes precedent for future proposals of same molecule type</li>
+      <li>All turnaround times contribute to department performance metrics</li>
+    </ul>
+  `},
+  'dept-bd':{icon:'ti ti-briefcase',iconBg:'#fef3c7',iconColor:'#d97706',title:'Business Development',subtitle:'Proposal origination, commercial context, and outcome tracking',body:`
+    <h4>Key features</h4>
+    <ul>
+      <li>Proposal creation with molecule type, therapeutic area, regulatory target</li>
+      <li>Client brief and document upload (malware-scanned before storage)</li>
+      <li>Strategic priority and deal value input</li>
+      <li>Real-time status tracking across all departments without chasing anyone</li>
+      <li>Win/loss outcome recording with client feedback notes</li>
+      <li>Historical proposal search — find past bids by molecule or client</li>
+    </ul>
+    <h4>What BD no longer does</h4>
+    <ul>
+      <li>Send Excel templates to 6 departments and wait for replies</li>
+      <li>Manually reconcile department inputs into a final document</li>
+      <li>Follow up repeatedly to find out which department hasn't responded</li>
+    </ul>
+  `},
+  'dept-pm':{icon:'ti ti-layout-dashboard',iconBg:'#ede9fe',iconColor:'#7c3aed',title:'Proposal Management',subtitle:'Central coordination hub for the entire proposal process',body:`
+    <h4>PM features</h4>
+    <ul>
+      <li>Proposal assignment and department activation in one action</li>
+      <li>Live status board: every department's current state visible at a glance</li>
+      <li>Timeline view: actual vs expected submission times per department</li>
+      <li>Concern tracking: all raised issues with resolution status</li>
+      <li>In-app notifications to any role without email</li>
+      <li>Kill request flow for commercially unviable proposals</li>
+    </ul>
+    <h4>PM Head exclusive</h4>
+    <ul>
+      <li>User management: add/remove team members, assign roles</li>
+      <li>AI generation trigger: initiates boardroom brief after all depts approved</li>
+      <li>Publishing control: final approve and publish cost sheet to BD</li>
+      <li>Sequential development program toggle for scale-up proposals</li>
+    </ul>
+  `},
+  'dept-rd':{icon:'ti ti-flask',iconBg:'#eff6ff',iconColor:'#2563eb',title:'R&D Department',subtitle:'AI-powered synthesis table generation and chemical intelligence',body:`
+    <h4>R&D features</h4>
+    <ul>
+      <li>AI-generated complete synthesis costing table in 35 seconds</li>
+      <li>Stage-by-stage structure: reagents, solvents, columns, equipment, validation, FTE per stage</li>
+      <li>Reaction scheme builder: draw structures or import from SMILES/MOL files</li>
+      <li>PDF reaction scheme extraction: AI parses chemistry from client PDFs</li>
+      <li>Process engineering canvas: visual equipment and reactor layout</li>
+      <li>Critical step analysis: AI flags high-risk synthesis steps</li>
+      <li>Precedent search: find how similar molecules were costed historically</li>
+    </ul>
+    <h4>Sequential development support</h4>
+    <ul>
+      <li>Testing batch and production tier costing in a single proposal</li>
+      <li>AI differentiates between method development costs (testing) and release-testing costs (production)</li>
+    </ul>
+  `},
+  'dept-mfg':{icon:'ti ti-building-factory-2',iconBg:'#f0fdf4',iconColor:'#059669',title:'Manufacturing',subtitle:'Batch sizing, reactor intelligence, and CAPEX/OPEX costing',body:`
+    <h4>Manufacturing features</h4>
+    <ul>
+      <li>Batch size tier management: define production quantities from pilot to commercial scale</li>
+      <li>AI reactor sizing recommendation based on chemistry and batch requirements</li>
+      <li>Process engineering canvas: drag-and-drop GLR, reactor, and equipment layout</li>
+      <li>CAPEX and OPEX inputs with AI prefill for standard process types</li>
+      <li>Utilities costing: steam, power, cooling water per stage</li>
+      <li>GMP compliance documentation fields</li>
+    </ul>
+    <h4>Data protection</h4>
+    <ul>
+      <li>Only manufacturing members can edit manufacturing inputs</li>
+      <li>Quality and SC inputs completely isolated from manufacturing section</li>
+    </ul>
+  `},
+  'dept-quality':{icon:'ti ti-shield-check',iconBg:'#fef2f2',iconColor:'#dc2626',title:'Quality Department',subtitle:'ICH guidelines, validation, and analytical method costing',body:`
+    <h4>Quality features</h4>
+    <ul>
+      <li>ICH stability study requirements: Q1A, Q1B, Q1C guidelines built in</li>
+      <li>Analytical method validation consumables: AI-prefilled per stage</li>
+      <li>QC testing: column usage, reagent quantities, equipment time</li>
+      <li>Stage-aware costing: quality costs differ per synthesis stage — tracked separately</li>
+      <li>Batch-size aware prefill: testing batch vs production tier quality costs differ</li>
+      <li>ICH risk assessment with severity, likelihood, and detectability scoring</li>
+    </ul>
+    <h4>Compliance</h4>
+    <ul>
+      <li>All quality inputs preserved in proposal record indefinitely</li>
+      <li>Validation study approach documented alongside cost — audit-ready</li>
+    </ul>
+  `},
+  'dept-sc':{icon:'ti ti-truck',iconBg:'#fff7ed',iconColor:'#ea580c',title:'Supply Chain',subtitle:'Raw material rates and RM cost calculation',body:`
+    <h4>Supply chain features</h4>
+    <ul>
+      <li>Rate entry per raw material per stage — pulled from R&D table</li>
+      <li>Auto-calculation: total RM cost = rate × qty required per stage</li>
+      <li>Contribution percentage calculated and displayed automatically</li>
+      <li>RMS in INR: total raw material spend per proposal</li>
+      <li>Currency conversion: USD/INR rate configurable per proposal</li>
+    </ul>
+    <h4>What SC no longer does</h4>
+    <ul>
+      <li>Receive Excel tables and fill in cost columns manually</li>
+      <li>Worry about formula errors in the rate × qty calculation</li>
+    </ul>
+  `},
+  'dept-ehs':{icon:'ti ti-leaf',iconBg:'#f0fdfa',iconColor:'#0d9488',title:'EHS Department',subtitle:'Safety, waste, and environmental compliance documentation',body:`
+    <h4>EHS features</h4>
+    <ul>
+      <li>Safety classification per stage: hazard class, GHS categories</li>
+      <li>Waste stream documentation: type, volume, disposal method, cost</li>
+      <li>Environmental compliance checklist per regulatory jurisdiction</li>
+      <li>Emergency response documentation and SDS references</li>
+      <li>EHS cost contribution to overall proposal costing</li>
+    </ul>
+    <h4>Integration</h4>
+    <ul>
+      <li>EHS inputs visible in the boardroom brief for management risk review</li>
+      <li>Historical EHS classifications searchable by molecule type</li>
+    </ul>
+  `},
+  'dept-mgmt':{icon:'ti ti-chart-pie',iconBg:'#f5f3ff',iconColor:'#6d28d9',title:'Upper Management',subtitle:'Full visibility, AI brief, and approval with audit trail',body:`
+    <h4>Management view</h4>
+    <ul>
+      <li>All proposals visible with status, assigned PM, BD owner, and deadline</li>
+      <li>Per-proposal: complete cost sheet, AI boardroom brief, and all department inputs</li>
+      <li>Financial summary: cost vs price vs margin at a glance</li>
+      <li>Activity log: complete chronological record of every action</li>
+    </ul>
+    <h4>Analytics access</h4>
+    <ul>
+      <li>Win rate trends, pipeline value, monthly volume</li>
+      <li>Department turnaround time benchmarks</li>
+      <li>BD performance by deal value and outcome</li>
+    </ul>
+  `},
+  'ai-rd':{icon:'ti ti-flask-2',iconBg:'#eff6ff',iconColor:'#2563eb',title:'R&D Table Generation',subtitle:'AI generates complete synthesis costing in under 35 seconds',body:`
+    <h4>What it generates per stage</h4>
+    <ul>
+      <li>All reagents: name, CAS number, quantity (mol), molecular weight, cost per kg</li>
+      <li>Solvents: volume, concentration, reuse factor, cost per litre</li>
+      <li>Chromatography columns: GC columns, HPLC columns, chiral columns — quantity per analysis</li>
+      <li>Analytical equipment: type, runtime hours, cost per run</li>
+      <li>Validation studies: method validation, ICH Q2 tests, number of samples</li>
+      <li>FTE: scientist grade, hours per stage, total effort</li>
+      <li>Miscellaneous: consumables, PPE, lab supplies with quantity and cost</li>
+    </ul>
+    <h4>How it knows what to generate</h4>
+    <ul>
+      <li>Reads the molecule name, therapeutic area, and regulatory target from BD's brief</li>
+      <li>Uses synthesis route and stage descriptions entered by R&D</li>
+      <li>References pharmaceutical industry standards and ICH guidelines</li>
+      <li>Learns from your organization's historical proposals over time</li>
+    </ul>
+  `},
+  'ai-eval':{icon:'ti ti-clipboard-check',iconBg:'#eff6ff',iconColor:'#2563eb',title:'AI Proposal Evaluation',subtitle:'31-element pharmaceutical CRO scorecard with Go/No-Go recommendation',body:`
+    <h4>What it evaluates</h4>
+    <ul>
+      <li>Compound identity, regulatory context, and therapeutic indication — clearly stated</li>
+      <li>Technical approach: synthesis route, stage count, critical steps flagged</li>
+      <li>Analytical method completeness: ICH Q2, stability, QC coverage</li>
+      <li>Commercial viability: pricing logic, margin assumptions, payment terms</li>
+      <li>Compliance posture: GMP readiness, environmental handling, risk disclosures</li>
+      <li>31 elements total — scored individually, with specific citations from the actual proposal</li>
+    </ul>
+    <h4>Output</h4>
+    <ul>
+      <li>Score per element (1–10) with status: Strong, Adequate, Weak, or Missing</li>
+      <li>Specific improvement comment per element — not generic, cites actual content</li>
+      <li>Overall score and a formal Go / No-Go / Conditional recommendation</li>
+      <li>Cached per document version — re-runs only if the proposal was regenerated</li>
+    </ul>
+  `},
+  'ai-quality':{icon:'ti ti-shield-star',iconBg:'#fef2f2',iconColor:'#dc2626',title:'Quality Prefill',subtitle:'Stage-aware quality consumables and validation cost prefill',body:`
+    <h4>What it prefills</h4>
+    <ul>
+      <li>Stability study requirements: ICH Q1A/Q1B/Q1C conditions, number of time points, samples</li>
+      <li>Analytical validation: specificity, linearity, accuracy, precision — samples per test</li>
+      <li>Column usage for QC testing: HPLC, GC, chiral per analysis type</li>
+      <li>Miscellaneous QC consumables: vials, filters, reference standards</li>
+    </ul>
+    <h4>Smart differentiation</h4>
+    <ul>
+      <li>Testing batch (R&D scale): full validation prefill — method development is the goal</li>
+      <li>Production tiers (commercial scale): only release testing — validation already done, zeroes validation fields</li>
+      <li>Quality team reviews and adjusts — AI saves 6–8 hours of table work per proposal</li>
+    </ul>
+  `},
+  'ai-mfg':{icon:'ti ti-building-factory',iconBg:'#f0fdf4',iconColor:'#059669',title:'Manufacturing Prefill',subtitle:'AI-estimated CAPEX, OPEX, and utilities per batch size',body:`
+    <h4>What it prefills</h4>
+    <ul>
+      <li>CAPEX: reactor, vessels, filtration, distillation — estimated based on scale</li>
+      <li>OPEX: labor, maintenance, depreciation per production batch</li>
+      <li>Utilities: steam, power, chilled water, nitrogen — based on chemistry and batch size</li>
+      <li>Effluent treatment and waste disposal cost estimates</li>
+    </ul>
+    <h4>How manufacturing uses it</h4>
+    <ul>
+      <li>All fields editable — AI is the starting point, manufacturing team refines</li>
+      <li>Per batch size tier: CAPEX/OPEX differs at 10kg vs 100kg vs 500kg</li>
+    </ul>
+  `},
+  'ai-generator':{icon:'ti ti-file-text-ai',iconBg:'#eff6ff',iconColor:'#2563eb',title:'AI Proposal Generator',subtitle:'Full client-facing proposal document written by AI, reviewed by PM',body:`
+    <h4>How it works</h4>
+    <ul>
+      <li>PM selects a proposal template (executive summary, technical approach, pricing, timelines, team — customisable per client type)</li>
+      <li>AI writes each section in parallel — pulling from R&D inputs, costing data, department notes, and BD brief</li>
+      <li>Each section delivered individually — PM can read, edit inline, request a revision, or approve</li>
+      <li>Approved sections lock; the full document assembles only when all sections are approved</li>
+    </ul>
+    <h4>What gets generated</h4>
+    <ul>
+      <li>Executive summary with molecule context, regulatory target, and proposed approach</li>
+      <li>Technical approach: synthesis route, critical steps, analytical strategy</li>
+      <li>Project timeline with milestones per stage</li>
+      <li>Team and facility credentials section</li>
+      <li>Commercial terms and pricing narrative</li>
+      <li>Export to DOCX — ready to send to the client with your company template applied</li>
+    </ul>
+  `},
+  'ai-chat':{icon:'ti ti-message-chatbot',iconBg:'#eff6ff',iconColor:'#2563eb',title:'Proposal AI Assistant',subtitle:'Conversational AI with full proposal memory and context',body:`
+    <h4>What you can ask</h4>
+    <ul>
+      <li>"Why is stage 3 more expensive than stage 2?" — AI explains the cost drivers</li>
+      <li>"How does this compare to our last 5 API proposals?" — references historical data</li>
+      <li>"Draft an email to the client explaining our pricing for the validation stage" — writes for you</li>
+      <li>"What's our typical margin on molecules of this complexity class?" — analytics query in plain language</li>
+      <li>"What ICH stability requirements apply to this molecule type?" — domain knowledge on demand</li>
+    </ul>
+    <h4>Memory tier</h4>
+    <ul>
+      <li>Full access to this proposal's inputs, costs, and department notes</li>
+      <li>Cross-proposal search: finds relevant precedents from your organization's history</li>
+      <li>Context persists through the conversation — no need to re-explain</li>
+    </ul>
+  `}
+};
+
+function openModal(key){
+  var m=MODALS[key];
+  if(!m)return;
+  var hdr=document.getElementById('modal-header');
+  var bdy=document.getElementById('modal-body');
+  hdr.innerHTML='<div class="modal-icon" style="background:'+m.iconBg+';"><i class="'+m.icon+'" style="color:'+m.iconColor+';"></i></div>'
+    +'<div><div class="modal-title">'+m.title+'</div><div class="modal-subtitle">'+m.subtitle+'</div></div>'
+    +'<button class="modal-close" onclick="closeModal()"><i class="ti ti-x"></i></button>';
+  bdy.innerHTML=m.body;
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(e){
+  if(e&&e.target!==document.getElementById('modal-overlay'))return;
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
 </script>
 </body>
 </html>
