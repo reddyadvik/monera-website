@@ -214,6 +214,16 @@ input[type="number"]:focus{outline:none;border-color:var(--blue);}
 .r-extra-card .ret{font-size:13px;font-weight:500;color:var(--navy);margin-bottom:4px;display:flex;align-items:center;gap:6px;}
 .r-extra-card .reb{font-size:12px;color:var(--text2);line-height:1.5;}
 
+/* === ANIMATION FEATURES === */
+#hero-canvas{position:absolute;inset:0;pointer-events:none;z-index:0;width:100%;height:100%;}
+.hero-inner{position:relative;z-index:1;}
+.hero-img{transform-style:preserve-3d;will-change:transform;}
+.hero-img-shine{position:absolute;inset:0;border-radius:12px;pointer-events:none;z-index:2;opacity:0;transition:opacity .4s;}
+.dept-card{position:relative;overflow:hidden;transition:box-shadow .2s,border-color .2s!important;}
+.step-card{position:relative;overflow:hidden;transition:box-shadow .2s,border-color .2s!important;}
+.ai-card{transition:box-shadow .2s,border-color .2s!important;}
+.card-shine{position:absolute;inset:0;pointer-events:none;border-radius:inherit;opacity:0;z-index:10;}
+
 /* Responsive */
 @media(max-width:900px){
   .hero-inner,.problem-grid,.analytics-inner{grid-template-columns:1fr;}
@@ -254,6 +264,7 @@ input[type="number"]:focus{outline:none;border-color:var(--blue);}
 
 <!-- HERO -->
 <section id="hero">
+  <canvas id="hero-canvas"></canvas>
   <div class="hero-inner">
     <div>
       <div class="hero-badge"><i class="ti ti-sparkles"></i> Built exclusively for CRO &amp; CDMO organizations</div>
@@ -267,6 +278,7 @@ input[type="number"]:focus{outline:none;border-color:var(--blue);}
       </div>
     </div>
     <div class="hero-img">
+      <div class="hero-img-shine" id="hero-shine"></div>
       <img src="./ss-proposals-list.png" alt="Nexus proposals dashboard">
       <div class="hero-img-badge"><i class="ti ti-check" style="margin-right:4px;"></i> Live dashboard — real proposals</div>
     </div>
@@ -1150,6 +1162,131 @@ function closeModal(e){
   document.body.style.overflow='';
 }
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
+
+// =====================================================
+// FEATURE 1: PARTICLE NETWORK BACKGROUND
+// =====================================================
+(function(){
+  var canvas=document.getElementById('hero-canvas');
+  if(!canvas)return;
+  var ctx=canvas.getContext('2d');
+  var W,H,particles=[];
+  var N=55,MAX_DIST=130;
+  var COLORS=['#60a5fa','#34d399','#f59e0b','#a78bfa','#f87171','#38bdf8','#fb923c'];
+  function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight;}
+  function Particle(){this.x=Math.random()*W;this.y=Math.random()*H;this.vx=(Math.random()-.5)*.35;this.vy=(Math.random()-.5)*.35;this.r=Math.random()*1.5+.8;this.color=COLORS[Math.floor(Math.random()*COLORS.length)];}
+  function init(){resize();particles=[];for(var i=0;i<N;i++)particles.push(new Particle());}
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(var i=0;i<particles.length;i++){
+      for(var j=i+1;j<particles.length;j++){
+        var dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y,d=Math.sqrt(dx*dx+dy*dy);
+        if(d<MAX_DIST){ctx.save();ctx.globalAlpha=(1-d/MAX_DIST)*.25;ctx.strokeStyle='#60a5fa';ctx.lineWidth=.5;ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.stroke();ctx.restore();}
+      }
+    }
+    particles.forEach(function(p){
+      ctx.save();ctx.globalAlpha=.65;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=p.color;ctx.fill();ctx.restore();
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0||p.x>W)p.vx*=-1;
+      if(p.y<0||p.y>H)p.vy*=-1;
+    });
+    requestAnimationFrame(draw);
+  }
+  init();draw();
+  window.addEventListener('resize',init);
+})();
+
+// =====================================================
+// FEATURE 2: HERO IMAGE 3D MOUSE PARALLAX
+// =====================================================
+(function(){
+  var hero=document.getElementById('hero');
+  var heroImg=document.querySelector('.hero-img');
+  var shine=document.getElementById('hero-shine');
+  if(!hero||!heroImg)return;
+  var tRX=0,tRY=0,cRX=0,cRY=0,tSX=50,tSY=50,cSX=50,cSY=50,raf,active=false;
+  function lerp(a,b,t){return a+(b-a)*t;}
+  function animate(){
+    cRX=lerp(cRX,tRX,.08);cRY=lerp(cRY,tRY,.08);cSX=lerp(cSX,tSX,.08);cSY=lerp(cSY,tSY,.08);
+    heroImg.style.transform='perspective(1000px) rotateX('+cRX.toFixed(3)+'deg) rotateY('+cRY.toFixed(3)+'deg) scale(1.02)';
+    if(shine){shine.style.background='radial-gradient(circle at '+cSX.toFixed(1)+'% '+cSY.toFixed(1)+'%, rgba(255,255,255,.13) 0%, transparent 55%)';shine.style.opacity='1';}
+    if(active||Math.abs(cRX)>.05||Math.abs(cRY)>.05)raf=requestAnimationFrame(animate);
+    else{heroImg.style.transform='';if(shine)shine.style.opacity='0';}
+  }
+  hero.addEventListener('mouseenter',function(){active=true;cancelAnimationFrame(raf);raf=requestAnimationFrame(animate);});
+  hero.addEventListener('mousemove',function(e){
+    var r=heroImg.getBoundingClientRect();
+    var dx=(e.clientX-(r.left+r.width/2))/(r.width/2),dy=(e.clientY-(r.top+r.height/2))/(r.height/2);
+    tRY=dx*7;tRX=-dy*4;
+    tSX=(e.clientX-r.left)/r.width*100;tSY=(e.clientY-r.top)/r.height*100;
+  });
+  hero.addEventListener('mouseleave',function(){active=false;tRX=0;tRY=0;tSX=50;tSY=50;});
+})();
+
+// =====================================================
+// FEATURE 3: CARD 3D TILT + LIGHT SWEEP
+// =====================================================
+(function(){
+  function initCard(card){
+    var shine=document.createElement('div');shine.className='card-shine';card.appendChild(shine);
+    var tRX=0,tRY=0,cRX=0,cRY=0,tSX=50,tSY=50,cSX=50,cSY=50,raf,hovering=false;
+    function lerp(a,b,t){return a+(b-a)*t;}
+    function animate(){
+      cRX=lerp(cRX,tRX,.12);cRY=lerp(cRY,tRY,.12);cSX=lerp(cSX,tSX,.12);cSY=lerp(cSY,tSY,.12);
+      if(hovering||Math.abs(cRX)>.05||Math.abs(cRY)>.05){
+        card.style.transform='perspective(700px) rotateX('+cRX.toFixed(3)+'deg) rotateY('+cRY.toFixed(3)+'deg) translateY(-4px)';
+        card.style.boxShadow='0 16px 40px rgba(0,0,0,.18)';
+        shine.style.background='radial-gradient(circle at '+cSX.toFixed(1)+'% '+cSY.toFixed(1)+'%, rgba(255,255,255,.22) 0%, transparent 58%)';
+        shine.style.opacity=hovering?'1':String((Math.abs(cRX)+Math.abs(cRY))/14);
+        raf=requestAnimationFrame(animate);
+      } else {
+        card.style.transform='';card.style.boxShadow='';shine.style.opacity='0';
+      }
+    }
+    card.addEventListener('mouseenter',function(){hovering=true;cancelAnimationFrame(raf);raf=requestAnimationFrame(animate);});
+    card.addEventListener('mousemove',function(e){
+      var r=card.getBoundingClientRect();
+      var dx=(e.clientX-(r.left+r.width/2))/(r.width/2),dy=(e.clientY-(r.top+r.height/2))/(r.height/2);
+      tRY=dx*9;tRX=-dy*7;tSX=(e.clientX-r.left)/r.width*100;tSY=(e.clientY-r.top)/r.height*100;
+    });
+    card.addEventListener('mouseleave',function(){hovering=false;tRX=0;tRY=0;tSX=50;tSY=50;});
+  }
+  document.querySelectorAll('.dept-card,.ai-card,.step-card').forEach(initCard);
+})();
+
+// =====================================================
+// FEATURE 4: SCROLL-TRIGGERED STAT COUNTERS
+// =====================================================
+(function(){
+  var defs=[
+    {from:0,to:35,suffix:'s'},
+    {from:0,to:7,suffix:''},
+    {from:0,to:100,suffix:'%'},
+    {from:47,to:0,suffix:''}
+  ];
+  var els=document.querySelectorAll('.hero-stats .sv');
+  if(!els.length)return;
+  els.forEach(function(el,i){if(defs[i])el.textContent=defs[i].from+defs[i].suffix;});
+  function easeOut(t){return 1-(1-t)*(1-t)*(1-t);}
+  function run(el,def){
+    var start=performance.now(),dur=def.to===0?900:(def.to===7?700:1300);
+    function tick(now){
+      var p=Math.min((now-start)/dur,1),v=Math.round(def.from+(def.to-def.from)*easeOut(p));
+      el.textContent=v+def.suffix;
+      if(p<1)requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  var triggered=false;
+  var obs=new IntersectionObserver(function(entries){
+    if(entries[0].isIntersecting&&!triggered){
+      triggered=true;
+      els.forEach(function(el,i){if(defs[i])run(el,defs[i]);});
+    }
+  },{threshold:.6});
+  var statsEl=document.querySelector('.hero-stats');
+  if(statsEl)obs.observe(statsEl);
+})();
 </script>
 </body>
 </html>
