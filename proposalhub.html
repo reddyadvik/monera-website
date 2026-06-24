@@ -245,8 +245,8 @@ input[type="number"]:focus{outline:none;border-color:var(--blue);}
 
 /* ── 3D AI WHEEL ── */
 #ai-showcase{position:relative;background:var(--navy);overflow:hidden;}
-.ai-sticky{height:100vh;display:flex;align-items:center;justify-content:center;background:var(--navy);position:relative;z-index:10;}
-.ai-stage{position:relative;width:100%;height:100vh;display:flex;align-items:center;justify-content:center;overflow:visible;}
+.ai-sticky{height:100vh;display:flex;flex-direction:column;justify-content:center;background:var(--navy);position:relative;z-index:10;padding-top:72px;box-sizing:border-box;}
+.ai-stage{position:relative;width:100%;flex:1;display:flex;align-items:center;justify-content:center;overflow:visible;}
 .ai-stage-persp{width:100%;height:100%;display:flex;align-items:center;justify-content:center;perspective:1200px;perspective-origin:50% 50%;position:relative;z-index:2;}
 .ai-glow{position:absolute;inset:0;pointer-events:none;z-index:0;transition:background 1.2s ease;background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(59,130,246,.15) 0%,transparent 70%);}
 .ai-grid-bg{position:absolute;bottom:-5%;left:-40%;width:180%;height:55%;pointer-events:none;z-index:1;background:repeating-linear-gradient(90deg,rgba(96,165,250,.05) 0,rgba(96,165,250,.05) 1px,transparent 1px,transparent 72px),repeating-linear-gradient(0deg,rgba(96,165,250,.05) 0,rgba(96,165,250,.05) 1px,transparent 1px,transparent 72px);transform:perspective(500px) rotateX(76deg);transform-origin:center bottom;}
