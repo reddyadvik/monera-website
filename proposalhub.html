@@ -245,37 +245,25 @@ input[type="number"]:focus{outline:none;border-color:var(--blue);}
 
 /* ── 3D AI WHEEL ── */
 #ai-showcase{position:relative;background:var(--navy);overflow:hidden;}
-.ai-sticky{height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;background:var(--navy);position:relative;z-index:10;}
-.ai-left{padding:0 clamp(32px,5vw,90px);position:relative;z-index:2;}
-.ai-section-label{font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:#60a5fa;margin-bottom:clamp(16px,2.5vh,28px);display:flex;align-items:center;gap:8px;}
-.ai-section-label::before{content:'';display:inline-block;width:28px;height:1px;background:#60a5fa;}
-.ai-static-head{font-size:clamp(1.7rem,3vw,2.7rem);font-weight:700;color:#f1f5f9;line-height:1.1;margin-bottom:clamp(24px,4vh,48px);}
-.ai-static-head em{color:#60a5fa;font-style:normal;}
-.ai-num-row{display:flex;align-items:baseline;gap:8px;margin-bottom:10px;}
-.ai-bignum{font-size:clamp(3.2rem,5.5vw,5rem);font-weight:800;color:#f1f5f9;line-height:1;}
-.ai-of{font-size:.7rem;color:#475569;letter-spacing:.2em;text-transform:uppercase;}
-.ai-feat-name{font-size:clamp(1rem,1.6vw,1.4rem);font-weight:600;color:#f1f5f9;margin-bottom:12px;line-height:1.25;}
-.ai-feat-desc{font-size:.87rem;color:#94a3b8;line-height:1.85;max-width:38ch;margin-bottom:20px;}
-.ai-feat-pill{display:inline-flex;align-items:center;gap:7px;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:#60a5fa;border:1px solid rgba(96,165,250,.3);padding:6px 16px;border-radius:20px;margin-bottom:32px;transition:color .5s,border-color .5s;}
-.ai-feat-pill b{color:#f1f5f9;font-weight:700;}
-.ai-bars{display:flex;gap:8px;align-items:center;}
-.ai-bar{width:22px;height:2px;background:rgba(255,255,255,.1);border-radius:1px;cursor:pointer;transition:width .35s cubic-bezier(.25,1,.3,1),background .35s;}
-.ai-bar.on{width:42px;background:#60a5fa;}
-.ai-stage{position:relative;height:100vh;display:flex;align-items:center;justify-content:center;overflow:visible;}
-.ai-stage-persp{width:100%;height:100%;display:flex;align-items:center;justify-content:center;perspective:1400px;perspective-origin:50% 50%;position:relative;z-index:2;}
-.ai-glow{position:absolute;inset:0;pointer-events:none;z-index:0;transition:background 1s ease;background:radial-gradient(ellipse 70% 55% at 55% 50%,rgba(59,130,246,.13) 0%,transparent 70%);}
-.ai-grid-bg{position:absolute;bottom:-5%;left:-40%;width:180%;height:60%;pointer-events:none;z-index:1;background:repeating-linear-gradient(90deg,rgba(96,165,250,.05) 0,rgba(96,165,250,.05) 1px,transparent 1px,transparent 72px),repeating-linear-gradient(0deg,rgba(96,165,250,.05) 0,rgba(96,165,250,.05) 1px,transparent 1px,transparent 72px);transform:perspective(500px) rotateX(76deg);transform-origin:center bottom;}
+.ai-sticky{height:100vh;display:flex;align-items:center;justify-content:center;background:var(--navy);position:relative;z-index:10;}
+.ai-stage{position:relative;width:100%;height:100vh;display:flex;align-items:center;justify-content:center;overflow:visible;}
+.ai-stage-persp{width:100%;height:100%;display:flex;align-items:center;justify-content:center;perspective:1200px;perspective-origin:50% 50%;position:relative;z-index:2;}
+.ai-glow{position:absolute;inset:0;pointer-events:none;z-index:0;transition:background 1.2s ease;background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(59,130,246,.15) 0%,transparent 70%);}
+.ai-grid-bg{position:absolute;bottom:-5%;left:-40%;width:180%;height:55%;pointer-events:none;z-index:1;background:repeating-linear-gradient(90deg,rgba(96,165,250,.05) 0,rgba(96,165,250,.05) 1px,transparent 1px,transparent 72px),repeating-linear-gradient(0deg,rgba(96,165,250,.05) 0,rgba(96,165,250,.05) 1px,transparent 1px,transparent 72px);transform:perspective(500px) rotateX(76deg);transform-origin:center bottom;}
 .ai-wheel{transform-style:preserve-3d;position:relative;will-change:transform;}
-.wh-card{position:absolute;background:rgba(15,23,42,.95);border:1px solid rgba(96,165,250,.15);border-radius:12px;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;display:flex;flex-direction:column;will-change:transform;transition:border-color .6s;}
-.wh-card.on{border-color:rgba(96,165,250,.45);}
-.wh-top-bar{height:2px;width:100%;flex-shrink:0;}
-.wh-body{padding:clamp(16px,1.8vw,22px) clamp(18px,2vw,24px);display:flex;flex-direction:column;flex:1;}
-.wh-cat{font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:#60a5fa;margin-bottom:6px;}
-.wh-glyph{font-size:1.6rem;line-height:1;margin-bottom:6px;}
-.wh-name{font-size:.95rem;font-weight:600;color:#f1f5f9;line-height:1.2;margin-bottom:6px;}
-.wh-txt{font-size:.71rem;color:#94a3b8;line-height:1.65;flex:1;}
-.wh-badge{display:inline-flex;align-items:center;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:8px;border:1px solid currentColor;opacity:.7;margin-top:10px;align-self:flex-start;}
-@media(max-width:900px){.ai-sticky{grid-template-columns:1fr;}.ai-stage{display:none;}.ai-left{padding:0 clamp(20px,5vw,40px);}}
+.wh-card{position:absolute;background:rgba(15,23,42,.96);border:1px solid rgba(96,165,250,.15);border-radius:16px;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;display:flex;flex-direction:column;will-change:transform;transition:border-color .6s,box-shadow .6s;}
+.wh-card.on{border-color:rgba(96,165,250,.5);box-shadow:0 0 60px rgba(96,165,250,.12);}
+.wh-top-bar{height:3px;width:100%;flex-shrink:0;}
+.wh-body{padding:32px 36px;display:flex;flex-direction:column;flex:1;}
+.wh-cat{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:#60a5fa;margin-bottom:10px;}
+.wh-glyph{font-size:2.4rem;line-height:1;margin-bottom:12px;}
+.wh-name{font-size:1.25rem;font-weight:700;color:#f1f5f9;line-height:1.2;margin-bottom:10px;}
+.wh-txt{font-size:.85rem;color:#94a3b8;line-height:1.75;flex:1;}
+.wh-badge{display:inline-flex;align-items:center;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;padding:5px 14px;border-radius:10px;border:1px solid currentColor;opacity:.75;margin-top:18px;align-self:flex-start;}
+.ai-dots{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;gap:10px;z-index:5;}
+.ai-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.15);cursor:pointer;transition:background .35s,transform .35s;}
+.ai-dot.on{background:#60a5fa;transform:scale(1.5);}
+@media(max-width:768px){.wh-body{padding:20px 22px;}.wh-name{font-size:1rem;}.wh-txt{font-size:.78rem;}}
 </style>
 </head>
 <body>
@@ -520,31 +508,13 @@ input[type="number"]:focus{outline:none;border-color:var(--blue);}
 <!-- AI FEATURES — 3D scroll wheel -->
 <section id="ai-showcase">
   <div class="ai-sticky">
-    <div class="ai-left">
-      <div class="ai-section-label">AI Engine</div>
-      <h2 class="ai-static-head">AI that understands<br><em>pharma.</em></h2>
-      <div class="ai-num-row">
-        <span class="ai-bignum" id="aiNum">01</span>
-        <span class="ai-of">/ 06</span>
-      </div>
-      <h3 class="ai-feat-name" id="aiFeatName">R&amp;D Table Generation</h3>
-      <p class="ai-feat-desc" id="aiFeatDesc">35 seconds. Complete reagent lists, equipment tables, and validation matrices — generated from a molecule name alone. R&amp;D reviews, not fills.</p>
-      <div class="ai-feat-pill" id="aiFeatPill"><b>35s</b>&nbsp;generation time</div>
-      <div class="ai-bars">
-        <div class="ai-bar on" data-i="0"></div>
-        <div class="ai-bar" data-i="1"></div>
-        <div class="ai-bar" data-i="2"></div>
-        <div class="ai-bar" data-i="3"></div>
-        <div class="ai-bar" data-i="4"></div>
-        <div class="ai-bar" data-i="5"></div>
-      </div>
-    </div>
     <div class="ai-stage">
       <div class="ai-glow" id="aiGlow"></div>
       <div class="ai-grid-bg"></div>
       <div class="ai-stage-persp">
         <div class="ai-wheel" id="aiWheel"></div>
       </div>
+      <div class="ai-dots" id="aiDots"></div>
     </div>
   </div>
 </section>
@@ -1309,28 +1279,26 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()
   var FEATURES=[
     {cat:'R&D Intelligence',glyph:'⚗',name:'R&D Table Generation',
      txt:'35 seconds. Complete reagent lists, equipment tables, and validation matrices — generated from a molecule name alone. R&D reviews, not fills.',
-     badge:'35s gen',color:'#60a5fa',pill:'<b>35s</b>&nbsp;generation time',num:'01'},
+     badge:'35s gen',color:'#60a5fa'},
     {cat:'Coordination AI',glyph:'⊞',name:'AI Coordinator Brief',
      txt:'All 7 department inputs synthesized into a boardroom-ready brief — risk flags, cost summary, and approval chain — in one click.',
-     badge:'7 depts',color:'#34d399',pill:'<b>7</b>&nbsp;departments unified',num:'02'},
+     badge:'7 depts',color:'#34d399'},
     {cat:'Evaluation',glyph:'◎',name:'Proposal Evaluator',
      txt:'31-element pharmaceutical CRO scorecard. Every element scored, cited from your actual proposal. Formal Go / No-Go recommendation.',
-     badge:'31-point',color:'#f59e0b',pill:'<b>31</b>&nbsp;evaluation criteria',num:'03'},
+     badge:'31-point',color:'#f59e0b'},
     {cat:'Quality Systems',glyph:'◈',name:'Quality Cost Prefill',
      txt:'ICH-aware stability requirements, analytical validation costs, and QC consumables — prefilled per batch scale and study stage.',
-     badge:'GMP ready',color:'#a78bfa',pill:'<b>GMP</b>&nbsp;grade output',num:'04'},
+     badge:'GMP ready',color:'#a78bfa'},
     {cat:'Manufacturing',glyph:'⬡',name:'Manufacturing Prefill',
      txt:'CAPEX, OPEX, utilities, and effluent treatment — estimated per batch size tier. Your team refines; AI builds the baseline.',
-     badge:'CAPEX est.',color:'#f87171',pill:'<b>3</b>&nbsp;batch size tiers',num:'05'},
+     badge:'CAPEX est.',color:'#f87171'},
     {cat:'Conversational AI',glyph:'◉',name:'Proposal AI Assistant',
      txt:'Full proposal memory. Ask about cost drivers, compare to historical data, draft client emails — all in plain language, instantly.',
-     badge:'Live context',color:'#38bdf8',pill:'<b>∞</b>&nbsp;proposal history',num:'06'}
+     badge:'Live context',color:'#38bdf8'}
   ];
-  var N=FEATURES.length,ANGLE=360/N,RADIUS=330,CW=285,CH=210;
+  var N=FEATURES.length,ANGLE=360/N,RADIUS=500,CW=420,CH=310;
   var wheel=document.getElementById('aiWheel'),glow=document.getElementById('aiGlow');
-  var numEl=document.getElementById('aiNum'),nameEl=document.getElementById('aiFeatName');
-  var descEl=document.getElementById('aiFeatDesc'),pillEl=document.getElementById('aiFeatPill');
-  var bars=document.querySelectorAll('.ai-bar');
+  var dotsWrap=document.getElementById('aiDots');
   if(!wheel)return;
   wheel.style.width=CW+'px';wheel.style.height=CH+'px';
   var cards=FEATURES.map(function(f,i){
@@ -1345,27 +1313,26 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()
         +'<div class="wh-txt">'+f.txt+'</div>'
         +'<div class="wh-badge" style="color:'+f.color+'">'+f.badge+'</div>'
       +'</div>';
-    wheel.appendChild(c);return c;
-  });
-  var active=0;
-  function activate(i,anim){
-    if(i===active&&anim)return;
-    var f=FEATURES[i];
-    bars.forEach(function(b,j){b.classList.toggle('on',j===i);});
-    cards.forEach(function(c,j){c.classList.toggle('on',j===i);});
-    if(glow)glow.style.background='radial-gradient(ellipse 70% 58% at 58% 50%,'+f.color+'18 0%,transparent 72%)';
-    var els=[numEl,nameEl,descEl,pillEl];
-    if(anim){
-      gsap.to(els,{opacity:0,x:-15,duration:.2,ease:'power2.in',onComplete:function(){
-        numEl.textContent=f.num;nameEl.textContent=f.name;descEl.textContent=f.txt;pillEl.innerHTML=f.pill;
-        gsap.fromTo(els,{opacity:0,x:15},{opacity:1,x:0,duration:.4,ease:'power3.out',stagger:.04});
-      }});
-    }else{
-      numEl.textContent=f.num;nameEl.textContent=f.name;descEl.textContent=f.txt;pillEl.innerHTML=f.pill;
+    wheel.appendChild(c);
+    if(dotsWrap){
+      var d=document.createElement('div');
+      d.className='ai-dot'+(i===0?' on':'');
+      d.dataset.i=i;
+      dotsWrap.appendChild(d);
     }
+    return c;
+  });
+  var dots=dotsWrap?dotsWrap.querySelectorAll('.ai-dot'):[];
+  var active=0;
+  function activate(i){
+    if(i===active)return;
+    cards.forEach(function(c,j){c.classList.toggle('on',j===i);});
+    dots.forEach(function(d,j){d.classList.toggle('on',j===i);});
+    if(glow)glow.style.background='radial-gradient(ellipse 65% 55% at 50% 50%,'+FEATURES[i].color+'18 0%,transparent 70%)';
     active=i;
   }
-  activate(0,false);
+  activate(0);active=0;
+  cards[0].classList.add('on');if(dots[0])dots[0].classList.add('on');
   var snapVals=[0,0.2,0.4,0.6,0.8,1];
   gsap.to('#aiWheel',{rotateY:-300,ease:'none',scrollTrigger:{
     trigger:'#ai-showcase',start:'top top',
@@ -1374,15 +1341,15 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()
     snap:{snapTo:snapVals,duration:{min:.3,max:.7},delay:.05,ease:'power2.inOut'},
     onUpdate:function(self){
       var i=Math.max(0,Math.min(N-1,Math.round(self.progress*(N-1))));
-      if(i!==active)activate(i,true);
+      activate(i);
     }
   }});
-  bars.forEach(function(b){
-    b.addEventListener('click',function(){
-      var i=parseInt(b.dataset.i);
+  dots.forEach(function(d){
+    d.addEventListener('click',function(){
+      var i=parseInt(d.dataset.i);
       var all=ScrollTrigger.getAll();
       var t=null;for(var k=0;k<all.length;k++){if(all[k].vars&&all[k].vars.trigger==='#ai-showcase'){t=all[k];break;}}
-      if(t){var pos=t.start+(t.end-t.start)*(i/(N-1));gsap.to(window,{duration:.9,ease:'power2.inOut',scrollTo:pos});}
+      if(t)gsap.to(window,{duration:.9,ease:'power2.inOut',scrollTo:t.start+(t.end-t.start)*(i/(N-1))});
     });
   });
 })();
