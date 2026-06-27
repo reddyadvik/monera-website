@@ -191,11 +191,11 @@ section{position:relative;z-index:2}
 .about-grid>div{width:100%;display:flex;flex-direction:column;align-items:center;text-align:center}
 .about-lead{font-family:'Saira',sans-serif;font-size:clamp(1.1rem,1.8vw,1.5rem);line-height:1.6;color:var(--star);font-weight:300;max-width:56ch;text-align:center}
 .about-lead em{color:var(--gold-bright);font-style:normal;font-weight:400}
-.about-stats{display:flex;flex-direction:row;flex-wrap:nowrap;width:100%;margin-top:0;align-items:flex-start;justify-content:center}
-.stat{display:flex;flex-direction:column;flex:1;align-items:center;padding:0 clamp(16px,3vw,40px)}
-.stat+.stat{border-left:1px solid rgba(255,255,255,0.15)}
-.stat .n{font-family:'Saira',sans-serif;font-size:clamp(3rem,6vw,5.5rem);font-weight:400;color:#fff;line-height:1;letter-spacing:.05em}
-.stat .l{font-family:'Saira',sans-serif;font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:10px;font-weight:300;text-align:center}
+.about-stats{display:flex;flex-direction:column;width:100%;margin-top:0;gap:0}
+.stat{display:flex;flex-direction:row;justify-content:space-between;align-items:center;padding:clamp(10px,1.6vh,18px) 0;border-bottom:1px solid rgba(255,255,255,0.12)}
+.stat:first-child{border-top:1px solid rgba(255,255,255,0.12)}
+.stat .n{font-family:'Saira',sans-serif;font-size:clamp(1.4rem,2.8vw,2.4rem);font-weight:400;color:#fff;line-height:1;letter-spacing:.04em;text-align:right}
+.stat .l{font-family:'Saira',sans-serif;font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,0.5);font-weight:300;text-align:left}
 
 /* ---------- TEAM (scroll-rotated moon) ---------- */
 #team{position:relative;z-index:2}
