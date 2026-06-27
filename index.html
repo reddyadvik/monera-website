@@ -790,6 +790,7 @@ function startHero(){
 function tryPlayHero(){
   const v=$('#heroVideo'); if(!v) return;
   v.muted=true; v.defaultMuted=true;
+  v.addEventListener('ended',()=>{ v.pause(); },{once:true});
   const p=v.play();
   if(p&&p.catch) p.catch(()=>{
     // autoplay blocked → play on first interaction or when tab becomes visible
