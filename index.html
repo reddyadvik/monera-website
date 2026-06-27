@@ -177,25 +177,26 @@ section{position:relative;z-index:2}
 .hero-scroll i{width:1px;height:42px;background:linear-gradient(var(--gold),transparent);animation:drip 2.4s infinite}
 @keyframes drip{0%{transform:scaleY(0);transform-origin:top}40%{transform:scaleY(1);transform-origin:top}60%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 
-/* ---------- ABOUT (particle-formed heading) ---------- */
-#about{padding:clamp(120px,18vh,220px) 0;position:relative;z-index:2}
-.about-stage{position:relative;min-height:160px;margin-bottom:18px}
-.about-canvas{width:100%;height:200px;display:block}
+/* ---------- ABOUT ---------- */
+#about{padding:clamp(100px,16vh,200px) 0;position:relative;z-index:2}
+.about-two-col{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,8vw,120px);align-items:start}
+.about-stage{position:relative;min-height:80px;margin-bottom:16px}
+.about-canvas{display:none}
 .about-heading-real{
-  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;
-  font-family:'Saira',sans-serif;font-size:clamp(2rem,5.5vw,4.5rem);font-weight:400;line-height:1;color:#fff;
-  opacity:0;pointer-events:none;letter-spacing:.15em;text-transform:uppercase;
+  position:relative;inset:auto;display:block;text-align:left;
+  font-family:'Saira',sans-serif;font-size:clamp(1.1rem,2.2vw,2rem);font-weight:400;line-height:1.1;color:#fff;
+  opacity:0;pointer-events:none;letter-spacing:.14em;text-transform:uppercase;
 }
 .about-heading-real em{color:#fff;font-style:normal;font-weight:400}
-.about-grid{display:flex;flex-direction:column;align-items:center;margin-top:40px;gap:48px;width:100%}
-.about-grid>div{width:100%;display:flex;flex-direction:column;align-items:center;text-align:center}
-.about-lead{font-family:'Saira',sans-serif;font-size:clamp(1.1rem,1.8vw,1.5rem);line-height:1.6;color:var(--star);font-weight:300;max-width:56ch;text-align:center}
+.about-lead{font-family:'Saira',sans-serif;font-size:clamp(.72rem,1vw,.88rem);line-height:1.75;color:rgba(255,255,255,.55);font-weight:300;text-align:left;max-width:52ch}
 .about-lead em{color:var(--gold-bright);font-style:normal;font-weight:400}
-.about-stats{display:flex;flex-direction:column;width:100%;margin-top:0;gap:0}
+.about-right{padding-top:8px}
+.about-stats{display:flex;flex-direction:column;width:100%;gap:0}
 .stat{display:flex;flex-direction:row;justify-content:space-between;align-items:center;padding:clamp(10px,1.6vh,18px) 0;border-bottom:1px solid rgba(255,255,255,0.12)}
 .stat:first-child{border-top:1px solid rgba(255,255,255,0.12)}
-.stat .n{font-family:'Saira',sans-serif;font-size:clamp(1.4rem,2.8vw,2.4rem);font-weight:400;color:#fff;line-height:1;letter-spacing:.04em;text-align:right}
-.stat .l{font-family:'Saira',sans-serif;font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,0.5);font-weight:300;text-align:left}
+.stat .n{font-family:'Saira',sans-serif;font-size:clamp(1.2rem,2.4vw,2.2rem);font-weight:400;color:#fff;line-height:1;letter-spacing:.04em;text-align:right}
+.stat .l{font-family:'Saira',sans-serif;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,0.45);font-weight:300;text-align:left}
+@media(max-width:680px){.about-two-col{grid-template-columns:1fr}}
 
 /* ---------- TEAM (scroll-rotated moon) ---------- */
 #team{position:relative;z-index:2}
@@ -444,16 +445,14 @@ section{position:relative;z-index:2}
 <!-- ====== ACT 2 — ABOUT ====== -->
 <section id="about">
   <div class="wrap">
-    <div class="about-stage">
-      <canvas class="about-canvas" id="aboutCanvas"></canvas>
-      <div class="about-heading-real" id="aboutReal"><span>Built&nbsp;for&nbsp;<em>Industries</em></span></div>
-    </div>
-    <div class="about-grid">
-      <div class="reveal">
-        <span class="eyebrow">Who We Are</span>
-        <p class="about-lead" style="margin-top:24px">Vonera builds <em>AI-native software</em> engineered for entire industries — not individual clients.<br><br>We encode the workflows, terminology, regulations, and edge-cases of a sector into a single intelligent platform. Every operator who adopts it gets software that already speaks their language — without a custom build, without starting over.<br><br>One platform. Infinite operators. The intelligence compounds every time.</p>
+    <div class="about-two-col">
+      <div class="about-left">
+        <div class="about-stage">
+          <div class="about-heading-real" id="aboutReal"><span>Built&nbsp;for&nbsp;<em>Industries</em></span></div>
+        </div>
+        <p class="about-lead reveal" style="margin-top:20px">Vonera builds <em>AI-native software</em> engineered for entire industries — not individual clients.<br><br>We encode the workflows, terminology, regulations, and edge-cases of a sector into a single intelligent platform. Every operator who adopts it gets software that already speaks their language — without a custom build, without starting over.<br><br>One platform. Infinite operators. The intelligence compounds every time.</p>
       </div>
-      <div class="about-body reveal">
+      <div class="about-right reveal">
         <div class="about-stats">
           <div class="stat"><div class="l">Started</div><div class="n" data-count="2026">2026</div></div>
           <div class="stat"><div class="l">Industries</div><div class="n" data-count="3">3</div></div>
