@@ -180,15 +180,16 @@ section{position:relative;z-index:2}
 /* ---------- ABOUT ---------- */
 #about{padding:clamp(100px,16vh,200px) 0;position:relative;z-index:2}
 .about-two-col{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,8vw,120px);align-items:start}
-.about-stage{position:relative;min-height:80px;margin-bottom:16px}
+.about-stage{position:relative;min-height:80px;margin-bottom:20px}
 .about-canvas{display:none}
+.about-left{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
 .about-heading-real{
-  position:relative;inset:auto;display:block;text-align:left;
-  font-family:'Saira',sans-serif;font-size:clamp(1.1rem,2.2vw,2rem);font-weight:400;line-height:1.1;color:#fff;
+  position:relative;inset:auto;display:block;text-align:center;
+  font-family:'Saira',sans-serif;font-size:clamp(2rem,4.5vw,5rem);font-weight:400;line-height:1.1;color:#fff;
   opacity:0;pointer-events:none;letter-spacing:.14em;text-transform:uppercase;
 }
 .about-heading-real em{color:#fff;font-style:normal;font-weight:400}
-.about-lead{font-family:'Saira',sans-serif;font-size:clamp(.72rem,1vw,.88rem);line-height:1.75;color:rgba(255,255,255,.55);font-weight:300;text-align:left;max-width:52ch}
+.about-lead{font-family:'Saira',sans-serif;font-size:clamp(1rem,1.4vw,1.3rem);line-height:1.75;color:rgba(255,255,255,.55);font-weight:300;text-align:center;max-width:48ch}
 .about-lead em{color:var(--gold-bright);font-style:normal;font-weight:400}
 .about-right{padding-top:8px;display:flex;justify-content:center}
 .about-stats{display:flex;flex-direction:column;width:auto;gap:clamp(28px,5vh,56px);align-items:center}
