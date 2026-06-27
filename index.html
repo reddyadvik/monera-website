@@ -179,24 +179,22 @@ section{position:relative;z-index:2}
 
 /* ---------- ABOUT ---------- */
 #about{padding:clamp(100px,16vh,200px) 0;position:relative;z-index:2}
-.about-two-col{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,8vw,120px);align-items:start}
+.about-inner{display:flex;flex-direction:column;align-items:center;text-align:center}
 .about-stage{position:relative;min-height:80px;margin-bottom:20px}
 .about-canvas{display:none}
-.about-left{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
 .about-heading-real{
   position:relative;inset:auto;display:block;text-align:center;
   font-family:'Saira',sans-serif;font-size:clamp(2rem,4.5vw,5rem);font-weight:400;line-height:1.1;color:#fff;
   opacity:0;pointer-events:none;letter-spacing:.14em;text-transform:uppercase;
 }
 .about-heading-real em{color:#fff;font-style:normal;font-weight:400}
-.about-lead{font-family:'Saira',sans-serif;font-size:clamp(1rem,1.4vw,1.3rem);line-height:1.75;color:rgba(255,255,255,.55);font-weight:300;text-align:center;max-width:48ch}
+.about-lead{font-family:'Saira',sans-serif;font-size:clamp(1rem,1.4vw,1.3rem);line-height:1.75;color:rgba(255,255,255,.55);font-weight:300;text-align:center;max-width:52ch}
 .about-lead em{color:var(--gold-bright);font-style:normal;font-weight:400}
-.about-right{padding-top:8px;display:flex;justify-content:center}
-.about-stats{display:flex;flex-direction:column;width:auto;gap:clamp(28px,5vh,56px);align-items:center}
+.about-stats{display:flex;flex-direction:row;justify-content:center;gap:clamp(40px,8vw,120px);margin-top:clamp(40px,7vh,80px);width:100%}
 .stat{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
 .stat .n{font-family:'Saira',sans-serif;font-size:clamp(2.8rem,6.5vw,6rem);font-weight:400;color:#fff;line-height:1;letter-spacing:.04em}
 .stat .l{font-family:'Saira',sans-serif;font-size:.7rem;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,0.45);font-weight:300}
-@media(max-width:680px){.about-two-col{grid-template-columns:1fr}}
+@media(max-width:600px){.about-stats{flex-direction:column;gap:clamp(24px,4vh,40px)}}
 
 /* ---------- TEAM (scroll-rotated moon) ---------- */
 #team{position:relative;z-index:2}
@@ -445,19 +443,15 @@ section{position:relative;z-index:2}
 <!-- ====== ACT 2 — ABOUT ====== -->
 <section id="about">
   <div class="wrap">
-    <div class="about-two-col">
-      <div class="about-left">
-        <div class="about-stage">
-          <div class="about-heading-real" id="aboutReal"><span>Built&nbsp;for&nbsp;<em>Industries</em></span></div>
-        </div>
-        <p class="about-lead reveal" style="margin-top:20px">Vonera builds <em>AI-native software</em> engineered for entire industries — not individual clients.<br><br>We encode the workflows, terminology, regulations, and edge-cases of a sector into a single intelligent platform. Every operator who adopts it gets software that already speaks their language — without a custom build, without starting over.<br><br>One platform. Infinite operators. The intelligence compounds every time.</p>
+    <div class="about-inner">
+      <div class="about-stage">
+        <div class="about-heading-real" id="aboutReal"><span>Built&nbsp;for&nbsp;<em>Industries</em></span></div>
       </div>
-      <div class="about-right reveal">
-        <div class="about-stats">
-          <div class="stat"><div class="n" data-count="2026">2026</div><div class="l">Started</div></div>
-          <div class="stat"><div class="n" data-count="3">3</div><div class="l">Industries</div></div>
-          <div class="stat"><div class="n" data-count="20" data-suffix="+">20+</div><div class="l">Tasks Automated</div></div>
-        </div>
+      <p class="about-lead reveal" style="margin-top:20px">Vonera builds <em>AI-native software</em> engineered for entire industries — not individual clients.<br><br>We encode the workflows, terminology, regulations, and edge-cases of a sector into a single intelligent platform. Every operator who adopts it gets software that already speaks their language — without a custom build, without starting over.<br><br>One platform. Infinite operators. The intelligence compounds every time.</p>
+      <div class="about-stats reveal">
+        <div class="stat"><div class="n" data-count="2026">2026</div><div class="l">Started</div></div>
+        <div class="stat"><div class="n" data-count="3">3</div><div class="l">Industries</div></div>
+        <div class="stat"><div class="n" data-count="20" data-suffix="+">20+</div><div class="l">Tasks Automated</div></div>
       </div>
     </div>
   </div>
