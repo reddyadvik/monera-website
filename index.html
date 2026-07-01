@@ -524,9 +524,8 @@ section{position:relative;z-index:2}
     <div class="wrap">
       <div class="team-layout">
         <div class="team-photos">
-          <div class="team-member-photo active" data-mp="0"></div>
-          <div class="team-member-photo" data-mp="1"></div>
-          <div class="team-member-photo" data-mp="2"></div>
+          <div class="team-member-photo active" data-mp="0"><img src="assets/team-1.webp" alt="Team member" style="width:100%;height:100%;object-fit:cover;object-position:center top;" /></div>
+          <div class="team-member-photo" data-mp="1"><img src="assets/team-2.webp" alt="Team member" style="width:100%;height:100%;object-fit:cover;object-position:center top;" /></div>
         </div>
         <div class="team-copy">
           <span class="eyebrow">Our Team</span>
@@ -537,7 +536,6 @@ section{position:relative;z-index:2}
           <div class="team-controls" id="teamControls">
             <button class="team-dot active" data-d="0" aria-label="Member 1"><i></i></button>
             <button class="team-dot" data-d="1" aria-label="Member 2"><i></i></button>
-            <button class="team-dot" data-d="2" aria-label="Member 3"><i></i></button>
           </div>
           <div class="team-scrollhint">Scroll · the moon turns</div>
         </div>
@@ -842,14 +840,12 @@ gsap.to('.hero-scroll',{opacity:0,ease:'none',scrollTrigger:{trigger:'#home',sta
   const photos=$$('.moon-photo'), dots=$$('.team-dot'), memberPhotos=$$('.team-member-photo');
   const numEl=$('#teamNum'), nameEl=$('#teamName'), roleEl=$('#teamRole'), bioEl=$('#teamBio');
   const data=[
-    {num:'01 / 03',name:'Team Member One',role:'Role / Title — Placeholder',
+    {num:'01 / 02',name:'Team Member One',role:'Role / Title — Placeholder',
      bio:"A short placeholder biography for the first team member. Replace this with a real introduction — their background, what they lead at Vonera, and the spark they bring to building industry-scale intelligence."},
-    {num:'02 / 03',name:'Team Member Two',role:'Role / Title — Placeholder',
-     bio:"Placeholder biography for the second team member. Add their story here — the disciplines they bridge, the systems they've shipped, and how they push Vonera's AI deeper into each industry."},
-    {num:'03 / 03',name:'Team Member Three',role:'Role / Title — Placeholder',
-     bio:"Placeholder biography for the third team member. Drop in their real profile — craft, curiosity, and the part they play in turning one platform into intelligence an entire field can rely on."}
+    {num:'02 / 02',name:'Team Member Two',role:'Role / Title — Placeholder',
+     bio:"Placeholder biography for the second team member. Add their story here — the disciplines they bridge, the systems they've shipped, and how they push Vonera's AI deeper into each industry."}
   ];
-  const N=3; let cur=-1;
+  const N=2; let cur=-1;
   function show(i){
     if(i===cur)return; cur=i; const d=data[i];
     photos.forEach(p=>p.classList.toggle('active',+p.dataset.ph===i));
