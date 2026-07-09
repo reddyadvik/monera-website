@@ -556,7 +556,7 @@ section{position:relative;z-index:2}
       <div class="contact-left reveal">
         <span class="eyebrow">Contact Us</span>
         <h2 class="contact-cta">Let's build the<br><em>intelligence</em><br>of your industry.</h2>
-        <a href="mailto:hello@vonera.ai" class="contact-mail" data-link>hello@vonera.ai →</a>
+        <a href="mailto:hello@vonera.com" class="contact-mail" data-link>hello@vonera.com →</a>
       </div>
       <div class="contact-form reveal">
         <h3>Get in Touch</h3>
@@ -582,7 +582,7 @@ section{position:relative;z-index:2}
           <label>Reason for Contact</label>
           <textarea placeholder="Tell us what you're looking to build or explore..."></textarea>
         </div>
-        <button class="cf-submit" type="button">Send Message →</button>
+        <button class="cf-submit" type="button" id="cfSubmit">Send Message →</button>
       </div>
     </div>
 
@@ -600,9 +600,9 @@ section{position:relative;z-index:2}
       </div>
       <div class="foot-col">
         <h4>Reach Us</h4>
-        <a href="mailto:hello@vonera.ai">hello@vonera.ai</a>
-        <a href="tel:+910000000000">+91 00000 00000</a>
-        <p>Placeholder Address Line,<br>City · Country</p>
+        <a href="mailto:hello@vonera.com">hello@vonera.com</a>
+        <a href="tel:+919390962688">+91 93909 62688</a>
+        <p>H.No. 6-3-1109/9 &amp; 10, 4th Floor,<br>G.S. Mall, Rajbhavan Road,<br>Somajiguda, Hyderabad,<br>Telangana 500082</p>
       </div>
     </div>
 
@@ -886,6 +886,16 @@ $('#yr').textContent=new Date().getFullYear();
 
 /* refresh triggers once everything (fonts/images) settled */
 addEventListener('load',()=>setTimeout(()=>ScrollTrigger.refresh(),300));
+
+document.getElementById('cfSubmit').addEventListener('click',function(){
+  const name=document.querySelector('.cf-field input').value.trim();
+  const industry=document.querySelector('.cf-field select').value;
+  const msg=document.querySelector('.cf-field textarea').value.trim();
+  if(!name||!msg){alert('Please fill in your name and message.');return;}
+  const subject=encodeURIComponent('Vonera Enquiry from '+name);
+  const body=encodeURIComponent('Name: '+name+'\nIndustry: '+(industry||'Not specified')+'\n\nMessage:\n'+msg);
+  window.location.href='mailto:hello@vonera.com?subject='+subject+'&body='+body;
+});
 </script>
 
 
