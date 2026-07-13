@@ -1,0 +1,1012 @@
+<title>Vistaar by Vonera — Retail Operating System</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="assets/favicon.png" />
+<style>
+  :root {
+    --bg:      #F8F7F2;
+    --bg2:     #EEEBE1;
+    --card:    #FFFFFF;
+    --ink:     #0A1A16;
+    --ink2:    #17281F;
+    --mut:     #4A5550;
+    --faint:   #8B958E;
+    --em1:     #065F46;
+    --em2:     #14B79E;
+    --em3:     #A7F3D0;
+    --amber:   #C2410C;
+    --line:    rgba(10,26,22,.10);
+    --line-s:  rgba(10,26,22,.18);
+    --f-body:  "Helvetica Neue", -apple-system, "Segoe UI", Arial, system-ui, sans-serif;
+    --f-mono:  "IBM Plex Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--f-body);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    font-feature-settings: "ss01" on, "cv01" on;
+  }
+  a { color: inherit; text-decoration: none; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--em1); outline-offset: 3px; border-radius: 3px; }
+  ::selection { background: var(--em3); color: var(--ink); }
+
+  /* ────────── Background layers ────────── */
+  .bgfx { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  .glow { position: absolute; border-radius: 50%; filter: blur(120px); }
+  .g1 { width: 52vw; height: 52vw; left: -14vw; top: -12vw;
+        background: radial-gradient(circle, rgba(20,183,158,.14), transparent 62%); }
+  .g2 { width: 46vw; height: 46vw; right: -16vw; bottom: -20vw;
+        background: radial-gradient(circle, rgba(6,95,70,.12), transparent 62%); }
+  .g3 { width: 28vw; height: 28vw; right: 12vw; top: 46vh;
+        background: radial-gradient(circle, rgba(194,65,12,.06), transparent 62%); }
+  .grain { position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: .035; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+  /* ────────── Chrome ────────── */
+  .top {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 40;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 40px; backdrop-filter: blur(8px);
+    background: rgba(248,247,242,.72);
+  }
+  .brand { font-weight: 800; letter-spacing: .18em; font-size: 14px; display: flex; align-items: center; gap: 10px; }
+  .brand img { height: 24px; width: auto; mix-blend-mode: multiply; }
+  .brand span { color: var(--em1); }
+  .back-btn { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); text-decoration: none;
+    display: flex; align-items: center; gap: 8px; padding: 9px 18px;
+    border: 1px solid var(--line-s); transition: border-color .2s, color .2s, background .2s; }
+  .back-btn:hover { color: var(--em1); border-color: var(--em1); background: rgba(20,183,158,.05); }
+  .back-btn svg { width: 13px; height: 13px; }
+  .prog { position: fixed; top: 0; left: 0; height: 2px;
+          background: linear-gradient(90deg, var(--em1), var(--em2));
+          z-index: 50; width: 0; transition: width .12s linear; }
+  .dots { position: fixed; right: 22px; top: 50%; transform: translateY(-50%); z-index: 40;
+          display: flex; flex-direction: column; gap: 9px; }
+  .dots b { width: 6px; height: 6px; border-radius: 50%; background: rgba(10,26,22,.20);
+            cursor: pointer; transition: transform .25s, background .25s, box-shadow .25s; display: block; }
+  .dots b.on { background: var(--em1); box-shadow: 0 0 12px var(--em2); transform: scale(1.5); }
+
+  /* ────────── Slide skeleton ────────── */
+  .slide { position: relative; z-index: 2;
+    min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+    padding: 116px 7vw 88px; }
+  .kick {
+    font-family: var(--f-mono);
+    font-size: 12px; letter-spacing: .28em; text-transform: uppercase;
+    color: var(--em1); font-weight: 600; margin-bottom: 18px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .kick::before { content: ""; width: 26px; height: 1px; background: var(--em1); display: inline-block; }
+  h1.dsp { font-weight: 800; letter-spacing: -.028em; line-height: .98;
+           font-size: clamp(42px, 7vw, 100px); color: var(--ink); }
+  h2 { font-weight: 800; letter-spacing: -.022em; line-height: 1.03;
+       font-size: clamp(30px, 4.6vw, 60px); color: var(--ink); }
+  h3 { font-weight: 800; letter-spacing: -.01em; color: var(--ink); }
+  .grad { background: linear-gradient(92deg, var(--em1), var(--em2));
+          -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .lead { color: var(--mut); font-size: clamp(15.5px,1.4vw,19.5px); line-height: 1.6; max-width: 66ch; }
+
+  .pill { display: inline-flex; align-items: center; gap: 10px;
+          padding: 14px 26px; border-radius: 40px; font-weight: 700; font-size: 15px; }
+  .pill.solid { background: linear-gradient(120deg, var(--em1), var(--em2));
+                color: #fff; box-shadow: 0 10px 34px rgba(20,183,158,.32); }
+  .pill.ghost { border: 1px solid var(--line-s); color: var(--ink); background: rgba(255,255,255,.5); }
+  .pill:hover { transform: translateY(-1px); }
+
+  .star { position: absolute; color: var(--em2); filter: drop-shadow(0 0 10px var(--em2)); }
+
+  /* ────────── Hero ────────── */
+  .hero { align-items: flex-start; }
+  .hero .wrap { max-width: 62%; position: relative; z-index: 3; }
+  .hero .desc { margin-top: 22px; max-width: 54ch; }
+  .hero .cta { margin-top: 34px; display: flex; gap: 14px; flex-wrap: wrap; }
+  .hero-mock { position: absolute; right: 3vw; bottom: 8vh; width: 46vw; max-width: 620px;
+               z-index: 2; filter: drop-shadow(0 24px 60px rgba(6,95,70,.18)); pointer-events: none; }
+  @media (max-width: 900px) { .hero .wrap { max-width: 100%; } .hero-mock { display: none; } }
+
+  /* ────────── Window frame (mock UI) ────────── */
+  .frame { border: 1px solid var(--line-s); border-radius: 14px; overflow: hidden;
+           background: #FDFCF7; box-shadow: 0 30px 70px rgba(10,26,22,.14), 0 0 0 1px rgba(20,183,158,.08); }
+  .fbar { display: flex; align-items: center; gap: 7px; padding: 11px 14px;
+          background: #F0EDE3; border-bottom: 1px solid var(--line); }
+  .fbar i { width: 10px; height: 10px; border-radius: 50%; display: block; }
+  .fbar i:nth-child(1) { background: #ff5f57; }
+  .fbar i:nth-child(2) { background: #febc2e; }
+  .fbar i:nth-child(3) { background: #28c840; }
+  .fbar span { margin-left: 12px; font-family: var(--f-mono); font-size: 11px; color: var(--faint); }
+  .fbody { padding: 20px 22px; font-size: 13.5px; }
+
+  /* Mock UI primitives */
+  .mock-row { display: flex; align-items: center; justify-content: space-between;
+              padding: 10px 12px; border-radius: 8px; }
+  .mock-row + .mock-row { margin-top: 3px; }
+  .mock-row:hover, .mock-row.hi { background: rgba(20,183,158,.09); }
+  .mock-h { font-family: var(--f-mono); font-size: 10.5px; text-transform: uppercase;
+            letter-spacing: .16em; color: var(--faint); font-weight: 600;
+            border-bottom: 1px solid var(--line); padding: 0 12px 8px; display: grid; }
+  .mock-name { font-weight: 700; color: var(--ink); }
+  .mock-tag { font-family: var(--f-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+              padding: 3px 7px; border-radius: 3px; background: var(--em3); color: var(--em1); }
+  .mock-num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; color: var(--ink); font-weight: 700; }
+  .mock-mut { color: var(--mut); font-size: 12.5px; }
+  .mock-hr { height: 1px; background: var(--line); margin: 12px -22px; }
+  .mock-total { display: flex; justify-content: space-between; align-items: baseline;
+                padding: 12px 12px 4px; }
+  .mock-total .lbl { font-family: var(--f-mono); font-size: 11px; text-transform: uppercase;
+                     letter-spacing: .14em; color: var(--faint); }
+  .mock-total .amt { font-size: 24px; font-weight: 800; letter-spacing: -.02em; color: var(--em1);
+                     font-variant-numeric: tabular-nums; }
+
+  /* ────────── Slide layouts ────────── */
+
+  /* 3-card horizontal deck */
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 40px; }
+  .card { border: 1px solid var(--line); border-radius: 20px; padding: 30px 26px;
+          background: rgba(255,255,255,.55);
+          box-shadow: 0 10px 30px rgba(10,26,22,.05); position: relative;
+          transition: transform .3s, box-shadow .3s, border-color .3s; }
+  .card:hover { transform: translateY(-2px); border-color: rgba(20,183,158,.35);
+                box-shadow: 0 20px 50px rgba(10,26,22,.09); }
+  .card h3 { font-size: 20px; margin: 4px 0 10px; }
+  .card h3 .g { color: var(--em1); }
+  .card p { color: var(--mut); font-size: 14.5px; line-height: 1.55; }
+  .card .big { font-size: clamp(30px, 3.4vw, 44px); font-weight: 800;
+               letter-spacing: -.02em; color: var(--em1); margin-bottom: 6px; }
+  .card .big.amber { color: var(--amber); }
+  .card .mark { font-family: var(--f-mono); font-size: 11px; letter-spacing: .18em;
+                text-transform: uppercase; color: var(--amber); font-weight: 700; }
+
+  /* Feature (text + mock) */
+  .feat { display: grid; grid-template-columns: 0.92fr 1.08fr; gap: 5vw; align-items: center; }
+  .feat.rev { grid-template-columns: 1.08fr 0.92fr; }
+  .feat.rev .txt { order: 2; } .feat.rev .shot { order: 1; }
+  .feat .txt h2 { margin: 6px 0 16px; font-size: clamp(28px, 3.3vw, 46px); }
+  .feat .intro { color: var(--mut); font-size: clamp(15px, 1.3vw, 17px);
+                 line-height: 1.55; margin-bottom: 18px; max-width: 46ch; }
+  .blist { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .blist li { display: flex; gap: 12px; color: var(--mut); font-size: 15px; line-height: 1.5; }
+  .blist li span { flex: 1; }
+  .blist li b { color: var(--ink); font-weight: 700; }
+  .blist li::before { content: ""; flex: none; width: 8px; height: 8px; margin-top: 7px;
+                      border-radius: 2px; background: var(--em1); }
+  .proof { margin-top: 20px; display: inline-flex; gap: 14px; align-items: center;
+           padding: 12px 18px; border: 1px solid var(--line);
+           border-radius: 12px; background: rgba(20,183,158,.06);
+           color: var(--ink); font-size: 13.5px; line-height: 1.4; max-width: 54ch; }
+  .proof .big { font-size: 22px; font-weight: 800; letter-spacing: -.02em;
+                color: var(--em1); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .proof b { color: var(--em1); }
+
+  /* Divider slide */
+  .divider { align-items: flex-start; justify-content: center; }
+  .divider .pt { font-size: clamp(64px, 13vw, 200px); font-weight: 800; line-height: .82;
+                 letter-spacing: -.05em;
+                 -webkit-text-stroke: 1.4px rgba(6,95,70,.28); color: transparent;
+                 text-transform: uppercase; }
+  .divider h2 { margin-top: 14px; max-width: 22ch; font-size: clamp(28px, 4vw, 52px); }
+
+  /* Numbers strip */
+  .numbers-wrap { background: var(--ink); color: #EAE7DE;
+                  border-radius: 24px; padding: 60px 44px;
+                  box-shadow: 0 30px 80px rgba(10,26,22,.24); }
+  .num-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 36px; }
+  .num-cell .n { font-size: clamp(42px, 5.2vw, 68px); font-weight: 800;
+                 letter-spacing: -.03em; line-height: 1; color: #F8F7F2;
+                 font-variant-numeric: tabular-nums; }
+  .num-cell .n .u { font-family: var(--f-mono); font-size: 15px;
+                    color: var(--em2); margin-left: 8px; font-weight: 500; letter-spacing: .05em; }
+  .num-cell .l { font-family: var(--f-mono); font-size: 10.5px; text-transform: uppercase;
+                 letter-spacing: .16em; color: #B4BBB5; margin-top: 14px; max-width: 30ch; line-height: 1.4; }
+  .num-cell .sub { font-family: var(--f-mono); font-size: 10px; letter-spacing: .22em;
+                   text-transform: uppercase; color: var(--em2); font-weight: 600;
+                   display: block; margin-bottom: 10px; }
+
+  /* Compliance chips */
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+  .chip { font-family: var(--f-mono); font-size: 12px; letter-spacing: .06em;
+          padding: 8px 14px; border: 1px solid var(--line-s); border-radius: 999px;
+          background: rgba(255,255,255,.6); color: var(--ink); }
+  .chip.hot { border-color: var(--em1); color: var(--em1);
+              background: rgba(20,183,158,.10); font-weight: 600; }
+  .chip.amber { border-color: var(--amber); color: var(--amber);
+                background: rgba(194,65,12,.08); font-weight: 600; }
+
+  /* Pricing tiers */
+  .tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 34px; }
+  .tier { border: 1px solid var(--line); border-radius: 22px; padding: 34px 30px;
+          background: rgba(255,255,255,.5); position: relative;
+          box-shadow: 0 8px 26px rgba(10,26,22,.05); }
+  .tier.f { border-color: var(--em1); background: rgba(20,183,158,.06);
+            box-shadow: 0 0 45px rgba(20,183,158,.14); }
+  .tier .tn { font-size: 22px; font-weight: 800; letter-spacing: -.01em; }
+  .tier .tn.g { color: var(--em1); }
+  .tier .old { color: var(--faint); text-decoration: line-through; font-size: 15px; margin-top: 14px; }
+  .tier .now { font-size: clamp(30px, 3.2vw, 42px); font-weight: 800;
+               letter-spacing: -.025em; margin-top: 2px; font-variant-numeric: tabular-nums; }
+  .tier .now small { font-size: 15px; color: var(--mut); font-weight: 600; }
+  .tier p { color: var(--mut); font-size: 14px; line-height: 1.5; margin-top: 18px; }
+  .tier ul { list-style: none; margin-top: 20px; display: flex; flex-direction: column; gap: 8px; }
+  .tier li { font-size: 13.5px; color: var(--ink2); display: flex; gap: 8px; align-items: flex-start; }
+  .tier li::before { content: "→"; color: var(--em1); font-weight: 700; }
+  .ribbon { position: absolute; top: -13px; right: 26px; background: var(--em1);
+            color: #fff; font-size: 11px; font-weight: 700; letter-spacing: .1em;
+            text-transform: uppercase; padding: 5px 14px; border-radius: 20px; }
+
+  /* Close */
+  .close { align-items: flex-start; }
+  .close .wrap { position: relative; z-index: 3; max-width: 66%; }
+  .close h2 { font-size: clamp(38px, 5.6vw, 82px); }
+  .close .cta { margin-top: 30px; display: flex; gap: 14px; flex-wrap: wrap; }
+  .foot { margin-top: 42px; color: var(--faint); font-size: 13px; letter-spacing: .04em;
+          font-family: var(--f-mono); text-transform: uppercase; }
+
+  /* Reveal animation */
+  .rv { opacity: 0; transform: translateY(28px);
+        transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
+  .rv.in { opacity: 1; transform: none; }
+  .rv.d1 { transition-delay: .07s; }
+  .rv.d2 { transition-delay: .14s; }
+  .rv.d3 { transition-delay: .21s; }
+  .rv.d4 { transition-delay: .28s; }
+  .slide:first-of-type .rv { animation: heroin .82s cubic-bezier(.2,.7,.2,1) both; }
+  .slide:first-of-type .rv.d1 { animation-delay: .12s; }
+  .slide:first-of-type .rv.d2 { animation-delay: .24s; }
+  .slide:first-of-type .rv.d3 { animation-delay: .36s; }
+  @keyframes heroin { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .feat, .feat.rev { grid-template-columns: 1fr; gap: 32px; }
+    .feat.rev .txt { order: 1; } .feat.rev .shot { order: 2; }
+    .cards, .tiers, .num-grid { grid-template-columns: 1fr 1fr; }
+    .slide { padding: 108px 6vw 66px; }
+    .dots { display: none; }
+    .numbers-wrap { padding: 40px 26px; }
+  }
+  @media (max-width: 560px) {
+    .cards, .tiers, .num-grid { grid-template-columns: 1fr; }
+    .topnav { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .rv { transition: none; opacity: 1; transform: none; animation: none !important; }
+  }
+
+  /* Dark theme — same deck, inverted */
+  :root[data-theme="dark"] {
+    --bg:      #0A1614;
+    --bg2:     #0E1F1B;
+    --card:    #101E1A;
+    --ink:     #ECEFEA;
+    --ink2:    #D8DFD8;
+    --mut:     #A6B0A9;
+    --faint:   #6E7A72;
+    --em1:     #14B79E;
+    --em2:     #6EE7B7;
+    --em3:     rgba(20,183,158,.18);
+    --amber:   #FB923C;
+    --line:    rgba(236,239,234,.08);
+    --line-s:  rgba(236,239,234,.14);
+  }
+  :root[data-theme="dark"] body { background: var(--bg); }
+  :root[data-theme="dark"] .top { background: rgba(10,22,20,.72); }
+  :root[data-theme="dark"] .frame { background: #0E1E1A; }
+  :root[data-theme="dark"] .fbar { background: #14251F; }
+  :root[data-theme="dark"] .card, :root[data-theme="dark"] .tier { background: rgba(20,40,32,.4); }
+  :root[data-theme="dark"] .tier.f { background: rgba(20,183,158,.10); }
+  :root[data-theme="dark"] .chip { background: rgba(20,40,32,.4); }
+  :root[data-theme="dark"] .numbers-wrap { background: #050D0B; }
+  :root[data-theme="dark"] .divider .pt { -webkit-text-stroke-color: rgba(20,183,158,.34); }
+</style>
+
+<div class="bgfx"><div class="glow g1"></div><div class="glow g2"></div><div class="glow g3"></div></div>
+<div class="grain"></div>
+<div class="prog" id="prog"></div>
+
+<div class="top">
+  <div class="brand"><img src="assets/logo-mark-black.png" alt="Vonera">VISTAAR <span>by Vonera</span></div>
+  <a class="back-btn" href="https://vonera.in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>vonera.in</a>
+</div>
+
+<div class="dots" id="dots"></div>
+
+<!-- ═══════════════════ 01 HERO ═══════════════════ -->
+<section class="slide hero" data-s>
+  <div class="star" style="right:8vw;top:22vh;font-size:22px">✦</div>
+  <div class="star" style="left:9vw;bottom:22vh;font-size:22px">✦</div>
+  <div class="wrap">
+    <div class="kick rv">A new operating layer for Indian retail</div>
+    <h1 class="dsp rv d1">Retail runs on<br>a hundred systems.<br><span class="grad">Vistaar is one.</span></h1>
+    <p class="lead desc rv d2">
+      An AI-native platform that adapts on signup to how your shop actually sells — sarees or gold, prescription strips or loose pulses. Inventory, billing, procurement, compliance, cash. One system that speaks the vocabulary of your counter, not a template forced onto it.
+    </p>
+    <div class="cta rv d3">
+      <a href="#six" class="pill solid">See the six verticals →</a>
+      <a href="#platform" class="pill ghost">Platform depth</a>
+    </div>
+  </div>
+
+  <!-- Hero mock — POS billing screen -->
+  <div class="hero-mock rv d3" aria-hidden="true">
+    <div class="frame">
+      <div class="fbar"><i></i><i></i><i></i><span>vistaar.app / pos / counter-1</span></div>
+      <div class="fbody">
+        <div class="mock-h" style="grid-template-columns: 1fr 60px 90px">
+          <span>Line item</span><span style="text-align:right">Qty</span><span style="text-align:right">Amount</span>
+        </div>
+        <div class="mock-row hi" style="display:grid; grid-template-columns: 1fr 60px 90px">
+          <div>
+            <div class="mock-name">Bengal H/L Benarasi</div>
+            <div class="mock-mut">SKU-000045 · Silk · Maroon</div>
+          </div>
+          <div class="mock-num" style="text-align:right">2</div>
+          <div class="mock-num" style="text-align:right">₹4,780</div>
+        </div>
+        <div class="mock-row" style="display:grid; grid-template-columns: 1fr 60px 90px">
+          <div>
+            <div class="mock-name">Petticoat Chilly XL</div>
+            <div class="mock-mut">SKU-000091 · Cotton</div>
+          </div>
+          <div class="mock-num" style="text-align:right">1</div>
+          <div class="mock-num" style="text-align:right">₹340</div>
+        </div>
+        <div class="mock-row" style="display:grid; grid-template-columns: 1fr 60px 90px">
+          <div>
+            <div class="mock-name">Blouse — pre-stitched</div>
+            <div class="mock-mut">SKU-000112 · Size 38</div>
+          </div>
+          <div class="mock-num" style="text-align:right">1</div>
+          <div class="mock-num" style="text-align:right">₹520</div>
+        </div>
+        <div class="mock-hr"></div>
+        <div class="mock-total">
+          <span class="lbl">Total · GST incl.</span>
+          <span class="amt">₹5,640</span>
+        </div>
+        <div style="display:flex; gap:8px; margin-top:14px; padding: 0 12px;">
+          <span class="mock-tag" style="background:#FDE68A;color:#92400E">F2 Checkout</span>
+          <span class="mock-tag">UPI</span>
+          <span class="mock-tag">Cash</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 02 PROBLEM ═══════════════════ -->
+<section class="slide" data-s>
+  <div class="kick rv">The reality on the floor</div>
+  <h2 class="rv d1">A retail owner today runs three shops <span class="grad">stitched from four apps</span>.</h2>
+  <p class="lead rv d2" style="margin-top: 22px">
+    Every counter, every category, every compliance body wants something different. Nobody sells one system that fits all of it — so retailers end up with a POS that doesn't know their SKUs, a spreadsheet that doesn't know their bills, and a WhatsApp group where the receivables actually live.
+  </p>
+  <div class="cards">
+    <div class="card rv d1">
+      <div class="mark">Problem 01</div>
+      <h3>Every category needs <span class="g">a different app</span></h3>
+      <p>Jewelers need hallmark and daily rate. Pharmacies need batch and expiry. Grocers need scale. Buying six different softwares means six invoices, six vendors, six trainings, zero integration.</p>
+    </div>
+    <div class="card rv d2">
+      <div class="mark">Problem 02</div>
+      <h3>Data entry <span class="g">eats the day</span></h3>
+      <p>Supplier bills come as photos, receipts, WhatsApp forwards. Someone retypes every line, every price, every HSN into an ancient POS. The owner reconciles at midnight — or doesn't.</p>
+    </div>
+    <div class="card rv d3">
+      <div class="mark">Problem 03</div>
+      <h3>Customization means <span class="g">months and lakhs</span></h3>
+      <p>Ask a local vendor to "just add a batch column" and it's a three-month conversation ending in a new invoice. The floor gets no closer to the way the shop actually sells.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 03 SOLUTION OVERVIEW ═══════════════════ -->
+<section class="slide" data-s style="align-items:center;text-align:center">
+  <div class="kick rv" style="justify-content:center">The Vistaar answer</div>
+  <h2 class="rv d1" style="max-width: 22ch; margin: 0 auto">One platform. <span class="grad">Reshaped at signup</span> for the exact way your shop sells.</h2>
+  <p class="lead rv d2" style="margin: 22px auto 0; text-align:center">
+    Pick a vertical, seed a shape, edit anything. Fields, workflows, invoices, tax, roles, modules — everything is configuration a shop owner can touch. Not code a developer has to ship.
+  </p>
+  <div class="cards" style="text-align:left">
+    <div class="card rv d1">
+      <h3><span class="g">Chemistry-aware</span> for retail</h3>
+      <p>A jeweler sees purity, hallmark, and gold rate. A chemist sees batch, expiry, and drug schedule. Same platform — different DNA — activated the moment you pick your vertical.</p>
+    </div>
+    <div class="card rv d2">
+      <h3><span class="g">AI that speaks</span> your dialect</h3>
+      <p>Bill OCR extracts exactly the fields your business tracks. Configure the vocabulary once; every supplier bill you photograph gets read against it, from any Indian format, printed or handwritten.</p>
+    </div>
+    <div class="card rv d3">
+      <h3>Compliance <span class="g">as configuration</span></h3>
+      <p>GST regime, HSN mandate, e-invoice, TCS, BIS hallmark, drug licence, FSSAI, e-way bill — turn on what applies to your trade. What's on your bill is what the auditor wants to see.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 04 DIVIDER: SIX VERTICALS ═══════════════════ -->
+<section class="slide divider" data-s id="six">
+  <div class="pt rv">Six<br>Verticals.</div>
+  <h2 class="rv d1">Every one of them <span class="grad">shipping day one</span>, with the exact controls their trade demands.</h2>
+</section>
+
+<!-- ═══════════════════ 05 FEATURE: JEWELRY ═══════════════════ -->
+<section class="slide" data-s>
+  <div class="feat">
+    <div class="txt">
+      <div class="kick rv">V04 · Jewelry</div>
+      <h2 class="rv d1">Weight, purity, hallmark — <span class="grad">priced against today's rate</span>.</h2>
+      <p class="intro rv d1">
+        Every piece is unique, every price is calculated live off gross and net weight, and every sale ends with a hallmark number on the invoice. Vistaar does all of it — no spreadsheet on the side.
+      </p>
+      <ul class="blist">
+        <li class="rv d2"><span><b>Per-piece serials.</b> Every ring, chain, bangle is its own tracked unit — hallmark or HUID stamped, photo-verified at billing.</span></li>
+        <li class="rv d2"><span><b>Daily rate at shift start.</b> Enter today's gold rate once; every subsequent line calculates metal + stone + making + wastage automatically.</span></li>
+        <li class="rv d3"><span><b>Scale integration.</b> Read weight straight off the USB scale; no re-typing, no drift.</span></li>
+        <li class="rv d3"><span><b>TCS &amp; PAN capture.</b> Sales &gt; ₹2L trigger PAN prompt and TCS calculation. Nothing to remember.</span></li>
+      </ul>
+      <div class="proof rv d4"><span class="big">3% GST</span><span>Auto-split, printed on every jewelry invoice with hallmark reference.</span></div>
+    </div>
+    <div class="shot rv d2">
+      <div class="frame">
+        <div class="fbar"><i></i><i></i><i></i><span>vistaar.app / pos / jewelry</span></div>
+        <div class="fbody">
+          <div class="mock-h" style="grid-template-columns: 1fr 74px 74px 90px">
+            <span>Item</span><span style="text-align:right">Gr Wt</span><span style="text-align:right">Net Wt</span><span style="text-align:right">Amount</span>
+          </div>
+          <div class="mock-row hi" style="display:grid; grid-template-columns: 1fr 74px 74px 90px">
+            <div>
+              <div class="mock-name">22K Chain — link cut</div>
+              <div class="mock-mut">HUID: HYD24-9G7X · Stone: —</div>
+            </div>
+            <div class="mock-num" style="text-align:right">18.42g</div>
+            <div class="mock-num" style="text-align:right">18.42g</div>
+            <div class="mock-num" style="text-align:right">₹1,42,830</div>
+          </div>
+          <div class="mock-row" style="display:grid; grid-template-columns: 1fr 74px 74px 90px">
+            <div>
+              <div class="mock-name">22K Ring — diamond cluster</div>
+              <div class="mock-mut">HUID: HYD24-4M2P · 0.32ct VS1</div>
+            </div>
+            <div class="mock-num" style="text-align:right">6.10g</div>
+            <div class="mock-num" style="text-align:right">5.42g</div>
+            <div class="mock-num" style="text-align:right">₹58,240</div>
+          </div>
+          <div class="mock-hr"></div>
+          <div style="padding:0 12px; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <div class="mock-mut">Today's rate</div>
+              <div class="mock-num" style="font-size:16px">₹6,820 / g · 22K</div>
+            </div>
+            <div style="text-align:right">
+              <div class="mock-mut">Making + Wastage</div>
+              <div class="mock-num" style="font-size:16px">12% + 2.5%</div>
+            </div>
+          </div>
+          <div class="mock-hr"></div>
+          <div class="mock-total">
+            <span class="lbl">Sub-total · GST 3% · TCS</span>
+            <span class="amt">₹2,08,190</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 06 FEATURE: PHARMACY (rev) ═══════════════════ -->
+<section class="slide" data-s>
+  <div class="feat rev">
+    <div class="txt">
+      <div class="kick rv">V05 · Pharmacy</div>
+      <h2 class="rv d1">Batch, expiry, schedule — <span class="grad">nothing sold that shouldn't be</span>.</h2>
+      <p class="intro rv d1">
+        FEFO picking, expiry warnings, Rx capture for schedule H drugs, drug licence printed on every invoice. The regulatory floor is built into the counter — the pharmacist doesn't have to remember it.
+      </p>
+      <ul class="blist">
+        <li class="rv d2"><span><b>Batch + expiry per stock lot.</b> One SKU, many batches, FEFO picking so the nearest-expiry pack sells first.</span></li>
+        <li class="rv d2"><span><b>Rx-first billing.</b> Schedule H / H1 / X drugs blocked at billing until a prescription reference is entered.</span></li>
+        <li class="rv d3"><span><b>Bill OCR that reads batch fields.</b> Supplier bills scanned; batch numbers, expiries, free-quantity schemes captured line by line.</span></li>
+        <li class="rv d3"><span><b>Near-expiry reports.</b> Stock expiring in 30 / 60 / 90 days surfaced to the owner every morning.</span></li>
+      </ul>
+      <div class="proof rv d4"><span class="big">FEFO</span><span>Nearest-expiry pack picked automatically at billing — no over-aged stock leaks out.</span></div>
+    </div>
+    <div class="shot rv d2">
+      <div class="frame">
+        <div class="fbar"><i></i><i></i><i></i><span>vistaar.app / inventory / lots</span></div>
+        <div class="fbody">
+          <div class="mock-h" style="grid-template-columns: 1fr 90px 90px 62px">
+            <span>Batch (Amoxycillin 500mg)</span><span>Expiry</span><span style="text-align:right">MRP</span><span style="text-align:right">Qty</span>
+          </div>
+          <div class="mock-row hi" style="display:grid; grid-template-columns: 1fr 90px 90px 62px">
+            <div>
+              <div class="mock-name">AMX240912</div>
+              <div class="mock-mut">Cipla · sched. H</div>
+            </div>
+            <div class="mock-num" style="color: var(--amber)">Sep 2026</div>
+            <div class="mock-num" style="text-align:right">₹142</div>
+            <div class="mock-num" style="text-align:right">8</div>
+          </div>
+          <div class="mock-row" style="display:grid; grid-template-columns: 1fr 90px 90px 62px">
+            <div>
+              <div class="mock-name">AMX250204</div>
+              <div class="mock-mut">Cipla · sched. H</div>
+            </div>
+            <div class="mock-num">Feb 2027</div>
+            <div class="mock-num" style="text-align:right">₹142</div>
+            <div class="mock-num" style="text-align:right">24</div>
+          </div>
+          <div class="mock-row" style="display:grid; grid-template-columns: 1fr 90px 90px 62px">
+            <div>
+              <div class="mock-name">AMX250811</div>
+              <div class="mock-mut">Cipla · sched. H · free:2</div>
+            </div>
+            <div class="mock-num">Aug 2027</div>
+            <div class="mock-num" style="text-align:right">₹142</div>
+            <div class="mock-num" style="text-align:right">30</div>
+          </div>
+          <div class="mock-hr"></div>
+          <div style="padding: 0 12px; display: flex; justify-content: space-between;">
+            <div>
+              <div class="mock-mut">Total stock</div>
+              <div class="mock-num" style="font-size: 18px">62 strips</div>
+            </div>
+            <div style="text-align:right">
+              <div class="mock-mut">Nearest expiry</div>
+              <div class="mock-num" style="font-size: 18px; color: var(--amber)">67 days</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 07 FEATURE: TEXTILE WHOLESALE ═══════════════════ -->
+<section class="slide" data-s>
+  <div class="feat">
+    <div class="txt">
+      <div class="kick rv">V01 · Textile Wholesale</div>
+      <h2 class="rv d1">Field trips, khata, and a design catalog <span class="grad">that survives the drive</span>.</h2>
+      <p class="intro rv d1">
+        Load 200 sarees into the car in the morning. Bill 47 at a vendor's counter with zero signal. Reconcile the 153 that came back at night. The floor moves at wholesale speed; the ledger moves with it.
+      </p>
+      <ul class="blist">
+        <li class="rv d2"><span><b>Offline field billing.</b> Pre-scan the batch you're loading, then bill from any vendor's counter — 100% offline, syncs when you're back.</span></li>
+        <li class="rv d2"><span><b>Vendor khata.</b> Every credit sale spawns a receivable, aged 0-30 / 30-60 / 60-90 / 90+, with WhatsApp reminder queue.</span></li>
+        <li class="rv d3"><span><b>Fabric / weave / design # catalog.</b> The SKU form knows your trade's vocabulary out of the box.</span></li>
+        <li class="rv d3"><span><b>Trip reconciliation.</b> "Took 200, sold 47, returned 148" — the missing 5 surface themselves before you close the trip.</span></li>
+      </ul>
+    </div>
+    <div class="shot rv d2">
+      <div class="frame">
+        <div class="fbar"><i></i><i></i><i></i><span>vistaar.app / field-trip / T-00042 / end</span></div>
+        <div class="fbody">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;padding: 0 4px 14px;">
+            <div>
+              <div class="mock-mut">Trip T-00042 · 2026-07-11</div>
+              <div class="mock-name" style="font-size: 16px">L.N. Textiles · Warangal route</div>
+            </div>
+            <span class="mock-tag">Reconcile</span>
+          </div>
+          <div class="mock-h" style="grid-template-columns: 1fr 60px 60px 60px">
+            <span>Category</span><span style="text-align:right">Out</span><span style="text-align:right">Sold</span><span style="text-align:right">Back</span>
+          </div>
+          <div class="mock-row" style="display:grid; grid-template-columns: 1fr 60px 60px 60px">
+            <div class="mock-name">Sarees</div>
+            <div class="mock-num" style="text-align:right">140</div>
+            <div class="mock-num" style="text-align:right">32</div>
+            <div class="mock-num" style="text-align:right">108</div>
+          </div>
+          <div class="mock-row" style="display:grid; grid-template-columns: 1fr 60px 60px 60px">
+            <div class="mock-name">Petticoats</div>
+            <div class="mock-num" style="text-align:right">40</div>
+            <div class="mock-num" style="text-align:right">10</div>
+            <div class="mock-num" style="text-align:right">30</div>
+          </div>
+          <div class="mock-row hi" style="display:grid; grid-template-columns: 1fr 60px 60px 60px">
+            <div>
+              <div class="mock-name">Blouses</div>
+              <div class="mock-mut" style="color: var(--amber)">5 pcs unaccounted</div>
+            </div>
+            <div class="mock-num" style="text-align:right">20</div>
+            <div class="mock-num" style="text-align:right">5</div>
+            <div class="mock-num" style="text-align:right; color: var(--amber)">10</div>
+          </div>
+          <div class="mock-hr"></div>
+          <div class="mock-total">
+            <span class="lbl">Field bills · 6 · net receivable</span>
+            <span class="amt">₹58,420</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 08 DIVIDER: AI ═══════════════════ -->
+<section class="slide divider" data-s>
+  <div class="pt rv">AI that<br>speaks<br>your shop.</div>
+  <h2 class="rv d1">The bill OCR isn't generic. It's <span class="grad">shaped by the fields you told it to look for</span>.</h2>
+</section>
+
+<!-- ═══════════════════ 09 FEATURE: BILL OCR ═══════════════════ -->
+<section class="slide" data-s>
+  <div class="feat">
+    <div class="txt">
+      <div class="kick rv">Capture</div>
+      <h2 class="rv d1">Photograph a bill. <span class="grad">Get your fields back</span>.</h2>
+      <p class="intro rv d1">
+        Handwritten, printed, four columns wide or twelve, the extraction reads only what your business tracks. A jeweler's bill returns gross weight and hallmark. A chemist's bill returns batch and expiry. Same engine, different vocabulary.
+      </p>
+      <ul class="blist">
+        <li class="rv d2"><span><b>55+ retail data points</b> in the library — HSN, MRP, purity, batch, e-way bill, gold rate, making charge — each with a hand-tuned extraction instruction.</span></li>
+        <li class="rv d2"><span><b>Fuzzy SKU match.</b> "BENGAL HL BENARASI" and "Bengal H/L=UIV Benarasi" resolve to the same product. Approve, or create a new SKU inline.</span></li>
+        <li class="rv d3"><span><b>Multi-page, handwritten, PDF or JPG.</b> Any Indian bill format the AI has seen — and if it hasn't, one round of feedback teaches it.</span></li>
+        <li class="rv d3"><span><b>Confidence flagged per line.</b> Illegible items marked in yellow for review; the rest post straight to inventory.</span></li>
+      </ul>
+    </div>
+    <div class="shot rv d2">
+      <div class="frame">
+        <div class="fbar"><i></i><i></i><i></i><span>vistaar.app / bills / upload / extracted</span></div>
+        <div class="fbody">
+          <div style="padding: 0 4px 12px; display: flex; justify-content: space-between; align-items:center;">
+            <div>
+              <div class="mock-mut">Supplier bill · SR-2024/9821</div>
+              <div class="mock-name" style="font-size: 16px">Sri Ramesh Textiles</div>
+            </div>
+            <span class="mock-tag" style="background: var(--em3); color: var(--em1)">14 items extracted</span>
+          </div>
+          <div class="mock-h" style="grid-template-columns: 1fr 60px 70px 40px">
+            <span>Item</span><span style="text-align:right">Qty</span><span style="text-align:right">Rate</span><span></span>
+          </div>
+          <div class="mock-row" style="display:grid; grid-template-columns: 1fr 60px 70px 40px">
+            <div>
+              <div class="mock-name">Bengal H/L Benarasi cotton</div>
+              <div class="mock-mut">HSN 5208 · matched SKU-000045</div>
+            </div>
+            <div class="mock-num" style="text-align:right">30</div>
+            <div class="mock-num" style="text-align:right">₹375</div>
+            <div style="text-align:right; color: var(--em1); font-weight: 700">✓</div>
+          </div>
+          <div class="mock-row" style="display:grid; grid-template-columns: 1fr 60px 70px 40px">
+            <div>
+              <div class="mock-name">Kanchipuram silk saree — green</div>
+              <div class="mock-mut">HSN 5007 · matched SKU-000091</div>
+            </div>
+            <div class="mock-num" style="text-align:right">12</div>
+            <div class="mock-num" style="text-align:right">₹2,140</div>
+            <div style="text-align:right; color: var(--em1); font-weight: 700">✓</div>
+          </div>
+          <div class="mock-row hi" style="display:grid; grid-template-columns: 1fr 60px 70px 40px; background: rgba(253,224,71,.28)">
+            <div>
+              <div class="mock-name">Chanderi mix — asstd</div>
+              <div class="mock-mut" style="color: var(--amber)">Ambiguous — needs review</div>
+            </div>
+            <div class="mock-num" style="text-align:right">19</div>
+            <div class="mock-num" style="text-align:right">₹995</div>
+            <div style="text-align:right; color: var(--amber); font-weight: 700">?</div>
+          </div>
+          <div class="mock-row" style="display:grid; grid-template-columns: 1fr 60px 70px 40px">
+            <div>
+              <div class="mock-name">Petticoats — assorted</div>
+              <div class="mock-mut">HSN 6208 · new SKU proposed</div>
+            </div>
+            <div class="mock-num" style="text-align:right">50</div>
+            <div class="mock-num" style="text-align:right">₹120</div>
+            <div style="text-align:right; color: var(--em1); font-weight: 700">＋</div>
+          </div>
+          <div class="mock-hr"></div>
+          <div class="mock-total">
+            <span class="lbl">Bill total · payable in 15d</span>
+            <span class="amt">₹1,52,890</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 10 FEATURE: CUSTOM FIELDS (rev) ═══════════════════ -->
+<section class="slide" data-s>
+  <div class="feat rev">
+    <div class="txt">
+      <div class="kick rv">Customization</div>
+      <h2 class="rv d1">Track anything the library doesn't. <span class="grad">Zero code.</span></h2>
+      <p class="intro rv d1">
+        Something your trade uses that nobody else does? Add a field, write one line describing what it looks like on a bill, and the AI extracts it forever. What normally takes a three-month development cycle takes ninety seconds.
+      </p>
+      <ul class="blist">
+        <li class="rv d2"><span><b>Per-surface selection.</b> Turn a field on for supplier bills, sale bills, SKU form, customer record — independently.</span></li>
+        <li class="rv d2"><span><b>Custom AI instructions.</b> Write the extraction prompt the way you'd tell a new employee to look for it. The AI follows it verbatim.</span></li>
+        <li class="rv d3"><span><b>Reorder, rename, require.</b> Field position, label, required-or-optional — configured by the shop owner, no ticket to raise.</span></li>
+        <li class="rv d3"><span><b>Same vocabulary everywhere.</b> Enable a field once and it appears in the SKU form, on the invoice, and inside the OCR prompt — no drift.</span></li>
+      </ul>
+    </div>
+    <div class="shot rv d2">
+      <div class="frame">
+        <div class="fbar"><i></i><i></i><i></i><span>vistaar.app / settings / fields / supplier_bill_line</span></div>
+        <div class="fbody">
+          <div style="padding: 0 4px 12px;">
+            <div class="mock-mut">Surface</div>
+            <div class="mock-name" style="font-size: 16px">Supplier bill · line items</div>
+          </div>
+          <div class="mock-h" style="grid-template-columns: 30px 1fr 100px 40px">
+            <span></span><span>Field</span><span style="text-align:right">Type</span><span></span>
+          </div>
+          <div class="mock-row" style="display:grid; grid-template-columns: 30px 1fr 100px 40px">
+            <div class="mock-num" style="color: var(--faint)">01</div>
+            <div><div class="mock-name">item_name</div><div class="mock-mut">Required · library</div></div>
+            <div style="text-align:right"><span class="mock-tag">text</span></div>
+            <div style="text-align:right;color:var(--faint)">✎</div>
+          </div>
+          <div class="mock-row" style="display:grid; grid-template-columns: 30px 1fr 100px 40px">
+            <div class="mock-num" style="color: var(--faint)">02</div>
+            <div><div class="mock-name">qty</div><div class="mock-mut">Required · library</div></div>
+            <div style="text-align:right"><span class="mock-tag">integer</span></div>
+            <div style="text-align:right;color:var(--faint)">✎</div>
+          </div>
+          <div class="mock-row" style="display:grid; grid-template-columns: 30px 1fr 100px 40px">
+            <div class="mock-num" style="color: var(--faint)">03</div>
+            <div><div class="mock-name">hsn</div><div class="mock-mut">Optional · library</div></div>
+            <div style="text-align:right"><span class="mock-tag">text</span></div>
+            <div style="text-align:right;color:var(--faint)">✎</div>
+          </div>
+          <div class="mock-row hi" style="display:grid; grid-template-columns: 30px 1fr 100px 40px">
+            <div class="mock-num" style="color: var(--em1)">04</div>
+            <div>
+              <div class="mock-name" style="color: var(--em1)">loom_no <span style="font-family:var(--f-mono);font-size:10px;background:var(--em3);color:var(--em1);padding:2px 6px;border-radius:3px;margin-left:6px">CUSTOM</span></div>
+              <div class="mock-mut">"3-digit code near the item name, prefixed 'L-' or 'Loom:'"</div>
+            </div>
+            <div style="text-align:right"><span class="mock-tag">text</span></div>
+            <div style="text-align:right;color:var(--faint)">✎</div>
+          </div>
+          <div class="mock-row" style="display:grid; grid-template-columns: 30px 1fr 100px 40px">
+            <div class="mock-num" style="color: var(--faint)">05</div>
+            <div><div class="mock-name">rate</div><div class="mock-mut">Required · library</div></div>
+            <div style="text-align:right"><span class="mock-tag">decimal</span></div>
+            <div style="text-align:right;color:var(--faint)">✎</div>
+          </div>
+          <div class="mock-hr"></div>
+          <div style="padding: 0 12px; display:flex; justify-content: space-between; align-items: center;">
+            <div class="mock-mut">Changes propagate to Bill OCR + SKU form on save.</div>
+            <span class="mock-tag" style="background: var(--em1); color:#fff">Save</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 11 NUMBERS ═══════════════════ -->
+<section class="slide" data-s>
+  <div class="kick rv">By the numbers</div>
+  <h2 class="rv d1">Built for the scale <span class="grad">Indian retail actually runs at</span>.</h2>
+  <div class="numbers-wrap rv d2" style="margin-top: 44px">
+    <div class="num-grid">
+      <div class="num-cell">
+        <span class="sub">Verticals live</span>
+        <div class="n">6<span class="u">day one</span></div>
+        <div class="l">Textile · Apparel · Footwear · Jewelry · Pharma · Grocery — all shipping.</div>
+      </div>
+      <div class="num-cell">
+        <span class="sub">Field library</span>
+        <div class="n">55<span class="u">+ fields</span></div>
+        <div class="l">Canonical retail data points, each with a hand-tuned AI extraction instruction.</div>
+      </div>
+      <div class="num-cell">
+        <span class="sub">Counter speed</span>
+        <div class="n">&lt; 200<span class="u">ms</span></div>
+        <div class="l">Barcode scanned to line-added, offline or online. Sales never wait on network.</div>
+      </div>
+      <div class="num-cell">
+        <span class="sub">Field billing</span>
+        <div class="n">100<span class="u">% offline</span></div>
+        <div class="l">Signal-independent. Bills sync whenever connectivity returns — none ever lost.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 12 COMPLIANCE ═══════════════════ -->
+<section class="slide" data-s>
+  <div class="kick rv">Comply</div>
+  <h2 class="rv d1">GST, e-invoice, hallmark, drug licence — <span class="grad">printed correctly, every time</span>.</h2>
+  <p class="lead rv d2" style="margin-top: 22px">
+    Regulations differ across every retail category and change every quarter. Vistaar tracks them as configuration. Turn on what applies to your trade. What's on your bill is what the auditor wants to see.
+  </p>
+  <div class="chips rv d3">
+    <span class="chip hot">GST Regular</span>
+    <span class="chip">Composition Scheme</span>
+    <span class="chip">Non-GST</span>
+    <span class="chip hot">CGST + SGST split</span>
+    <span class="chip">Inter-state IGST</span>
+    <span class="chip hot">HSN on every line</span>
+    <span class="chip">E-Invoice ready</span>
+    <span class="chip amber">TCS (jewelry &gt; ₹2L)</span>
+    <span class="chip amber">BIS Hallmark / HUID</span>
+    <span class="chip amber">Drug Licence #</span>
+    <span class="chip amber">Schedule H/H1/X gating</span>
+    <span class="chip">Prescription capture</span>
+    <span class="chip amber">FSSAI on invoice</span>
+    <span class="chip">E-way Bill #</span>
+    <span class="chip">Vehicle # capture</span>
+    <span class="chip hot">FY numbering reset</span>
+    <span class="chip">Round-off line</span>
+    <span class="chip">PAN capture</span>
+    <span class="chip">Multi-series numbering</span>
+    <span class="chip">Custom invoice templates</span>
+  </div>
+</section>
+
+<!-- ═══════════════════ 13 PLATFORM DEPTH ═══════════════════ -->
+<section class="slide" data-s id="platform">
+  <div class="kick rv">Platform</div>
+  <h2 class="rv d1">Configuration deep enough <span class="grad">to be its own product</span>.</h2>
+  <p class="lead rv d2" style="margin-top: 22px">
+    Under every screen sits a customization layer. What data you capture. What rules apply at billing. What roles see what. What modules turn on. Staff never see it. Owners reshape the business without touching a developer.
+  </p>
+  <div class="cards" style="margin-top: 40px">
+    <div class="card rv d1">
+      <div class="mark">Model</div>
+      <h3>Inventory that <span class="g">shape-shifts</span></h3>
+      <p>Variants · Batches · Serials · Weight-based · Mixed. Pick per SKU; the UI and stock math reshape accordingly.</p>
+    </div>
+    <div class="card rv d2">
+      <div class="mark">Access</div>
+      <h3>Roles as fine as <span class="g">you need</span></h3>
+      <p>Owner · Manager · Staff · Accountant · Marketing · Viewer — enforced at the database, not just the screen.</p>
+    </div>
+    <div class="card rv d3">
+      <div class="mark">Isolation</div>
+      <h3>Multi-tenant, <span class="g">row-level secure</span></h3>
+      <p>Every tenant's data is fenced at the database layer. Every module gate enforced in three places.</p>
+    </div>
+    <div class="card rv d1">
+      <div class="mark">Modules</div>
+      <h3>Turn on <span class="g">what you sell</span></h3>
+      <p>POS · Inventory · Barcodes · Bill OCR · Khata · Field trips · Photo Verify · WhatsApp · Rx · Scale · Multi-branch.</p>
+    </div>
+    <div class="card rv d2">
+      <div class="mark">Print</div>
+      <h3>Every invoice <span class="g">yours</span></h3>
+      <p>A4 · A5 · 80mm · 58mm · logo · header · footer · T&amp;C · bilingual (EN + regional). Multiple series, FY reset.</p>
+    </div>
+    <div class="card rv d3">
+      <div class="mark">Presets</div>
+      <h3>Live in <span class="g">15 minutes</span></h3>
+      <p>Pick a vertical at signup — capabilities, fields, tax, invoice, modules — all pre-configured. Edit anything after.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 14 PRICING ═══════════════════ -->
+<section class="slide" data-s>
+  <div class="kick rv">Pricing</div>
+  <h2 class="rv d1">Lock in <span class="grad">founding pricing</span> before the tier moves.</h2>
+  <p class="lead rv d2" style="margin-top: 20px">
+    All plans include the six verticals, the field library, AI bill OCR, GST + compliance, WhatsApp delivery, and every module toggle. What changes is scale — users, branches, and how deep the support goes.
+  </p>
+  <div class="tiers">
+    <div class="tier rv d1">
+      <div class="tn">Starter</div>
+      <div class="old">₹2,400 / mo</div>
+      <div class="now">₹1,499 <small>/ mo</small></div>
+      <p>For a single-counter shop getting off spreadsheets.</p>
+      <ul>
+        <li>3 users · 1 branch</li>
+        <li>All 6 vertical presets</li>
+        <li>Bill OCR: 200 / mo</li>
+        <li>Email support</li>
+      </ul>
+    </div>
+    <div class="tier f rv d2">
+      <div class="ribbon">Most popular</div>
+      <div class="tn g">Growth</div>
+      <div class="old">₹5,900 / mo</div>
+      <div class="now">₹3,499 <small>/ mo</small></div>
+      <p>For a shop that ships, prints, and takes credit — the middle of Indian retail.</p>
+      <ul>
+        <li>10 users · 2 branches</li>
+        <li>Full khata + field trips</li>
+        <li>Bill OCR: 1,000 / mo</li>
+        <li>WhatsApp reminders</li>
+        <li>WhatsApp support</li>
+      </ul>
+    </div>
+    <div class="tier rv d3">
+      <div class="tn">Enterprise</div>
+      <div class="old">₹14,900 / mo</div>
+      <div class="now">₹9,900 <small>/ mo</small></div>
+      <p>For chains, franchise networks, and shops with an accountant on staff.</p>
+      <ul>
+        <li>Unlimited users · branches</li>
+        <li>E-invoice + TCS + audit log</li>
+        <li>Bill OCR: unlimited</li>
+        <li>Custom vertical playbooks</li>
+        <li>Named account manager</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 15 CLOSE ═══════════════════ -->
+<section class="slide close" data-s>
+  <div class="star" style="left:9vw;top:26vh;font-size:24px">✦</div>
+  <div class="star" style="right:12vw;bottom:24vh;font-size:24px">✦</div>
+  <div class="wrap">
+    <div class="kick rv">Ready when you are</div>
+    <h2 class="rv d1">Retail isn't one business.<br><span class="grad">It's a hundred.</span><br>Vistaar is built for that.</h2>
+    <p class="lead rv d2" style="margin-top: 22px">
+      Bring your own bills, your own SKUs, your own compliance surface. We'll spin up a live tenant for your vertical in a call and let you break it.
+    </p>
+    <div class="cta rv d3">
+      <a href="mailto:contact@vonera.in" class="pill solid">Request a live demo →</a>
+      <a href="#" class="pill ghost">Download the deck</a>
+    </div>
+    <div class="foot rv d3">Vistaar by Vonera · Hyderabad, IN · contact@vonera.in</div>
+  </div>
+</section>
+
+<script>
+  (function() {
+    // Progress bar
+    var prog = document.getElementById('prog');
+    var dotsWrap = document.getElementById('dots');
+    var slides = document.querySelectorAll('[data-s]');
+
+    // Build dot pagination
+    for (var i = 0; i < slides.length; i++) {
+      var b = document.createElement('b');
+      b.setAttribute('data-i', i);
+      b.setAttribute('role', 'button');
+      b.setAttribute('aria-label', 'Slide ' + (i+1));
+      dotsWrap.appendChild(b);
+    }
+    var dots = dotsWrap.querySelectorAll('b');
+    dots.forEach(function(d, i) {
+      d.addEventListener('click', function() {
+        slides[i].scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    function onScroll() {
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      var p = h > 0 ? window.scrollY / h : 0;
+      prog.style.width = (p * 100) + '%';
+      // Find current slide (nearest to viewport top)
+      var mid = window.scrollY + window.innerHeight * 0.4;
+      var cur = 0;
+      for (var i = 0; i < slides.length; i++) {
+        if (slides[i].offsetTop <= mid) cur = i;
+      }
+      for (var j = 0; j < dots.length; j++) {
+        dots[j].classList.toggle('on', j === cur);
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // Reveal on scroll
+    var rvs = document.querySelectorAll('.rv');
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      rvs.forEach(function(el) { io.observe(el); });
+    } else {
+      rvs.forEach(function(el) { el.classList.add('in'); });
+    }
+
+    // First slide reveals immediately (via CSS animation) — mark in
+    document.querySelector('.slide').querySelectorAll('.rv').forEach(function(el) {
+      el.classList.add('in');
+    });
+  })();
+</script>
