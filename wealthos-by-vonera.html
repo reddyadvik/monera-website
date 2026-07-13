@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WealthOS — Private Preview</title>
+<meta name="description" content="A private, invitation-only preview of the operating layer for Indian wealth advisory practices." />
+<meta name="robots" content="noindex, nofollow" />
+<link rel="icon" type="image/png" href="assets/favicon.png" />
+
+<!--
+  WealthOS teaser / "arriving soon" notice.
+  Standalone document — hosted as-is (index.html) or its <style>/<body>
+  lifted into an existing site template.
+
+  Design direction: "exaggerated minimalism" editorial — one dominant,
+  oversized element per section, huge negative space, a single gold accent.
+  Oversized typographic numerals (01–06) are the feature section's graphic
+  device — no icon-pack clichés, no cramped grid-of-tiles.
+
+  Fonts: EB Garamond + Inter + JetBrains Mono via Google Fonts, matching the
+  in-app type system exactly. Requires network access to fonts.googleapis.com
+  when live (fine on a real, internet-connected website); a fully offline or
+  CSP-sandboxed preview will silently fall back to the system stacks below,
+  which are chosen to still read correctly.
+
+  Deliberately single-theme (dark) — a private notice, not a SaaS landing
+  page. No client names, figures, or vendor/technology names appear anywhere.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --ground:      #0a0f18;
+    --panel:       #10192a;
+    --rule:        #232e46;
+    --rule-soft:   #171f32;
+    --paper:       #f4efe3;
+    --paper-dim:   rgba(244, 239, 227, 0.66);
+    --paper-faint: rgba(244, 239, 227, 0.4);
+    --gold:        #c9ab6e;
+    --gold-deep:   #b08a3c;
+    --gold-glow:   rgba(201, 171, 110, 0.3);
+
+    --font-display: 'EB Garamond', 'Iowan Old Style', 'Palatino Linotype', Georgia, 'Times New Roman', serif;
+    --font-body:    'Inter', -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    --font-mono:    'JetBrains Mono', 'SF Mono', 'Fira Code', ui-monospace, Menlo, Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html { background: var(--ground); -webkit-font-smoothing: antialiased; text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--paper-dim);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  a { color: inherit; }
+  ::selection { background: var(--gold-glow); color: var(--paper); }
+  :focus-visible { outline: 1px solid var(--gold); outline-offset: 3px; }
+
+  #field { position: fixed; inset: 0; z-index: 0; opacity: 0.7; pointer-events: none; }
+
+  #grain {
+    position: fixed; inset: 0; z-index: 2; pointer-events: none;
+    opacity: 0.03; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .stage { position: relative; z-index: 1; }
+
+  /* ── Header ─────────────────────────────────────────────────────────── */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: clamp(26px, 4vw, 46px) clamp(24px, 6vw, 80px) 0;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .wordmark {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: var(--paper);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .wordmark img { height: 22px; width: auto; }
+  .wordmark em { font-style: italic; color: var(--gold); }
+
+  .back-btn {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--paper-faint);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 160ms ease;
+  }
+  .back-btn:hover { color: var(--gold); }
+  .back-btn svg { width: 13px; height: 13px; }
+
+  /* ── Hero — one dominant element, huge type, generous air ─────────── */
+  .hero {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: clamp(64px, 12vh, 132px) clamp(24px, 6vw, 80px) clamp(56px, 9vh, 100px);
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0 0 clamp(28px, 4vh, 44px);
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    opacity: 0;
+    animation: rise 700ms cubic-bezier(0.22, 0.61, 0.36, 1) 100ms forwards;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 12px var(--gold-glow);
+    flex-shrink: 0;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(46px, 8.4vw, 122px);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    color: var(--paper);
+    margin: 0 0 clamp(32px, 5vh, 52px);
+    text-wrap: balance;
+    max-width: 15ch;
+    opacity: 0;
+    animation: rise 900ms cubic-bezier(0.22, 0.61, 0.36, 1) 220ms forwards;
+  }
+  h1 em { font-style: italic; color: var(--gold); }
+
+  .hero-foot {
+    display: grid;
+    grid-template-columns: minmax(0, 46ch) auto;
+    align-items: end;
+    gap: clamp(24px, 4vw, 48px);
+    opacity: 0;
+    animation: rise 900ms cubic-bezier(0.22, 0.61, 0.36, 1) 400ms forwards;
+  }
+
+  .subhead {
+    font-size: clamp(16px, 1.5vw, 18.5px);
+    line-height: 1.65;
+    color: var(--paper-dim);
+    margin: 0;
+  }
+
+  .cta-col { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 26px;
+    background: var(--gold);
+    color: var(--ground);
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 160ms ease, transform 160ms ease;
+  }
+  .btn-primary:hover { background: var(--paper); transform: translateY(-1px); }
+  .btn-primary svg { width: 13px; height: 13px; transition: transform 160ms ease; }
+  .btn-primary:hover svg { transform: translateX(3px); }
+
+  .cta-note {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--paper-faint);
+    letter-spacing: 0.02em;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Features — stacked editorial rows, oversized numerals as the
+       graphic element (not icon-pack clichés, not a cramped tile grid) ─ */
+  .features {
+    position: relative;
+    z-index: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: clamp(40px, 6vh, 64px) clamp(24px, 6vw, 80px) clamp(80px, 10vh, 130px);
+    border-top: 1px solid var(--rule);
+  }
+
+  .features-head {
+    padding: clamp(48px, 7vh, 76px) 0 clamp(40px, 6vh, 60px);
+  }
+  .features-head .mark {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--paper-faint);
+    margin-bottom: 16px;
+  }
+  .features-head h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(28px, 4vw, 44px);
+    color: var(--paper);
+    margin: 0;
+    max-width: 16ch;
+    text-wrap: balance;
+  }
+
+  .feature-row {
+    display: grid;
+    grid-template-columns: minmax(120px, 200px) 1fr;
+    gap: clamp(20px, 4vw, 56px);
+    padding: clamp(38px, 5.5vh, 58px) 0;
+    border-top: 1px solid var(--rule);
+    align-items: start;
+  }
+  .feature-row:last-child { border-bottom: 1px solid var(--rule); }
+
+  .feature-num {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(3.4rem, 6vw, 6.2rem);
+    line-height: 0.9;
+    color: var(--gold);
+    letter-spacing: -0.02em;
+  }
+
+  .feature-body h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(22px, 2.4vw, 30px);
+    color: var(--paper);
+    margin: 6px 0 14px;
+    letter-spacing: -0.005em;
+  }
+  .feature-body p {
+    margin: 0;
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: var(--paper-dim);
+    max-width: 52ch;
+  }
+
+  @media (max-width: 720px) {
+    .feature-row { grid-template-columns: 1fr; gap: 14px; }
+    .hero-foot { grid-template-columns: 1fr; align-items: start; }
+  }
+
+  /* ── Manifesto ──────────────────────────────────────────────────────── */
+  .manifesto {
+    position: relative;
+    z-index: 1;
+    padding: clamp(70px, 11vh, 130px) clamp(24px, 6vw, 80px);
+    background: var(--panel);
+    border-top: 1px solid var(--rule);
+  }
+  .manifesto-inner {
+    max-width: 920px;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 900ms cubic-bezier(0.22, 0.61, 0.36, 1), transform 900ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  .manifesto-inner.in-view { opacity: 1; transform: translateY(0); }
+  .manifesto-inner .mark {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--paper-faint);
+    display: block;
+    margin-bottom: 26px;
+  }
+  .manifesto-inner blockquote {
+    margin: 0;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(24px, 3.6vw, 38px);
+    line-height: 1.38;
+    color: var(--paper);
+    text-wrap: balance;
+  }
+  .manifesto-inner blockquote em { font-style: normal; color: var(--gold); }
+
+  /* ── Closing CTA ────────────────────────────────────────────────────── */
+  .closing {
+    position: relative;
+    z-index: 1;
+    padding: clamp(64px, 10vh, 110px) clamp(24px, 6vw, 80px);
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .closing h2 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(30px, 4.6vw, 56px);
+    line-height: 1.06;
+    color: var(--paper);
+    margin: 0;
+    max-width: 14ch;
+    text-wrap: balance;
+  }
+  .closing h2 em { font-style: italic; color: var(--gold); }
+
+  /* ── Footer ─────────────────────────────────────────────────────────── */
+  footer {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 24px clamp(24px, 6vw, 80px) 32px;
+    border-top: 1px solid var(--rule-soft);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    color: var(--paper-faint);
+  }
+  footer a { text-decoration: none; color: var(--paper-faint); transition: color 160ms ease; }
+  footer a:hover { color: var(--gold); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .eyebrow, h1, .hero-foot { animation: none !important; opacity: 1 !important; transform: none !important; }
+    .manifesto-inner { transition: none !important; opacity: 1 !important; transform: none !important; }
+    .btn-primary, .btn-primary svg { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="field" aria-hidden="true"></canvas>
+<div id="grain" aria-hidden="true"></div>
+
+<div class="stage">
+  <header>
+    <a class="wordmark" href="#" aria-label="WealthOS"><img src="assets/logo-mark-white.png" alt="Vonera" style="mix-blend-mode:screen">Wealth<em>OS</em></a>
+    <a class="back-btn" href="https://vonera.in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>vonera.in</a>
+  </header>
+
+  <main class="hero">
+    <p class="eyebrow">Private preview — invitation only</p>
+    <h1>Built to carry more than any <em>spreadsheet</em> should.</h1>
+    <div class="hero-foot">
+      <p class="subhead">
+        A quiet rebuild of how Indian wealth advisory firms run their book —
+        every family, every filing, every follow-through, in one place that
+        never falls behind. Not yet open. Arriving on invitation.
+      </p>
+      <div class="cta-col">
+        <a class="btn-primary" href="mailto:contact@vonera.in">
+          Write to us
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <span class="cta-note">We read every note personally.</span>
+      </div>
+    </div>
+  </main>
+
+  <section class="features" aria-labelledby="features-heading">
+    <div class="features-head">
+      <span class="mark">What's inside</span>
+      <h2 id="features-heading">Six things it does, quietly, every day.</h2>
+    </div>
+
+    <div class="feature-row">
+      <span class="feature-num">01</span>
+      <div class="feature-body">
+        <h3>The Book</h3>
+        <p>Every holding, every SIP, every filing — reconciled into one book that's never a day stale. No more chasing PDFs across three portals.</p>
+      </div>
+    </div>
+
+    <div class="feature-row">
+      <span class="feature-num">02</span>
+      <div class="feature-body">
+        <h3>The Plan</h3>
+        <p>Not a folder of screenshots. A living financial plan for every family — goals, timelines, and the numbers that back them, always current.</p>
+      </div>
+    </div>
+
+    <div class="feature-row">
+      <span class="feature-num">03</span>
+      <div class="feature-body">
+        <h3>Today</h3>
+        <p>One screen, every morning: what changed overnight, what's overdue, and exactly who needs a call before lunch.</p>
+      </div>
+    </div>
+
+    <div class="feature-row">
+      <span class="feature-num">04</span>
+      <div class="feature-body">
+        <h3>Consent, Before Action</h3>
+        <p>Every recommendation reaches the client before it reaches the market. Nothing moves without a paper trail of "yes."</p>
+      </div>
+    </div>
+
+    <div class="feature-row">
+      <span class="feature-num">05</span>
+      <div class="feature-body">
+        <h3>The Assistant</h3>
+        <p>Ask your book a question in plain language. Get a straight answer back — not a dashboard you have to interpret yourself.</p>
+      </div>
+    </div>
+
+    <div class="feature-row">
+      <span class="feature-num">06</span>
+      <div class="feature-body">
+        <h3>The Whole Relationship</h3>
+        <p>From the first introduction to the day a client eventually leaves — handled deliberately, on the record, start to finish.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="manifesto">
+    <div class="manifesto-inner" id="manifesto-inner">
+      <span class="mark">— a note, before the rest</span>
+      <blockquote>
+        Most tools were built to manage contacts. <em>We built ours to manage a practice</em> —
+        the families, the filings, the fine print, and the thousand quiet
+        follow-throughs that decide whether a client stays for a decade or leaves in a year.
+      </blockquote>
+    </div>
+  </section>
+
+  <section class="closing">
+    <h2>Not open yet. <em>Arriving</em> on invitation.</h2>
+    <div class="cta-col">
+      <a class="btn-primary" href="mailto:contact@vonera.in">
+        Write to us
+        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <span class="cta-note">We read every note personally.</span>
+    </div>
+  </section>
+
+  <footer>
+    <span>WealthOS — Hyderabad — © 2026. All rights reserved.</span>
+    <a href="mailto:contact@vonera.in">contact@vonera.in</a>
+  </footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var manifesto = document.getElementById("manifesto-inner");
+  if (manifesto && "IntersectionObserver" in window && !reduceMotion) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          manifesto.classList.add("in-view");
+          io.disconnect();
+        }
+      });
+    }, { threshold: 0.3 });
+    io.observe(manifesto);
+  } else if (manifesto) {
+    manifesto.classList.add("in-view");
+  }
+
+  // Sparse, quiet floating points — no connecting web of lines (that read
+  // as busy/cluttered). A handful of slow, large, soft dots is enough to
+  // feel alive without competing with the huge type.
+  var canvas = document.getElementById("field");
+  var ctx = canvas.getContext("2d");
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var W = 0, H = 0;
+  var nodes = [];
+
+  function resize() {
+    W = window.innerWidth;
+    H = window.innerHeight;
+    canvas.width = Math.floor(W * dpr);
+    canvas.height = Math.floor(H * dpr);
+    canvas.style.width = W + "px";
+    canvas.style.height = H + "px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    seed();
+  }
+
+  function seed() {
+    var count = Math.max(8, Math.min(16, Math.floor((W * H) / 90000)));
+    nodes = [];
+    for (var i = 0; i < count; i++) {
+      nodes.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        vx: (Math.random() - 0.5) * 0.045,
+        vy: (Math.random() - 0.5) * 0.045,
+        r: 1.1 + Math.random() * 1.6,
+        phase: Math.random() * Math.PI * 2
+      });
+    }
+  }
+
+  function step(t) {
+    ctx.clearRect(0, 0, W, H);
+    for (var i = 0; i < nodes.length; i++) {
+      var n = nodes[i];
+      n.x += n.vx;
+      n.y += n.vy;
+      if (n.x < -20) n.x = W + 20;
+      if (n.x > W + 20) n.x = -20;
+      if (n.y < -20) n.y = H + 20;
+      if (n.y > H + 20) n.y = -20;
+      var twinkle = 0.28 + 0.24 * Math.sin(t * 0.0004 + n.phase);
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(201, 171, 110, " + twinkle.toFixed(3) + ")";
+      ctx.fill();
+    }
+    window.requestAnimationFrame(step);
+  }
+
+  window.addEventListener("resize", resize, { passive: true });
+  resize();
+
+  if (reduceMotion) {
+    step(0);
+  } else {
+    window.requestAnimationFrame(step);
+  }
+})();
+</script>
+
+</body>
+</html>
