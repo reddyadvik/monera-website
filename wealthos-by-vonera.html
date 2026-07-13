@@ -3,490 +3,333 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>WealthOS — Private Preview</title>
+<title>WealthOS by Vonera — Private Preview</title>
 <meta name="description" content="A private, invitation-only preview of the operating layer for Indian wealth advisory practices." />
 <meta name="robots" content="noindex, nofollow" />
 <link rel="icon" type="image/png" href="assets/favicon.png" />
-
-<!--
-  WealthOS teaser / "arriving soon" notice.
-  Standalone document — hosted as-is (index.html) or its <style>/<body>
-  lifted into an existing site template.
-
-  Design direction: "exaggerated minimalism" editorial — one dominant,
-  oversized element per section, huge negative space, a single gold accent.
-  Oversized typographic numerals (01–06) are the feature section's graphic
-  device — no icon-pack clichés, no cramped grid-of-tiles.
-
-  Fonts: EB Garamond + Inter + JetBrains Mono via Google Fonts, matching the
-  in-app type system exactly. Requires network access to fonts.googleapis.com
-  when live (fine on a real, internet-connected website); a fully offline or
-  CSP-sandboxed preview will silently fall back to the system stacks below,
-  which are chosen to still read correctly.
-
-  Deliberately single-theme (dark) — a private notice, not a SaaS landing
-  page. No client names, figures, or vendor/technology names appear anywhere.
--->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
   :root {
-    --ground:      #0a0f18;
-    --panel:       #10192a;
-    --rule:        #232e46;
-    --rule-soft:   #171f32;
-    --paper:       #f4efe3;
-    --paper-dim:   rgba(244, 239, 227, 0.66);
-    --paper-faint: rgba(244, 239, 227, 0.4);
-    --gold:        #c9ab6e;
-    --gold-deep:   #b08a3c;
-    --gold-glow:   rgba(201, 171, 110, 0.3);
+    --bg:      #0a0f18;
+    --bg2:     #0e1524;
+    --card:    #121a2c;
+    --ink:     #f4efe3;
+    --ink2:    #e6ddc7;
+    --mut:     rgba(244, 239, 227, .66);
+    --faint:   rgba(244, 239, 227, .4);
+    --gold:    #c9ab6e;
+    --gold2:   #e8cfa0;
+    --gold3:   rgba(201, 171, 110, .16);
+    --line:    rgba(244, 239, 227, .11);
+    --line-s:  rgba(244, 239, 227, .18);
 
-    --font-display: 'EB Garamond', 'Iowan Old Style', 'Palatino Linotype', Georgia, 'Times New Roman', serif;
-    --font-body:    'Inter', -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
-    --font-mono:    'JetBrains Mono', 'SF Mono', 'Fira Code', ui-monospace, Menlo, Consolas, monospace;
+    --f-display: 'EB Garamond', 'Iowan Old Style', 'Palatino Linotype', Georgia, 'Times New Roman', serif;
+    --f-body:    'Inter', -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    --f-mono:    'JetBrains Mono', 'SF Mono', 'Fira Code', ui-monospace, Menlo, Consolas, monospace;
   }
 
-  * { box-sizing: border-box; }
-  html { background: var(--ground); -webkit-font-smoothing: antialiased; text-size-adjust: 100%; }
-
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; background: var(--bg); }
   body {
-    margin: 0;
-    background: var(--ground);
-    color: var(--paper-dim);
-    font-family: var(--font-body);
-    font-size: 16px;
-    line-height: 1.6;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--f-body);
+    -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
+  a { color: inherit; text-decoration: none; }
+  a:focus-visible, button:focus-visible { outline: 1px solid var(--gold); outline-offset: 3px; border-radius: 2px; }
+  ::selection { background: var(--gold3); color: var(--ink); }
 
-  a { color: inherit; }
-  ::selection { background: var(--gold-glow); color: var(--paper); }
-  :focus-visible { outline: 1px solid var(--gold); outline-offset: 3px; }
+  /* ── Background layers ─────────────────────────────────────────────── */
+  .bgfx { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  .glow { position: absolute; border-radius: 50%; filter: blur(130px); }
+  .g1 { width: 50vw; height: 50vw; left: -14vw; top: -12vw;
+        background: radial-gradient(circle, rgba(201,171,110,.16), transparent 62%); }
+  .g2 { width: 44vw; height: 44vw; right: -16vw; bottom: -18vw;
+        background: radial-gradient(circle, rgba(176,138,60,.13), transparent 62%); }
+  .g3 { width: 26vw; height: 26vw; right: 14vw; top: 44vh;
+        background: radial-gradient(circle, rgba(201,171,110,.07), transparent 62%); }
+  .grain { position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: .035; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 
-  #field { position: fixed; inset: 0; z-index: 0; opacity: 0.7; pointer-events: none; }
+  /* ── Chrome ─────────────────────────────────────────────────────────── */
+  .top {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 40;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 40px; backdrop-filter: blur(8px);
+    background: rgba(10,15,24,.7);
+    border-bottom: 1px solid var(--line);
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-family: var(--f-display); font-weight: 500; font-size: 15px; letter-spacing: .01em; }
+  .brand img { height: 26px; width: auto; mix-blend-mode: screen; }
+  .brand span { color: var(--gold); font-style: italic; }
+  .back-btn { font-size: 11px; color: var(--mut); letter-spacing: .1em; text-transform: uppercase;
+    text-decoration: none; display: flex; align-items: center; gap: 8px;
+    padding: 9px 18px; border: 1px solid var(--line-s);
+    transition: border-color .2s, color .2s, background .2s; font-family: var(--f-body); }
+  .back-btn:hover { color: var(--gold); border-color: var(--gold); background: var(--gold3); }
+  .back-btn svg { width: 13px; height: 13px; flex: none; }
+  .prog { position: fixed; top: 0; left: 0; height: 2px;
+          background: linear-gradient(90deg, var(--gold), var(--gold2));
+          z-index: 50; width: 0; transition: width .12s linear; }
+  .dots { position: fixed; right: 22px; top: 50%; transform: translateY(-50%); z-index: 40;
+          display: flex; flex-direction: column; gap: 9px; }
+  .dots b { width: 6px; height: 6px; border-radius: 50%; background: rgba(244,239,227,.18);
+            cursor: pointer; transition: transform .25s, background .25s, box-shadow .25s; display: block; }
+  .dots b.on { background: var(--gold); box-shadow: 0 0 12px var(--gold); transform: scale(1.5); }
 
-  #grain {
-    position: fixed; inset: 0; z-index: 2; pointer-events: none;
-    opacity: 0.03; mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  /* ── Slide skeleton ─────────────────────────────────────────────────── */
+  .slide { position: relative; z-index: 2;
+    min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+    padding: 118px 7vw 88px; }
+  .kick {
+    font-family: var(--f-mono);
+    font-size: 11.5px; letter-spacing: .26em; text-transform: uppercase;
+    color: var(--gold); font-weight: 500; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
   }
+  .kick::before { content: ""; width: 26px; height: 1px; background: var(--gold); display: inline-block; }
+  h1.dsp { font-family: var(--f-display); font-weight: 500; letter-spacing: -.015em; line-height: .98;
+           font-size: clamp(40px, 6.6vw, 94px); color: var(--ink); }
+  h2 { font-family: var(--f-display); font-weight: 500; letter-spacing: -.01em; line-height: 1.06;
+       font-size: clamp(28px, 4.2vw, 54px); color: var(--ink); }
+  h3 { font-family: var(--f-display); font-weight: 500; letter-spacing: -.005em; color: var(--ink); }
+  .grad { font-style: italic; color: var(--gold); }
+  .lead { color: var(--mut); font-size: clamp(15.5px,1.4vw,18.5px); line-height: 1.62; max-width: 64ch; }
 
-  .stage { position: relative; z-index: 1; }
+  .pill { display: inline-flex; align-items: center; gap: 10px;
+          padding: 14px 26px; font-weight: 600; font-size: 14px; }
+  .pill.solid { background: var(--gold); color: var(--bg);
+                box-shadow: 0 10px 34px rgba(201,171,110,.28); transition: background 160ms ease, transform 160ms ease; }
+  .pill.solid:hover { background: var(--gold2); transform: translateY(-1px); }
+  .pill.ghost { border: 1px solid var(--line-s); color: var(--ink); }
+  .pill.ghost:hover { border-color: var(--gold); color: var(--gold); }
+  .pill:hover { cursor: pointer; }
 
-  /* ── Header ─────────────────────────────────────────────────────────── */
-  header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: clamp(26px, 4vw, 46px) clamp(24px, 6vw, 80px) 0;
-    max-width: 1400px;
-    margin: 0 auto;
-  }
+  .star { position: absolute; color: var(--gold); opacity: .8; filter: drop-shadow(0 0 10px rgba(201,171,110,.5)); }
 
-  .wordmark {
-    font-family: var(--font-display);
-    font-size: 20px;
-    font-weight: 500;
-    letter-spacing: 0.01em;
-    color: var(--paper);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .wordmark img { height: 22px; width: auto; }
-  .wordmark em { font-style: italic; color: var(--gold); }
+  /* ── Hero ───────────────────────────────────────────────────────────── */
+  .hero { align-items: flex-start; }
+  .hero .wrap { max-width: 60%; position: relative; z-index: 3; }
+  .hero .desc { margin-top: 22px; max-width: 52ch; }
+  .hero .cta { margin-top: 34px; display: flex; gap: 14px; flex-wrap: wrap; }
+  .hero-mock { position: absolute; right: 3vw; bottom: 9vh; width: 42vw; max-width: 540px;
+               z-index: 2; filter: drop-shadow(0 24px 60px rgba(0,0,0,.4)); pointer-events: none; }
+  @media (max-width: 900px) { .hero .wrap { max-width: 100%; } .hero-mock { display: none; } }
 
-  .back-btn {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--paper);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 9px 18px;
-    border: 1px solid rgba(244,239,227,0.22);
-    transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
-  }
-  .back-btn:hover { color: var(--gold); border-color: var(--gold); background: rgba(201,171,110,0.06); }
-  .back-btn svg { width: 13px; height: 13px; }
+  /* ── Window frame (redacted mock UI — no real product data) ─────────── */
+  .frame { border: 1px solid var(--line-s); border-radius: 12px; overflow: hidden;
+           background: var(--card); box-shadow: 0 30px 70px rgba(0,0,0,.4), 0 0 0 1px rgba(201,171,110,.06); }
+  .fbar { display: flex; align-items: center; gap: 7px; padding: 11px 14px;
+          background: rgba(244,239,227,.04); border-bottom: 1px solid var(--line); }
+  .fbar i { width: 9px; height: 9px; border-radius: 50%; display: block; background: rgba(244,239,227,.16); }
+  .fbar span { margin-left: 12px; font-family: var(--f-mono); font-size: 10.5px; color: var(--faint); }
+  .fbody { padding: 20px 22px; font-size: 13.5px; }
 
-  /* ── Hero — one dominant element, huge type, generous air ─────────── */
-  .hero {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: clamp(64px, 12vh, 132px) clamp(24px, 6vw, 80px) clamp(56px, 9vh, 100px);
-  }
+  .mock-row { display: flex; align-items: center; justify-content: space-between;
+              padding: 11px 12px; border-radius: 6px; }
+  .mock-row + .mock-row { margin-top: 2px; border-top: 1px solid var(--line); }
+  .mock-h { font-family: var(--f-mono); font-size: 10px; text-transform: uppercase;
+            letter-spacing: .14em; color: var(--faint); font-weight: 500;
+            padding: 0 12px 9px; display: grid; }
+  .mock-name { font-weight: 500; color: var(--ink2); }
+  .mock-mut { color: var(--faint); font-size: 11.5px; }
+  /* Redacted placeholder — deliberately illegible; signals "private", not real UI */
+  .redact { display: inline-block; background: rgba(244,239,227,.14); color: transparent;
+            border-radius: 3px; user-select: none; }
+  .redact.gold { background: rgba(201,171,110,.32); }
+  .mock-total { display: flex; justify-content: space-between; align-items: baseline;
+                padding: 13px 12px 2px; border-top: 1px solid var(--line); margin-top: 6px; }
+  .mock-total .lbl { font-family: var(--f-mono); font-size: 10.5px; text-transform: uppercase;
+                     letter-spacing: .12em; color: var(--faint); }
 
-  .eyebrow {
-    font-family: var(--font-mono);
-    font-size: 11.5px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin: 0 0 clamp(28px, 4vh, 44px);
-    display: flex;
-    align-items: center;
-    gap: 11px;
-    opacity: 0;
-    animation: rise 700ms cubic-bezier(0.22, 0.61, 0.36, 1) 100ms forwards;
-  }
-  .eyebrow::before {
-    content: "";
-    width: 7px; height: 7px; border-radius: 50%;
-    background: var(--gold);
-    box-shadow: 0 0 12px var(--gold-glow);
-    flex-shrink: 0;
-  }
+  /* ── Cards ──────────────────────────────────────────────────────────── */
+  .pcards, .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 40px; }
+  .pc, .gc { border: 1px solid var(--line); border-radius: 16px; padding: 28px 24px;
+             background: rgba(244,239,227,.025); transition: transform .3s, border-color .3s; }
+  .pc:hover, .gc:hover { transform: translateY(-2px); border-color: rgba(201,171,110,.35); }
+  .pc h3, .gc h3 { font-size: 20px; margin: 0 0 10px; }
+  .pc h3 span, .gc h3 span { color: var(--gold); font-style: italic; }
+  .pc p, .gc p { color: var(--mut); font-size: 14.5px; line-height: 1.55; }
+  .gc .mark { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .18em;
+              text-transform: uppercase; color: var(--gold); font-weight: 500; display: block; margin-bottom: 12px; }
 
-  h1 {
-    font-family: var(--font-display);
-    font-weight: 500;
-    font-size: clamp(46px, 8.4vw, 122px);
-    line-height: 0.98;
-    letter-spacing: -0.02em;
-    color: var(--paper);
-    margin: 0 0 clamp(32px, 5vh, 52px);
-    text-wrap: balance;
-    max-width: 15ch;
-    opacity: 0;
-    animation: rise 900ms cubic-bezier(0.22, 0.61, 0.36, 1) 220ms forwards;
-  }
-  h1 em { font-style: italic; color: var(--gold); }
+  /* ── Feature (text + redacted mock) ────────────────────────────────── */
+  .feat { display: grid; grid-template-columns: 0.94fr 1.06fr; gap: 5vw; align-items: center; }
+  .feat.rev { grid-template-columns: 1.06fr 0.94fr; }
+  .feat.rev .txt { order: 2; } .feat.rev .shot { order: 1; }
+  .feat .txt h2 { margin: 6px 0 16px; font-size: clamp(26px, 3vw, 42px); }
+  .feat .intro { color: var(--mut); font-size: clamp(15px, 1.3vw, 17px);
+                 line-height: 1.58; margin-bottom: 18px; max-width: 46ch; }
+  .blist { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+  .blist li { display: flex; gap: 12px; color: var(--mut); font-size: 15px; line-height: 1.5; }
+  .blist li span { flex: 1; }
+  .blist li b { color: var(--ink); font-weight: 600; }
+  .blist li::before { content: ""; flex: none; width: 7px; height: 7px; margin-top: 7px;
+                      border-radius: 2px; background: var(--gold); }
+  .proof { margin-top: 22px; display: inline-flex; gap: 14px; align-items: center;
+           padding: 13px 18px; border: 1px solid var(--line);
+           border-radius: 10px; background: rgba(201,171,110,.05);
+           color: var(--ink); font-size: 13.5px; line-height: 1.4; max-width: 54ch; }
+  .proof .big { font-family: var(--f-display); font-size: 22px; font-style: italic; font-weight: 500;
+                color: var(--gold); white-space: nowrap; }
 
-  .hero-foot {
-    display: grid;
-    grid-template-columns: minmax(0, 46ch) auto;
-    align-items: end;
-    gap: clamp(24px, 4vw, 48px);
-    opacity: 0;
-    animation: rise 900ms cubic-bezier(0.22, 0.61, 0.36, 1) 400ms forwards;
-  }
-
-  .subhead {
-    font-size: clamp(16px, 1.5vw, 18.5px);
-    line-height: 1.65;
-    color: var(--paper-dim);
-    margin: 0;
-  }
-
-  .cta-col { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
-
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 15px 26px;
-    background: var(--gold);
-    color: var(--ground);
-    font-family: var(--font-body);
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 0.01em;
-    text-decoration: none;
-    white-space: nowrap;
-    transition: background 160ms ease, transform 160ms ease;
-  }
-  .btn-primary:hover { background: var(--paper); transform: translateY(-1px); }
-  .btn-primary svg { width: 13px; height: 13px; transition: transform 160ms ease; }
-  .btn-primary:hover svg { transform: translateX(3px); }
-
-  .cta-note {
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    color: var(--paper-faint);
-    letter-spacing: 0.02em;
-  }
-
-  @keyframes rise {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ── Features — stacked editorial rows, oversized numerals as the
-       graphic element (not icon-pack clichés, not a cramped tile grid) ─ */
-  .features {
-    position: relative;
-    z-index: 1;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: clamp(40px, 6vh, 64px) clamp(24px, 6vw, 80px) clamp(80px, 10vh, 130px);
-    border-top: 1px solid var(--rule);
-  }
-
-  .features-head {
-    padding: clamp(48px, 7vh, 76px) 0 clamp(40px, 6vh, 60px);
-  }
-  .features-head .mark {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--paper-faint);
-    margin-bottom: 16px;
-  }
-  .features-head h2 {
-    font-family: var(--font-display);
-    font-weight: 400;
-    font-style: italic;
-    font-size: clamp(28px, 4vw, 44px);
-    color: var(--paper);
-    margin: 0;
-    max-width: 16ch;
-    text-wrap: balance;
-  }
-
-  .feature-row {
-    display: grid;
-    grid-template-columns: minmax(120px, 200px) 1fr;
-    gap: clamp(20px, 4vw, 56px);
-    padding: clamp(38px, 5.5vh, 58px) 0;
-    border-top: 1px solid var(--rule);
-    align-items: start;
-  }
-  .feature-row:last-child { border-bottom: 1px solid var(--rule); }
-
-  .feature-num {
-    font-family: var(--font-display);
-    font-weight: 400;
-    font-size: clamp(3.4rem, 6vw, 6.2rem);
-    line-height: 0.9;
-    color: var(--gold);
-    letter-spacing: -0.02em;
-  }
-
-  .feature-body h3 {
-    font-family: var(--font-display);
-    font-weight: 500;
-    font-size: clamp(22px, 2.4vw, 30px);
-    color: var(--paper);
-    margin: 6px 0 14px;
-    letter-spacing: -0.005em;
-  }
-  .feature-body p {
-    margin: 0;
-    font-size: 15.5px;
-    line-height: 1.65;
-    color: var(--paper-dim);
-    max-width: 52ch;
-  }
-
-  @media (max-width: 720px) {
-    .feature-row { grid-template-columns: 1fr; gap: 14px; }
-    .hero-foot { grid-template-columns: 1fr; align-items: start; }
-  }
+  /* ── Divider slide ──────────────────────────────────────────────────── */
+  .divider { align-items: flex-start; justify-content: center; }
+  .divider .pt { font-family: var(--f-display); font-size: clamp(58px, 12vw, 190px); font-weight: 500; line-height: .86;
+                 letter-spacing: -.02em; font-style: italic;
+                 -webkit-text-stroke: 1.2px rgba(201,171,110,.4); color: transparent; }
+  .divider h2 { margin-top: 18px; max-width: 22ch; font-size: clamp(26px, 3.6vw, 46px); }
 
   /* ── Manifesto ──────────────────────────────────────────────────────── */
-  .manifesto {
-    position: relative;
-    z-index: 1;
-    padding: clamp(70px, 11vh, 130px) clamp(24px, 6vw, 80px);
-    background: var(--panel);
-    border-top: 1px solid var(--rule);
-  }
-  .manifesto-inner {
-    max-width: 920px;
-    margin: 0 auto;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 900ms cubic-bezier(0.22, 0.61, 0.36, 1), transform 900ms cubic-bezier(0.22, 0.61, 0.36, 1);
-  }
-  .manifesto-inner.in-view { opacity: 1; transform: translateY(0); }
-  .manifesto-inner .mark {
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--paper-faint);
-    display: block;
-    margin-bottom: 26px;
-  }
-  .manifesto-inner blockquote {
-    margin: 0;
-    font-family: var(--font-display);
-    font-style: italic;
-    font-weight: 400;
-    font-size: clamp(24px, 3.6vw, 38px);
-    line-height: 1.38;
-    color: var(--paper);
-    text-wrap: balance;
-  }
-  .manifesto-inner blockquote em { font-style: normal; color: var(--gold); }
+  .manifesto-wrap { max-width: 900px; }
+  .manifesto-wrap blockquote { margin: 22px 0 0; font-family: var(--f-display); font-style: italic;
+    font-size: clamp(22px, 3.2vw, 34px); line-height: 1.42; color: var(--ink2); }
+  .manifesto-wrap blockquote em { font-style: normal; color: var(--gold); }
 
-  /* ── Closing CTA ────────────────────────────────────────────────────── */
-  .closing {
-    position: relative;
-    z-index: 1;
-    padding: clamp(64px, 10vh, 110px) clamp(24px, 6vw, 80px);
-    max-width: 1400px;
-    margin: 0 auto;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 32px;
-    flex-wrap: wrap;
-  }
-  .closing h2 {
-    font-family: var(--font-display);
-    font-weight: 500;
-    font-size: clamp(30px, 4.6vw, 56px);
-    line-height: 1.06;
-    color: var(--paper);
-    margin: 0;
-    max-width: 14ch;
-    text-wrap: balance;
-  }
-  .closing h2 em { font-style: italic; color: var(--gold); }
+  /* ── Close ──────────────────────────────────────────────────────────── */
+  .close { align-items: flex-start; }
+  .close .wrap { position: relative; z-index: 3; max-width: 66%; }
+  .close h2 { font-size: clamp(36px, 5.2vw, 76px); }
+  .close .cta { margin-top: 30px; display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  .foot { margin-top: 42px; color: var(--faint); font-size: 11.5px; letter-spacing: .06em;
+          font-family: var(--f-mono); text-transform: uppercase; }
+  .badge { font-family: var(--f-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+           color: var(--faint); border: 1px solid var(--line-s); padding: 5px 11px; border-radius: 3px; }
 
-  /* ── Footer ─────────────────────────────────────────────────────────── */
-  footer {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    flex-wrap: wrap;
-    padding: 24px clamp(24px, 6vw, 80px) 32px;
-    border-top: 1px solid var(--rule-soft);
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    letter-spacing: 0.06em;
-    color: var(--paper-faint);
-  }
-  footer a { text-decoration: none; color: var(--paper-faint); transition: color 160ms ease; }
-  footer a:hover { color: var(--gold); }
+  /* ── Reveal animation ───────────────────────────────────────────────── */
+  .rv { opacity: 0; transform: translateY(26px);
+        transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
+  .rv.in { opacity: 1; transform: none; }
+  .rv.d1 { transition-delay: .07s; } .rv.d2 { transition-delay: .14s; }
+  .rv.d3 { transition-delay: .21s; } .rv.d4 { transition-delay: .28s; }
+  .slide:first-of-type .rv { animation: heroin .82s cubic-bezier(.2,.7,.2,1) both; }
+  .slide:first-of-type .rv.d1 { animation-delay: .12s; }
+  .slide:first-of-type .rv.d2 { animation-delay: .24s; }
+  .slide:first-of-type .rv.d3 { animation-delay: .36s; }
+  @keyframes heroin { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
 
+  @media (max-width: 900px) {
+    .feat, .feat.rev { grid-template-columns: 1fr; gap: 30px; }
+    .feat.rev .txt { order: 1; } .feat.rev .shot { order: 2; }
+    .pcards, .grid3 { grid-template-columns: 1fr 1fr; }
+    .slide { padding: 106px 6vw 66px; }
+    .dots { display: none; }
+    .close .wrap { max-width: 100%; }
+  }
+  @media (max-width: 560px) {
+    .pcards, .grid3 { grid-template-columns: 1fr; }
+    .topnav { display: none; }
+  }
   @media (prefers-reduced-motion: reduce) {
-    .eyebrow, h1, .hero-foot { animation: none !important; opacity: 1 !important; transform: none !important; }
-    .manifesto-inner { transition: none !important; opacity: 1 !important; transform: none !important; }
-    .btn-primary, .btn-primary svg { transition: none !important; }
+    .rv { transition: none; opacity: 1; transform: none; animation: none !important; }
   }
 </style>
 </head>
 <body>
 
-<canvas id="field" aria-hidden="true"></canvas>
-<div id="grain" aria-hidden="true"></div>
+<div class="bgfx"><div class="glow g1"></div><div class="glow g2"></div><div class="glow g3"></div></div>
+<div class="grain"></div>
+<div class="prog" id="prog"></div>
 
-<div class="stage">
-  <header>
-    <a class="wordmark" href="#" aria-label="WealthOS"><img src="assets/logo-mark-white.png" alt="Vonera" style="mix-blend-mode:screen">Wealth<em>OS</em></a>
-    <a class="back-btn" href="https://vonera.in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>vonera.in</a>
-  </header>
-
-  <main class="hero">
-    <p class="eyebrow">Private preview — invitation only</p>
-    <h1>Built to carry more than any <em>spreadsheet</em> should.</h1>
-    <div class="hero-foot">
-      <p class="subhead">
-        A quiet rebuild of how Indian wealth advisory firms run their book —
-        every family, every filing, every follow-through, in one place that
-        never falls behind. Not yet open. Arriving on invitation.
-      </p>
-      <div class="cta-col">
-        <a class="btn-primary" href="mailto:contact@vonera.in">
-          Write to us
-          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-        <span class="cta-note">We read every note personally.</span>
-      </div>
-    </div>
-  </main>
-
-  <section class="features" aria-labelledby="features-heading">
-    <div class="features-head">
-      <span class="mark">What's inside</span>
-      <h2 id="features-heading">Six things it does, quietly, every day.</h2>
-    </div>
-
-    <div class="feature-row">
-      <span class="feature-num">01</span>
-      <div class="feature-body">
-        <h3>The Book</h3>
-        <p>Every holding, every SIP, every filing — reconciled into one book that's never a day stale. No more chasing PDFs across three portals.</p>
-      </div>
-    </div>
-
-    <div class="feature-row">
-      <span class="feature-num">02</span>
-      <div class="feature-body">
-        <h3>The Plan</h3>
-        <p>Not a folder of screenshots. A living financial plan for every family — goals, timelines, and the numbers that back them, always current.</p>
-      </div>
-    </div>
-
-    <div class="feature-row">
-      <span class="feature-num">03</span>
-      <div class="feature-body">
-        <h3>Today</h3>
-        <p>One screen, every morning: what changed overnight, what's overdue, and exactly who needs a call before lunch.</p>
-      </div>
-    </div>
-
-    <div class="feature-row">
-      <span class="feature-num">04</span>
-      <div class="feature-body">
-        <h3>Consent, Before Action</h3>
-        <p>Every recommendation reaches the client before it reaches the market. Nothing moves without a paper trail of "yes."</p>
-      </div>
-    </div>
-
-    <div class="feature-row">
-      <span class="feature-num">05</span>
-      <div class="feature-body">
-        <h3>The Assistant</h3>
-        <p>Ask your book a question in plain language. Get a straight answer back — not a dashboard you have to interpret yourself.</p>
-      </div>
-    </div>
-
-    <div class="feature-row">
-      <span class="feature-num">06</span>
-      <div class="feature-body">
-        <h3>The Whole Relationship</h3>
-        <p>From the first introduction to the day a client eventually leaves — handled deliberately, on the record, start to finish.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="manifesto">
-    <div class="manifesto-inner" id="manifesto-inner">
-      <span class="mark">— a note, before the rest</span>
-      <blockquote>
-        Most tools were built to manage contacts. <em>We built ours to manage a practice</em> —
-        the families, the filings, the fine print, and the thousand quiet
-        follow-throughs that decide whether a client stays for a decade or leaves in a year.
-      </blockquote>
-    </div>
-  </section>
-
-  <section class="closing">
-    <h2>Not open yet. <em>Arriving</em> on invitation.</h2>
-    <div class="cta-col">
-      <a class="btn-primary" href="mailto:contact@vonera.in">
-        Write to us
-        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
-      <span class="cta-note">We read every note personally.</span>
-    </div>
-  </section>
-
-  <footer>
-    <span>WealthOS — Hyderabad — © 2026. All rights reserved.</span>
-    <a href="mailto:contact@vonera.in">contact@vonera.in</a>
-  </footer>
+<div class="top">
+  <div class="brand"><img src="assets/logo-mark-white.png" alt="Vonera">WEALTHOS <span>by Vonera</span></div>
+  <a class="back-btn" href="https://vonera.in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>vonera.in</a>
 </div>
+
+<div class="dots" id="dots"></div>
+
+<!-- ═══════════════════ 01 HERO ═══════════════════ -->
+<section class="slide hero" data-s>
+  <div class="star" style="right:8vw;top:20vh;font-size:20px">✦</div>
+  <div class="wrap">
+    <div class="kick rv">WealthOS by Vonera · private preview</div>
+    <h1 class="dsp rv d1">Built to carry more<br>than any <span class="grad">spreadsheet</span><br>should.</h1>
+    <p class="lead desc rv d2">
+      A quiet rebuild of how Indian wealth advisory firms run their book —
+      every family, every filing, every follow-through, in one place that
+      never falls behind. Not yet open. Arriving on invitation.
+    </p>
+    <div class="cta rv d3">
+      <a href="#six" class="pill solid">See what's inside →</a>
+      <a href="mailto:contact@vonera.in" class="pill ghost">Write to us</a>
+    </div>
+  </div>
+
+  <!-- Hero mock — deliberately redacted, not a real screen -->
+  <div class="hero-mock rv d3" aria-hidden="true">
+    <div class="frame">
+      <div class="fbar"><i></i><i></i><i></i><span>private — access restricted</span></div>
+      <div class="fbody">
+        <div class="mock-h" style="grid-template-columns: 1fr 70px 90px">
+          <span>Family</span><span style="text-align:right">Status</span><span style="text-align:right">Cover</span>
+        </div>
+        <div class="mock-row" style="display:grid; grid-template-columns: 1fr 70px 90px">
+          <div>
+            <div class="mock-name"><span class="redact" style="width:96px">Redacted</span></div>
+            <div class="mock-mut"><span class="redact" style="width:70px">Redacted</span></div>
+          </div>
+          <div style="text-align:right"><span class="redact gold" style="width:40px">Redacted</span></div>
+          <div style="text-align:right"><span class="redact" style="width:56px">Redacted</span></div>
+        </div>
+        <div class="mock-row" style="display:grid; grid-template-columns: 1fr 70px 90px">
+          <div>
+            <div class="mock-name"><span class="redact" style="width:118px">Redacted</span></div>
+            <div class="mock-mut"><span class="redact" style="width:58px">Redacted</span></div>
+          </div>
+          <div style="text-align:right"><span class="redact" style="width:40px">Redacted</span></div>
+          <div style="text-align:right"><span class="redact" style="width:56px">Redacted</span></div>
+        </div>
+        <div class="mock-row" style="display:grid; grid-template-columns: 1fr 70px 90px">
+          <div>
+            <div class="mock-name"><span class="redact" style="width:84px">Redacted</span></div>
+            <div class="mock-mut"><span class="redact" style="width:66px">Redacted</span></div>
+          </div>
+          <div style="text-align:right"><span class="redact gold" style="width:40px">Redacted</span></div>
+          <div style="text-align:right"><span class="redact" style="width:56px">Redacted</span></div>
+        </div>
+        <div class="mock-total">
+          <span class="lbl">Book · reconciled today</span>
+          <span class="redact gold" style="width:64px;height:16px">Redacted</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 02 MANIFESTO ═══════════════════ -->
+<section class="slide" data-s>
+  <div class="kick rv">— a note, before the rest</div>
+  <div class="manifesto-wrap">
+    <blockquote class="rv d1">
+      Most tools were built to manage contacts. <em>We built ours to manage a practice</em> —
+      the families, the filings, the fine print, and the thousand quiet
+      follow-throughs that decide whether a client stays for a decade or leaves in a year.
+    </blockquote>
+  </div>
+</section>
+
+<!-- ═══════════════════ 09 CLOSE ═══════════════════ -->
+<section class="slide close" data-s>
+  <div class="star" style="left:9vw;top:26vh;font-size:22px">✦</div>
+  <div class="star" style="right:12vw;bottom:24vh;font-size:22px">✦</div>
+  <div class="wrap">
+    <div class="kick rv">Ready when you are</div>
+    <h2 class="rv d1">Not open yet.<br><span class="grad">Arriving</span> on invitation.</h2>
+    <p class="lead rv d2" style="margin-top: 22px">
+      We're not accepting general inquiries yet. If you already know why you're here, introduce yourself.
+    </p>
+    <div class="cta rv d3">
+      <a href="mailto:contact@vonera.in" class="pill solid">Write to us →</a>
+      <span class="badge">Under Development</span>
+    </div>
+    <div class="foot rv d3">WealthOS by Vonera · Hyderabad, IN · contact@vonera.in</div>
+  </div>
+</section>
 
 <script>
 (function () {
@@ -494,83 +337,65 @@
 
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  var manifesto = document.getElementById("manifesto-inner");
-  if (manifesto && "IntersectionObserver" in window && !reduceMotion) {
+  var prog = document.getElementById('prog');
+  var dotsWrap = document.getElementById('dots');
+  var slides = document.querySelectorAll('[data-s]');
+
+  for (var i = 0; i < slides.length; i++) {
+    var b = document.createElement('b');
+    b.setAttribute('data-i', i);
+    b.setAttribute('role', 'button');
+    b.setAttribute('tabindex', '0');
+    b.setAttribute('aria-label', 'Slide ' + (i + 1));
+    dotsWrap.appendChild(b);
+  }
+  var dots = dotsWrap.querySelectorAll('b');
+  dots.forEach(function (d, i) {
+    d.addEventListener('click', function () {
+      slides[i].scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+    });
+    d.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        slides[i].scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+      }
+    });
+  });
+
+  function onScroll() {
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var p = h > 0 ? window.scrollY / h : 0;
+    prog.style.width = (p * 100) + '%';
+    var mid = window.scrollY + window.innerHeight * 0.4;
+    var cur = 0;
+    for (var i = 0; i < slides.length; i++) {
+      if (slides[i].offsetTop <= mid) cur = i;
+    }
+    for (var j = 0; j < dots.length; j++) {
+      dots[j].classList.toggle('on', j === cur);
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  var rvs = document.querySelectorAll('.rv');
+  if ('IntersectionObserver' in window && !reduceMotion) {
     var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          manifesto.classList.add("in-view");
-          io.disconnect();
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
         }
       });
-    }, { threshold: 0.3 });
-    io.observe(manifesto);
-  } else if (manifesto) {
-    manifesto.classList.add("in-view");
-  }
-
-  // Sparse, quiet floating points — no connecting web of lines (that read
-  // as busy/cluttered). A handful of slow, large, soft dots is enough to
-  // feel alive without competing with the huge type.
-  var canvas = document.getElementById("field");
-  var ctx = canvas.getContext("2d");
-  var dpr = Math.min(window.devicePixelRatio || 1, 2);
-  var W = 0, H = 0;
-  var nodes = [];
-
-  function resize() {
-    W = window.innerWidth;
-    H = window.innerHeight;
-    canvas.width = Math.floor(W * dpr);
-    canvas.height = Math.floor(H * dpr);
-    canvas.style.width = W + "px";
-    canvas.style.height = H + "px";
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    seed();
-  }
-
-  function seed() {
-    var count = Math.max(8, Math.min(16, Math.floor((W * H) / 90000)));
-    nodes = [];
-    for (var i = 0; i < count; i++) {
-      nodes.push({
-        x: Math.random() * W,
-        y: Math.random() * H,
-        vx: (Math.random() - 0.5) * 0.045,
-        vy: (Math.random() - 0.5) * 0.045,
-        r: 1.1 + Math.random() * 1.6,
-        phase: Math.random() * Math.PI * 2
-      });
-    }
-  }
-
-  function step(t) {
-    ctx.clearRect(0, 0, W, H);
-    for (var i = 0; i < nodes.length; i++) {
-      var n = nodes[i];
-      n.x += n.vx;
-      n.y += n.vy;
-      if (n.x < -20) n.x = W + 20;
-      if (n.x > W + 20) n.x = -20;
-      if (n.y < -20) n.y = H + 20;
-      if (n.y > H + 20) n.y = -20;
-      var twinkle = 0.28 + 0.24 * Math.sin(t * 0.0004 + n.phase);
-      ctx.beginPath();
-      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-      ctx.fillStyle = "rgba(201, 171, 110, " + twinkle.toFixed(3) + ")";
-      ctx.fill();
-    }
-    window.requestAnimationFrame(step);
-  }
-
-  window.addEventListener("resize", resize, { passive: true });
-  resize();
-
-  if (reduceMotion) {
-    step(0);
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    rvs.forEach(function (el) { io.observe(el); });
   } else {
-    window.requestAnimationFrame(step);
+    rvs.forEach(function (el) { el.classList.add('in'); });
   }
+
+  document.querySelector('.slide').querySelectorAll('.rv').forEach(function (el) {
+    el.classList.add('in');
+  });
 })();
 </script>
 
