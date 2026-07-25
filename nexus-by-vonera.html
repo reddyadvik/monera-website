@@ -65,7 +65,7 @@ h2{font-weight:800;letter-spacing:-.022em;line-height:1.03;font-size:clamp(30px,
 .divider{align-items:flex-start;justify-content:center}
 .divider .pt{font-size:clamp(64px,13vw,180px);font-weight:800;line-height:.8;letter-spacing:-.04em;-webkit-text-stroke:1.4px rgba(37,99,235,.3);color:transparent}
 .divider h2{margin-top:10px;max-width:20ch}
-.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:34px}
+.tiers{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:0}
 .tier{border:1px solid var(--line);border-radius:22px;padding:32px 28px;background:rgba(20,16,31,.024);position:relative}
 .tier.f{border-color:var(--purple);background:rgba(96,150,255,.08);box-shadow:0 0 45px rgba(96,150,255,.14)}
 .tier .tn{font-size:22px;font-weight:800}.tier .tn.g{color:var(--pl)}
@@ -84,6 +84,12 @@ h2{font-weight:800;letter-spacing:-.022em;line-height:1.03;font-size:clamp(30px,
 @media(max-width:900px){.feat,.feat.rev{grid-template-columns:1fr;gap:28px}.feat.rev .txt{order:1}.feat.rev .shot{order:2}.pcards,.steps,.grid3,.tiers{grid-template-columns:1fr 1fr}.slide{padding:106px 6vw 62px}.dots{display:none}.hero .wrap{max-width:100%}.chrome{opacity:.28;height:62vh;right:-6vw}}
 @media(max-width:560px){.pcards,.steps,.grid3,.tiers{grid-template-columns:1fr}.top{padding:14px 18px}.brand{font-size:11px;gap:6px}.brand img{height:18px}.back-btn{padding:6px 10px}}
 @media(prefers-reduced-motion:reduce){.rv{transition:none;opacity:1;transform:none}}
+.btog{display:flex;align-items:center;gap:4px;background:rgba(20,16,31,.06);border:1px solid var(--line);border-radius:40px;padding:4px;width:fit-content;margin:24px 0 28px}
+.btog-btn{border:none;background:transparent;cursor:pointer;font-size:13px;font-weight:700;letter-spacing:.06em;padding:8px 22px;border-radius:36px;color:var(--faint);transition:background .2s,color .2s;font-family:inherit}
+.btog-btn.on{background:var(--purple);color:#fff;box-shadow:0 4px 14px rgba(47,107,255,.3)}
+.btog-save{font-size:10px;font-weight:800;letter-spacing:.08em;background:rgba(47,107,255,.12);color:var(--pl);padding:2px 7px;border-radius:20px;margin-left:6px;vertical-align:middle}
+.btog-btn.on .btog-save{background:rgba(255,255,255,.22);color:#fff}
+.tier .cta-link{display:inline-flex;align-items:center;margin-top:18px;font-size:13px;font-weight:700;color:var(--purple);letter-spacing:.04em;text-decoration:none;border:1px solid var(--line);padding:9px 18px;border-radius:40px;transition:border-color .2s,background .2s}.tier .cta-link:hover{border-color:var(--purple);background:rgba(47,107,255,.05)}
 </style>
 <style>.pc,.gc,.step,.tier{box-shadow:0 8px 26px rgba(20,16,31,.05)}.top{background:rgba(251,252,255,.72)}.proof{background:rgba(47,107,255,.05)}.tier.f{background:rgba(47,107,255,.06)}</style>
 <div class="bgfx"><div class="glow g1"></div><div class="glow g2"></div></div>
@@ -251,12 +257,35 @@ const DECK=[
    <div class="kick rv">Founding customer pricing</div>
    <h2 class="rv d1">Lock in founding pricing <span class="grad">before it moves</span></h2>
    <p class="lead rv d1" style="margin-top:16px">Introductory rates for our first cohort — the price you start at is the price you keep.</p>
-   <div class="tiers">
-     <div class="tier rv d1"><div class="tn">Starter</div><div class="old">₹70,000 / mo</div><div class="now">₹40,000 <small>/ mo</small></div><p>For a lean desk getting quotes out faster.</p></div>
-     <div class="tier f rv d2"><div class="ribbon">Most popular</div><div class="tn g">Growth</div><div class="old">₹1,10,000 / mo</div><div class="now">₹70,000 <small>/ mo</small></div><p>Full parallel workflow across every department.</p></div>
-     <div class="tier rv d3"><div class="tn">Enterprise</div><div class="old">₹1,50,000 / mo</div><div class="now">₹1,00,000 <small>/ mo</small></div><p>Governance, scale and procurement-grade controls.</p></div>
+   <div class="btog rv d2">
+     <button class="btog-btn on" data-mode="q">Quarterly</button>
+     <button class="btog-btn" data-mode="y">Annual <span class="btog-save">Save up to 25%</span></button>
    </div>
-   <p class="lead rv d4" style="margin-top:20px;font-style:italic;color:var(--pl)">Even the top tier is covered many times over by a single extra win.</p>
+   <div class="tiers">
+     <div class="tier rv d1">
+       <div class="tn">Starter</div>
+       <div class="now"><span class="pval" data-q="₹2 L" data-y="₹6 L">₹2 L</span><small> <span class="pper" data-q="/ quarter" data-y="/ year">/ quarter</span></small></div>
+       <p>For a lean desk getting quotes out faster.</p>
+     </div>
+     <div class="tier f rv d2">
+       <div class="ribbon">Most popular</div>
+       <div class="tn g">Growth</div>
+       <div class="now"><span class="pval" data-q="₹2.8 L" data-y="₹9 L">₹2.8 L</span><small> <span class="pper" data-q="/ quarter" data-y="/ year">/ quarter</span></small></div>
+       <p>Full parallel workflow across every department.</p>
+     </div>
+     <div class="tier rv d3">
+       <div class="tn">Max</div>
+       <div class="now"><span class="pval" data-q="₹4 L" data-y="₹14 L">₹4 L</span><small> <span class="pper" data-q="/ quarter" data-y="/ year">/ quarter</span></small></div>
+       <p>Governance, scale and procurement-grade controls.</p>
+     </div>
+     <div class="tier rv d4">
+       <div class="tn">Enterprise</div>
+       <div class="now" style="font-size:clamp(24px,2.6vw,34px);margin-top:10px">Custom</div>
+       <p>White-glove onboarding, custom SLAs, and dedicated support — scoped to your org.</p>
+       <a href="mailto:contact@vonera.in" class="cta-link">Get a quote →</a>
+     </div>
+   </div>
+   <p class="lead rv d5" style="margin-top:24px;font-style:italic;color:var(--pl)">Even the top tier is covered many times over by a single extra win.</p>
  </section>`,
  // 20 CLOSE
  `<section class="slide close" data-s>
@@ -282,4 +311,20 @@ addEventListener('scroll',()=>{const h=document.documentElement;prog.style.width
 let cur=0;
 addEventListener('keydown',e=>{if(['ArrowDown','PageDown',' '].includes(e.key)){e.preventDefault();cur=Math.min(slides.length-1,cur+1);slides[cur].scrollIntoView({behavior:'smooth'})}if(['ArrowUp','PageUp'].includes(e.key)){e.preventDefault();cur=Math.max(0,cur-1);slides[cur].scrollIntoView({behavior:'smooth'})}});
 slides.forEach((s,i)=>new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)cur=i}),{threshold:.5}).observe(s));
+</script>
+<script>
+(function(){
+  function init(){
+    var btns=document.querySelectorAll('.btog-btn');
+    if(!btns.length)return;
+    function setMode(m){
+      btns.forEach(function(b){b.classList.toggle('on',b.dataset.mode===m)});
+      document.querySelectorAll('.pval,.pper').forEach(function(el){
+        if(el.dataset[m])el.textContent=el.dataset[m];
+      });
+    }
+    btns.forEach(function(b){b.addEventListener('click',function(){setMode(b.dataset.mode)})});
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init)}else{init()}
+})();
 </script>
