@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Nexus by Vonera</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<style>
+:root{
+  --bg:#FBFCFF;--bg2:#EEF3FC;--card:#fff;--ink:#141021;--mut:#4E475F;--faint:#857E93;
+  --purple:#2F6BFF;--pl:#2563EB;--line:rgba(20,16,31,.11);--line2:rgba(47,107,255,.18);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;background:var(--bg)}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Helvetica Neue",Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;font-size:16px;line-height:1.5;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+::selection{background:rgba(47,107,255,.15)}
+
+/* ── Nav ── */
+.nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  padding:13px 20px;background:rgba(251,252,255,.88);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:8px;font-weight:800;letter-spacing:.12em;font-size:12px;text-transform:uppercase}
+.brand img{height:20px;width:auto}
+.brand span{color:var(--purple)}
+.back{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--faint);padding:7px 12px;border:1px solid var(--line);border-radius:6px;
+  transition:color .2s,border-color .2s}
+.back svg{width:12px;height:12px}
+
+/* ── Section base ── */
+.sect{padding:52px 22px}
+.sect.alt{background:var(--bg2)}
+.sect.dark{background:var(--ink);color:#fff}
+.kick{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--pl);font-weight:700;
+  margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.kick::before{content:"";width:20px;height:1px;background:var(--purple);display:inline-block;flex:none}
+.kick.c{justify-content:center}
+h1.dsp{font-size:clamp(34px,9vw,52px);font-weight:800;letter-spacing:-.03em;line-height:.97;margin-bottom:20px}
+h2{font-size:clamp(24px,6vw,36px);font-weight:800;letter-spacing:-.022em;line-height:1.05;margin-bottom:16px}
+h2.sm{font-size:clamp(20px,5vw,28px)}
+.grad{background:linear-gradient(92deg,var(--pl),var(--purple));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--mut);font-size:15px;line-height:1.65}
+.dark .lead{color:rgba(255,255,255,.62)}
+.dark .kick{color:rgba(47,107,255,.85)}
+
+/* ── Hero ── */
+.hero{padding:80px 22px 52px;background:linear-gradient(160deg,#EEF3FC 0%,var(--bg) 60%);position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;width:280px;height:280px;right:-80px;top:-60px;
+  border-radius:50%;background:radial-gradient(circle,rgba(47,107,255,.14),transparent 70%);pointer-events:none}
+.hero h1{margin-bottom:18px}
+.hero .lead{max-width:44ch;margin-bottom:30px}
+.cta-row{display:flex;flex-direction:column;gap:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:15px 28px;
+  border-radius:40px;font-weight:700;font-size:15px;cursor:pointer;border:none}
+.btn.solid{background:var(--purple);color:#fff;box-shadow:0 8px 28px rgba(47,107,255,.35);width:100%}
+.btn.ghost{border:1px solid var(--line);color:var(--ink);background:transparent;width:fit-content}
+
+/* ── Problem cards ── */
+.cards{display:flex;flex-direction:column;gap:14px;margin-top:24px}
+.card{border:1px solid var(--line);border-radius:16px;padding:22px 18px;background:var(--card)}
+.card h3{font-size:17px;font-weight:800;margin-bottom:8px}
+.card h3 span,.card h3 b{color:var(--pl)}
+.card p{color:var(--mut);font-size:14px;line-height:1.55}
+.card .mark{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--pl);margin-bottom:8px}
+
+/* ── 3-pillar grid ── */
+.pillars{display:grid;grid-template-columns:1fr;gap:14px;margin-top:24px}
+.pillar{border:1px solid var(--line2);border-radius:14px;padding:20px 16px;background:rgba(47,107,255,.03)}
+.pillar h3{font-size:16px;font-weight:800;margin-bottom:6px}
+.pillar p{font-size:13.5px;color:var(--mut);line-height:1.5}
+
+/* ── Steps ── */
+.steps{display:flex;flex-direction:column;gap:0;margin-top:24px}
+.step-item{display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--line)}
+.step-item:last-child{border-bottom:none}
+.step-num{flex:none;width:36px;height:36px;border-radius:10px;background:rgba(47,107,255,.08);
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--pl);letter-spacing:.06em}
+.step-body b{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--pl)}
+.step-body h3{font-size:16px;font-weight:800;margin:4px 0 4px}
+.step-body p{font-size:13.5px;color:var(--mut);line-height:1.5}
+
+/* ── Capabilities accordion ── */
+.caps{display:flex;flex-direction:column;gap:0;margin-top:24px;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.cap{border-bottom:1px solid var(--line)}
+.cap:last-child{border-bottom:none}
+.cap-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;cursor:pointer;
+  background:var(--card);user-select:none;-webkit-user-select:none}
+.cap-head:active{background:rgba(47,107,255,.04)}
+.cap-label{font-size:13px;font-weight:700;color:var(--ink);flex:1}
+.cap-tag{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--pl);margin-right:12px}
+.cap-icon{flex:none;width:22px;height:22px;border-radius:50%;background:rgba(47,107,255,.08);
+  display:flex;align-items:center;justify-content:center;transition:transform .25s}
+.cap-icon svg{width:10px;height:10px;stroke:var(--purple)}
+.cap.open .cap-icon{transform:rotate(180deg)}
+.cap-body{display:none;padding:0 18px 18px}
+.cap-body p{font-size:14px;color:var(--mut);line-height:1.6;margin-bottom:12px}
+.cap-blist{list-style:none;display:flex;flex-direction:column;gap:8px}
+.cap-blist li{display:flex;gap:10px;font-size:13.5px;color:var(--mut);line-height:1.45}
+.cap-blist li::before{content:"";flex:none;width:7px;height:7px;margin-top:5px;border-radius:2px;background:var(--purple)}
+.cap-blist li b{color:var(--ink)}
+.cap-proof{margin-top:12px;padding:10px 14px;border-left:2px solid var(--purple);background:rgba(47,107,255,.05);
+  border-radius:0 8px 8px 0;font-size:13px;color:var(--pl);font-style:italic}
+.cap.open .cap-body{display:block}
+
+/* ── Divider ── */
+.divider{padding:52px 22px;background:var(--ink);color:#fff;text-align:center}
+.divider .pt{font-size:clamp(56px,16vw,100px);font-weight:800;line-height:.85;letter-spacing:-.04em;
+  -webkit-text-stroke:1.5px rgba(47,107,255,.5);color:transparent;display:block;margin-bottom:16px}
+.divider h2{color:#fff;font-size:clamp(22px,5vw,32px);max-width:26ch;margin:0 auto 12px}
+.divider .lead{color:rgba(255,255,255,.55);text-align:center;max-width:38ch;margin:0 auto}
+
+/* ── Stat grid ── */
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px}
+.stat{border:1px solid var(--line);border-radius:16px;padding:22px 16px;background:var(--card)}
+.stat .big{font-size:clamp(26px,6vw,38px);font-weight:800;letter-spacing:-.02em;color:var(--pl);line-height:1}
+.stat h3{font-size:14px;font-weight:800;margin:6px 0 6px;line-height:1.2}
+.stat p{font-size:13px;color:var(--mut);line-height:1.5}
+.stats.col1{grid-template-columns:1fr}
+
+/* ── Pricing ── */
+.btog{display:flex;align-items:center;gap:4px;background:rgba(20,16,31,.06);
+  border:1px solid var(--line);border-radius:40px;padding:4px;margin:20px 0 22px}
+.btog-btn{flex:1;border:none;background:transparent;cursor:pointer;font-size:13px;font-weight:700;
+  letter-spacing:.05em;padding:9px 14px;border-radius:36px;color:var(--faint);transition:background .2s,color .2s;font-family:inherit;text-align:center}
+.btog-btn.on{background:var(--purple);color:#fff;box-shadow:0 4px 12px rgba(47,107,255,.3)}
+.btog-save{font-size:10px;font-weight:800;background:rgba(255,255,255,.22);color:#fff;padding:2px 6px;border-radius:20px;margin-left:5px;vertical-align:middle}
+.btog-btn:not(.on) .btog-save{background:rgba(47,107,255,.12);color:var(--pl)}
+.tiers{display:flex;flex-direction:column;gap:14px}
+.tier{border:1px solid var(--line);border-radius:18px;padding:24px 18px;background:var(--card);position:relative}
+.tier.pop{border-color:var(--purple);background:rgba(47,107,255,.04);box-shadow:0 0 32px rgba(47,107,255,.1)}
+.ribbon{position:absolute;top:-11px;right:18px;background:var(--purple);color:#fff;font-size:10px;
+  font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:20px}
+.tier .tn{font-size:20px;font-weight:800}
+.tier .tn.g{color:var(--pl)}
+.tier .now{font-size:30px;font-weight:800;letter-spacing:-.02em;margin:6px 0 2px}
+.tier .now small{font-size:14px;font-weight:600;color:var(--mut)}
+.tier p{color:var(--mut);font-size:13.5px;line-height:1.45;margin-top:10px}
+.tier .limit{margin-top:8px;font-size:12px;font-weight:700;color:var(--pl);letter-spacing:.04em}
+.tier .cta-link{display:inline-flex;align-items:center;margin-top:14px;font-size:13px;font-weight:700;
+  color:var(--purple);border:1px solid var(--line);padding:8px 16px;border-radius:40px}
+
+/* ── Proof / quote box ── */
+.proof{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border:1px solid var(--line);
+  border-radius:12px;background:rgba(47,107,255,.04);margin-top:18px;font-size:13.5px;color:var(--ink);line-height:1.5}
+.proof .big{font-size:22px;font-weight:800;color:var(--pl);white-space:nowrap;flex:none}
+
+/* ── Close ── */
+.close-sect{padding:60px 22px;background:var(--ink);color:#fff;text-align:center}
+.close-sect h2{color:#fff;font-size:clamp(28px,7vw,42px);margin-bottom:16px}
+.close-sect .lead{margin:0 auto 28px;max-width:36ch}
+.close-sect .btn.solid{width:auto;margin:0 auto}
+
+/* ── Footer ── */
+.foot{padding:24px 22px;border-top:1px solid rgba(255,255,255,.08);text-align:center;
+  font-size:12.5px;color:rgba(255,255,255,.35);line-height:1.8;background:var(--ink)}
+.foot a{color:rgba(255,255,255,.5)}
+
+/* ── Scroll reveal ── */
+.rv{opacity:0;transform:translateY(20px);transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+.rv.d1{transition-delay:.06s}.rv.d2{transition-delay:.12s}.rv.d3{transition-delay:.18s}.rv.d4{transition-delay:.24s}
+@media(prefers-reduced-motion:reduce){.rv{transition:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="brand">
+    <img src="assets/logo-mark-black.png" alt="Vonera">
+    NEXUS <span>by Vonera</span>
+  </div>
+  <a class="back" href="https://vonera.in">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    vonera.in
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="kick rv">Nexus by Vonera · Pharma CRO / CDMO</div>
+  <h1 class="dsp rv d1">Quote faster.<br>Protect margin.<br><span class="grad">Win more work.</span></h1>
+  <p class="lead rv d2">The AI-native proposal &amp; costing platform for pharma CRO / CDMO — one organised system for a process that today lives in email, spreadsheets and people's heads.</p>
+  <div class="cta-row rv d3">
+    <button class="btn solid">Book a walkthrough</button>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="sect">
+  <div class="kick rv">Your reality today</div>
+  <h2 class="rv d1">Proposals get built <span class="grad">in chaos</span> — and it costs you</h2>
+  <p class="lead rv d2">A CRO/CDMO bid pulls together chemistry, costing, manufacturing, quality and regulatory into one quote — yet there's no system holding it. The route lives in one head, the costing in a fragile spreadsheet, reviews scattered across email, every estimator pricing differently.</p>
+  <div class="cards rv d3">
+    <div class="card">
+      <h3>No <span>single system</span></h3>
+      <p>Chemistry, costing and review live in different tools and different inboxes — nothing joined up.</p>
+    </div>
+    <div class="card">
+      <h3>Fragile &amp; <span>inconsistent</span></h3>
+      <p>One wrong spreadsheet cell re-prices the bid, and two estimators quote the same job two different ways.</p>
+    </div>
+    <div class="card">
+      <h3>Slow, and <span>costly to get wrong</span></h3>
+      <p>RFPs go out late or mis-priced — and one custom-synthesis project is worth ₹15L to ₹1Cr+.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MEET -->
+<section class="sect alt">
+  <div class="kick c rv">One platform</div>
+  <h2 style="text-align:center" class="rv d1">From a route to a <span class="grad">costed, reviewed, client-ready</span> proposal</h2>
+  <p class="lead rv d2" style="text-align:center;margin-bottom:0">Not a generic CPQ. Nexus understands the chemistry — routes, yields, stages and structures — and pairs AI drafting with a deterministic cost engine and a governed, parallel review workflow.</p>
+  <div class="pillars rv d3">
+    <div class="pillar"><h3 class="grad">Chemistry-native</h3><p>It reads the route and builds the costed table — nobody starts from a blank page.</p></div>
+    <div class="pillar"><h3 class="grad">Deterministic costing</h3><p>Every number traces back to the chemistry and holds up line by line.</p></div>
+    <div class="pillar"><h3 class="grad">Parallel + governed</h3><p>Every department works the same live proposal at once, under approval gates.</p></div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="sect">
+  <div class="kick rv">How it works</div>
+  <h2 class="sm rv d1">Route in. AI-drafted. Reviewed in parallel. <span class="grad">Out as a finished document.</span></h2>
+  <div class="steps rv d2">
+    <div class="step-item">
+      <div class="step-num">01</div>
+      <div class="step-body"><b>Ingest</b><h3>Drop in the route</h3><p>A synthesis route, patent or client brief.</p></div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">02</div>
+      <div class="step-body"><b>Cost</b><h3>Price it, per tier</h3><p>The deterministic engine costs it, traceable to the chemistry.</p></div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">03</div>
+      <div class="step-body"><b>Review</b><h3>Every dept, in parallel</h3><p>Worked simultaneously, under approval gates.</p></div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">04</div>
+      <div class="step-body"><b>Deliver</b><h3>Client-ready out</h3><p>Export a branded, defensible proposal.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITIES -->
+<section class="sect alt">
+  <div class="kick rv">The platform</div>
+  <h2 class="sm rv d1">8 capabilities. <span class="grad">One system.</span></h2>
+  <div class="caps rv d2">
+
+    <div class="cap open">
+      <div class="cap-head">
+        <span class="cap-tag">01</span>
+        <span class="cap-label">Generation — Drop in the route, get the costed table back</span>
+        <span class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 9l-7 7-7-7"/></svg></span>
+      </div>
+      <div class="cap-body">
+        <p>Nexus reads the chemistry and generates the full RD table — every stage, reagent and quantity laid out, with yields and stoichiometry derived rather than re-typed.</p>
+        <ul class="cap-blist">
+          <li><b>Hours of manual data entry</b> turn into a single review-and-approve step.</li>
+          <li><b>Chemical identities resolved and cross-checked</b> against public references.</li>
+          <li><b>The route feeds the cost engine directly</b> — no re-keying between chemistry and price.</li>
+        </ul>
+        <div class="cap-proof">A full day of table-building becomes a short review.</div>
+      </div>
+    </div>
+
+    <div class="cap">
+      <div class="cap-head">
+        <span class="cap-tag">02</span>
+        <span class="cap-label">Workflow — Every department, working at once</span>
+        <span class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 9l-7 7-7-7"/></svg></span>
+      </div>
+      <div class="cap-body">
+        <p>The single biggest driver of turnaround is the department relay. Nexus removes it — R&D, Manufacturing, Quality, Supply Chain and EHS all work the same live proposal in parallel.</p>
+        <ul class="cap-blist">
+          <li><b>Teams work simultaneously</b> — more bids out per quarter without adding headcount.</li>
+          <li><b>Nothing stalls unseen in an inbox</b> — every hand-off is visible.</li>
+          <li><b>Governed approvals</b> keep the speed without giving up control.</li>
+        </ul>
+        <div class="cap-proof">The department relay disappears — teams work at once, not in line.</div>
+      </div>
+    </div>
+
+    <div class="cap">
+      <div class="cap-head">
+        <span class="cap-tag">03</span>
+        <span class="cap-label">Costing — A number you can defend line by line</span>
+        <span class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 9l-7 7-7-7"/></svg></span>
+      </div>
+      <div class="cap-body">
+        <p>Nexus replaces fragile spreadsheets with one deterministic engine — so when a client pushes back you can re-quote on the spot without losing the thread, or the margin.</p>
+        <ul class="cap-blist">
+          <li><b>Re-quote 100 kg → 1,000 kg in seconds</b>, target margin held intact under client pressure.</li>
+          <li><b>Every figure traces back to the chemistry</b>, so it stands up to a client or an auditor.</li>
+          <li><b>Sanity checks flag impossible values</b> before they reach the quote.</li>
+        </ul>
+        <div class="cap-proof">Margin computed to your target, on every tier — not guessed.</div>
+      </div>
+    </div>
+
+    <div class="cap">
+      <div class="cap-head">
+        <span class="cap-tag">04</span>
+        <span class="cap-label">Manufacturing — Model the plant, cost every operation</span>
+        <span class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 9l-7 7-7-7"/></svg></span>
+      </div>
+      <div class="cap-body">
+        <p>Manufacturing economics are where quotes quietly go wrong. Nexus lets you lay out the actual plant — reactors, utilities, unit-ops — and cost every operation instead of estimating it.</p>
+        <ul class="cap-blist">
+          <li><b>Cost the plant you will actually run</b>, stage by stage — not a round-number guess.</li>
+          <li><b>Utility and labour rates from your company profile</b>, so every estimator prices the same way.</li>
+          <li><b>Per-batch operation costs flow straight into the quote.</b></li>
+        </ul>
+        <div class="cap-proof">Every reactor, utility and unit-op — costed per batch, not estimated.</div>
+      </div>
+    </div>
+
+    <div class="cap">
+      <div class="cap-head">
+        <span class="cap-tag">05</span>
+        <span class="cap-label">Chemistry search — Search your archive by molecule</span>
+        <span class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 9l-7 7-7-7"/></svg></span>
+      </div>
+      <div class="cap-body">
+        <p>Your proposal history is a chemistry asset most CROs can't use. Nexus lets you search it the way a chemist thinks — by structure, not by keyword.</p>
+        <ul class="cap-blist">
+          <li><b>Draw a molecule</b> and find every past proposal that contains that substructure.</li>
+          <li><b>Reuse a proven route or price</b> instead of re-quoting from scratch.</li>
+          <li><b>Verified structures</b>, not fragile name-matching.</li>
+        </ul>
+        <div class="cap-proof">Search your entire proposal archive by molecule, not keyword.</div>
+      </div>
+    </div>
+
+    <div class="cap">
+      <div class="cap-head">
+        <span class="cap-tag">06</span>
+        <span class="cap-label">AI assistant — Ask your pipeline anything</span>
+        <span class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 9l-7 7-7-7"/></svg></span>
+      </div>
+      <div class="cap-body">
+        <p>The answers to run your business are buried in files. Nexus surfaces them in plain English, straight from your live data.</p>
+        <ul class="cap-blist">
+          <li><b>Ask "what's our win rate?"</b> and get a real answer, not a search result.</li>
+          <li><b>Every answer cites its source</b>, so you can trust the number.</li>
+          <li><b>Onboard a new estimator faster</b> — the system already knows your history.</li>
+        </ul>
+        <div class="cap-proof">Answers from your live data — with sources.</div>
+      </div>
+    </div>
+
+    <div class="cap">
+      <div class="cap-head">
+        <span class="cap-tag">07</span>
+        <span class="cap-label">Analytics — See every bottleneck, while you can still fix it</span>
+        <span class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 9l-7 7-7-7"/></svg></span>
+      </div>
+      <div class="cap-body">
+        <p>Nexus turns your whole pipeline into live analytics — company-wide and department by department.</p>
+        <ul class="cap-blist">
+          <li><b>Win rate, proposal quality and stage-by-stage progress</b> on one dashboard.</li>
+          <li><b>Per-department turnaround</b> shows exactly where bids stall — before they cost a deadline.</li>
+          <li><b>Spot the bottleneck this quarter</b>, not in the post-mortem.</li>
+        </ul>
+        <div class="cap-proof">Turnaround and win-rate, live and per department.</div>
+      </div>
+    </div>
+
+    <div class="cap">
+      <div class="cap-head">
+        <span class="cap-tag">08</span>
+        <span class="cap-label">Output — A finished, client-ready proposal</span>
+        <span class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 9l-7 7-7-7"/></svg></span>
+      </div>
+      <div class="cap-body">
+        <p>A complete, well-structured, on-brand document — assembled and governed, not stitched together the night before.</p>
+        <ul class="cap-blist">
+          <li><b>A full multi-section proposal</b>, AI-drafted and approved section by section.</li>
+          <li><b>Your voice and detail</b>, kept under control per section.</li>
+          <li><b>Exported to branded PDF or Word</b> in one click.</li>
+        </ul>
+        <div class="cap-proof">A branded, multi-section proposal — client-ready in one export.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="divider">
+  <span class="pt rv">↑</span>
+  <h2 class="rv d1">What an organised proposal engine <span class="grad">does for your business</span></h2>
+  <p class="lead rv d2">Three things a CRO/CDMO owner actually feels: time back, margin protected, and proposals good enough to win more of.</p>
+</div>
+
+<!-- TIME -->
+<section class="sect">
+  <div class="kick rv">The payoff · Time</div>
+  <h2 class="rv d1">Weeks of turnaround <span class="grad">become days</span></h2>
+  <p class="lead rv d2">The first credible quote often wins. Nexus makes you first.</p>
+  <div class="stats rv d3">
+    <div class="stat"><div class="big">2×</div><h3>the RFP throughput</h3><p>Respond to more bids with the same team.</p></div>
+    <div class="stat"><div class="big">Parallel</div><h3>not a relay</h3><p>All departments, same live proposal, at once.</p></div>
+    <div class="stat" style="grid-column:1/-1"><div class="big">First</div><h3>with a real number</h3><p>Be back with a defensible quote while competitors are still in Excel.</p></div>
+  </div>
+</section>
+
+<!-- MONEY -->
+<section class="sect alt">
+  <div class="kick rv">The payoff · Money</div>
+  <h2 class="rv d1">Capacity freed, <span class="grad">margin protected</span></h2>
+  <p class="lead rv d2">Senior time redirected to quoting, and margin that stops leaking bid after bid.</p>
+  <div class="stats rv d3">
+    <div class="stat"><div class="big">~₹30K</div><h3>freed per bid</h3><p>A 30–40 hr proposal handled in ~4–8 hrs.</p></div>
+    <div class="stat"><div class="big">~₹6L</div><h3>/ month</h3><p>Across ~20 bids a month — redirected from data entry to quoting.</p></div>
+    <div class="stat" style="grid-column:1/-1"><div class="big">Less leak</div><h3>margin protected</h3><p>Deterministic costing and quote-vs-actual reduce the mis-quotes that quietly erode margin.</p></div>
+  </div>
+</section>
+
+<!-- QUALITY -->
+<section class="sect">
+  <div class="kick rv">The payoff · Quality</div>
+  <h2 class="rv d1">Sharper, more <span class="grad">defensible proposals</span></h2>
+  <p class="lead rv d2">Nexus raises the floor on every bid, no matter who builds it.</p>
+  <div class="cards rv d3">
+    <div class="card"><h3>Fewer <b>mis-quotes</b></h3><p>Sanity checks catch the mg-as-kg error and the broken cell before they reach a client.</p></div>
+    <div class="card"><h3>No <b>estimator drift</b></h3><p>Every quote is built off the same engine and rate book — consistent across your whole team.</p></div>
+    <div class="card"><h3>Fully <b>defensible</b></h3><p>Every number traces to the chemistry, standing up to the client's technical review and any audit.</p></div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section class="sect alt">
+  <div class="kick rv">The payoff · Trust</div>
+  <h2 class="rv d1">Governed, audited, and <span class="grad">your molecules stay yours</span></h2>
+  <p class="lead rv d2">Governance makes speed safe. Both are built in.</p>
+  <div class="cards rv d3">
+    <div class="card"><h3>Nothing ships <b>unreviewed</b></h3><p>Concerns, escalations and approvals tracked, attributable and time-stamped across every proposal.</p></div>
+    <div class="card"><h3>Your IP stays <b>in your tenant</b></h3><p>Your chemistry never leaves your isolated workspace and is never used to train any model.</p></div>
+    <div class="card"><h3><b>Procurement-ready</b></h3><p>Multi-tenant isolation, RBAC and full audit logging — aligned to SOC 2, 21 CFR Part 11 and GxP.</p></div>
+  </div>
+</section>
+
+<!-- ECONOMICS -->
+<section class="sect">
+  <div class="kick rv">The economics</div>
+  <h2 class="rv d1">It pays for itself <span class="grad">on the first saved proposal</span></h2>
+  <p class="lead rv d2">Conservative, illustrative model built from how a mid-sized CRO/CDMO bid desk runs.</p>
+  <div class="stats rv d3">
+    <div class="stat"><div class="big">~3 wks</div><h3>to payback</h3><p>The licence is covered by the capacity freed on your first saved proposal.</p></div>
+    <div class="stat"><div class="big">~₹6L</div><h3>capacity / month</h3><p>Senior time redirected across ~20 bids per month.</p></div>
+    <div class="stat" style="grid-column:1/-1"><div class="big">1 win</div><h3>pays for years</h3><p>A single extra custom-synthesis win (₹15L–₹1Cr+) dwarfs the entire licence.</p></div>
+  </div>
+  <p class="lead rv d4" style="margin-top:18px;font-style:italic;color:var(--pl);font-size:13.5px">Illustrative model — happy to rebuild it on your actual bid volume.</p>
+</section>
+
+<!-- PRICING -->
+<section class="sect alt">
+  <div class="kick rv">Founding customer pricing</div>
+  <h2 class="rv d1">Lock in founding pricing <span class="grad">before it moves</span></h2>
+  <p class="lead rv d2">Introductory rates for our first cohort — the price you start at is the price you keep.</p>
+  <div class="btog rv d3">
+    <button class="btog-btn on" data-mode="q">Quarterly</button>
+    <button class="btog-btn" data-mode="y">Annual <span class="btog-save">Save up to 25%</span></button>
+  </div>
+  <div class="tiers rv d3">
+    <div class="tier">
+      <div class="tn">Starter</div>
+      <div class="now"><span class="pval" data-q="₹2 L" data-y="₹6 L">₹2 L</span><small> <span class="pper" data-q="/ quarter" data-y="/ year">/ quarter</span></small></div>
+      <p>For a lean desk getting quotes out faster.</p>
+      <div class="limit">20 proposals / month</div>
+    </div>
+    <div class="tier pop">
+      <div class="ribbon">Most popular</div>
+      <div class="tn g">Growth</div>
+      <div class="now"><span class="pval" data-q="₹2.8 L" data-y="₹9 L">₹2.8 L</span><small> <span class="pper" data-q="/ quarter" data-y="/ year">/ quarter</span></small></div>
+      <p>Full parallel workflow across every department.</p>
+      <div class="limit">35 proposals / month</div>
+    </div>
+    <div class="tier">
+      <div class="tn">Max</div>
+      <div class="now"><span class="pval" data-q="₹4 L" data-y="₹14 L">₹4 L</span><small> <span class="pper" data-q="/ quarter" data-y="/ year">/ quarter</span></small></div>
+      <p>Governance, scale and procurement-grade controls.</p>
+      <div class="limit">60 proposals / month</div>
+    </div>
+    <div class="tier">
+      <div class="tn">Enterprise</div>
+      <div class="now" style="font-size:26px">Custom</div>
+      <p>White-glove onboarding, custom SLAs, and dedicated support — scoped to your org.</p>
+      <a href="mailto:contact@vonera.in" class="cta-link">Get a quote →</a>
+    </div>
+  </div>
+  <p class="lead rv d4" style="margin-top:18px;font-style:italic;color:var(--pl);font-size:13.5px">Even the top tier is covered many times over by a single extra win.</p>
+</section>
+
+<!-- CLOSE -->
+<section class="close-sect">
+  <div class="kick c rv" style="justify-content:center">Ready to see it live?</div>
+  <h2 class="rv d1">Win more. Quote sharper.<br><span class="grad">Defend every number.</span></h2>
+  <p class="lead rv d2">See Nexus run against one of your own routes — bring a real bid, we'll cost it live and model the ROI on your actual volume.</p>
+  <button class="btn solid rv d3">Book a walkthrough</button>
+</section>
+
+<!-- FOOTER -->
+<footer class="foot">
+  Nexus by Vonera &nbsp;·&nbsp;
+  <a href="mailto:contact@vonera.in">contact@vonera.in</a> &nbsp;·&nbsp;
+  <a href="tel:+919390962688">+91 93909 62688</a><br>
+  Somajiguda, Hyderabad, Telangana 500082
+</footer>
+
+<script>
+// Scroll reveal
+const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } }), {threshold:.12});
+document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
+// Accordion
+document.querySelectorAll('.cap-head').forEach(h => {
+  h.addEventListener('click', () => {
+    const cap = h.closest('.cap');
+    const wasOpen = cap.classList.contains('open');
+    document.querySelectorAll('.cap.open').forEach(c => c.classList.remove('open'));
+    if (!wasOpen) cap.classList.add('open');
+  });
+});
+
+// Billing toggle
+(function(){
+  const btns = document.querySelectorAll('.btog-btn');
+  function setMode(m) {
+    btns.forEach(b => b.classList.toggle('on', b.dataset.mode === m));
+    document.querySelectorAll('.pval,.pper').forEach(el => { if(el.dataset[m]) el.textContent = el.dataset[m]; });
+  }
+  btns.forEach(b => b.addEventListener('click', () => setMode(b.dataset.mode)));
+})();
+</script>
+</body>
+</html>
