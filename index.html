@@ -1124,84 +1124,12 @@ function tryPlayHero(){
 gsap.to('#heroVideo',{scale:1.12,ease:'none',scrollTrigger:{trigger:'#home',start:'top top',end:'bottom top',scrub:1}});
 gsap.to('.hero-scroll',{opacity:0,ease:'none',scrollTrigger:{trigger:'#home',start:'top top',end:'40% top',scrub:true}});
 
-/* =========================================================
-   6. ABOUT — simple float-in heading
-========================================================= */
-(function(){
-  const real=$('#aboutReal');
-  const canvas=$('#aboutCanvas');
-  if(canvas) canvas.style.display='none';
-  ScrollTrigger.create({trigger:'#about',start:'top 68%',once:true,onEnter:()=>{
-    gsap.fromTo(real,{opacity:0,y:30},{opacity:1,y:0,duration:1.4,ease:'power3.out'});
-    gsap.to(real,{y:-10,repeat:-1,yoyo:true,duration:3,ease:'sine.inOut',delay:1.4});
-  }});
-})();
-
-/* generic reveals + counters */
+/* generic reveals + counters (contact form, etc — About/Team reveal now lives in about.html) */
 (function(){
   $$('.reveal').forEach(el=>{
     gsap.fromTo(el,{y:46,opacity:0},{y:0,opacity:1,duration:1.1,ease:'power3.out',
       scrollTrigger:{trigger:el,start:'top 85%'}});
   });
-  $$('.stat .n').forEach(el=>{
-    const end=+el.dataset.count;
-    const suffix=el.dataset.suffix||'';
-    const isYear=(end>=2000);
-    const o={v: isYear ? end : 0};
-    ScrollTrigger.create({trigger:el,start:'top 88%',once:true,onEnter:()=>{
-      if(isYear){el.textContent=end+suffix;return;}
-      gsap.to(o,{v:end,duration:1.6,ease:'power2.out',onUpdate:()=>{el.textContent=Math.round(o.v)+suffix;}});
-    }});
-  });
-})();
-
-/* =========================================================
-   7. TEAM — moon that ROTATES on scroll to reveal members
-========================================================= */
-(function(){
-  const moon=$('#moon'), tex=$('#moonImg'), term=$('#moonTerminator'), ring=$('#moonRing');
-  const photos=$$('.moon-photo'), dots=$$('.team-dot'), memberPhotos=$$('.team-member-photo');
-  const numEl=$('#teamNum'), nameEl=$('#teamName'), roleEl=$('#teamRole'), bioEl=$('#teamBio');
-  const data=[
-    {num:'01 / 02',name:'Advik Reddy Bommineni',role:'Founder & CEO',
-     bio:"Building AI-native software for entire industries — not per client. Advik leads product, strategy, and engineering at Vonera, shipping across pharma, fintech, and retail simultaneously."},
-    {num:'02 / 02',name:'Nomula Venkat Reddy',role:'Co-Founder',
-     bio:"Brings operational depth and domain expertise to Vonera's core ventures. Venkat anchors the business foundation that lets the engineering side move fast without breaking things that matter."}
-  ];
-  const N=2; let cur=-1;
-  function show(i){
-    if(i===cur)return; cur=i; const d=data[i];
-    photos.forEach(p=>p.classList.toggle('active',+p.dataset.ph===i));
-    dots.forEach(x=>x.classList.toggle('active',+x.dataset.d===i));
-    memberPhotos.forEach(p=>p.classList.toggle('active',+p.dataset.mp===i));
-    numEl.textContent=d.num;
-    // flash + crossfade the copy as the new face turns into view
-    gsap.fromTo([nameEl,roleEl,bioEl],{opacity:0,y:16},{opacity:1,y:0,duration:.7,ease:'power2.out',stagger:.05});
-    nameEl.textContent=d.name; roleEl.textContent=d.role; bioEl.textContent=d.bio;
-    gsap.fromTo(moon,{filter:'brightness(1.9)'},{filter:'brightness(1)',duration:.8,ease:'power2.out'});
-  }
-  show(0);
-
-  function applyRot(p){
-    const deg=p*540;                 // craters turn ~1.5 revolutions across the section
-    tex.style.transform=`rotate(${deg}deg)`;
-    ring.style.transform=`rotate(${-deg*0.5}deg)`;
-    const i=clamp(Math.floor(p*N+0.0001),0,N-1);
-    show(i);
-  }
-  applyRot(0);
-
-  const st=ScrollTrigger.create({
-    trigger:'#team', start:'top top', end:()=> '+='+(innerHeight*2.4),
-    pin:'#teamPin', scrub:0.8, anticipatePin:1,
-    onUpdate:self=>applyRot(self.progress)
-  });
-
-  // dots let users jump — scroll the page to that member's slice
-  dots.forEach(d=>d.addEventListener('click',()=>{
-    const i=+d.dataset.d; const target=st.start + (st.end-st.start)*((i+0.5)/N);
-    gsap.to(window,{duration:1.1,ease:'power2.inOut',scrollTo:target});
-  }));
 })();
 
 (function(){
