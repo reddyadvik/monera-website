@@ -552,35 +552,52 @@ section{position:relative;z-index:2}
 #product .m-step b{font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--pl)}
 #product .m-step h3{font-size:15.5px;font-weight:800;margin:3px 0}
 #product .m-step p{font-size:13px;color:var(--mut);line-height:1.5}
+#product.m .m-flowsect{padding-left:14px;padding-right:14px}
+#product.m .m-flowsect>.m-kick,#product.m .m-flowsect>.m-h2,#product.m .m-flowsect>.m-lead{padding-left:6px;padding-right:6px}
+@media(min-width:620px){#product.m .m-flowsect{padding-left:20px;padding-right:20px}}
 /* ── capability flow timeline (auto-opens on scroll) ── */
-#product .m-flow{position:relative;margin-top:26px;padding-left:32px}
-#product .m-flow::before{content:"";position:absolute;left:10px;top:8px;bottom:8px;width:2px;border-radius:2px;
-  background:linear-gradient(180deg,rgba(47,107,255,.55),rgba(47,107,255,.10))}
-#product .m-fi{position:relative;margin-bottom:13px}
+/* phones: cards run the full width — no left gutter — and the screenshot
+   goes edge to edge inside the card. The step marker lives inline in the
+   header instead of in a gutter, and the connector sits in the gap. */
+#product .m-flow{position:relative;margin-top:24px}
+#product .m-fi{position:relative;margin-bottom:16px}
 #product .m-fi:last-child{margin-bottom:0}
-#product .m-fi::before{content:"";position:absolute;left:-27px;top:19px;width:12px;height:12px;border-radius:50%;
-  background:#0a0a0d;border:2px solid rgba(47,107,255,.45);z-index:2;
-  transition:background .35s,border-color .35s,box-shadow .35s}
-#product .m-fi.open::before{background:var(--purple);border-color:var(--purple);box-shadow:0 0 0 4px rgba(47,107,255,.16)}
+#product .m-fi:not(:last-child)::after{content:"";position:absolute;left:50%;margin-left:-1px;bottom:-16px;
+  width:2px;height:16px;background:linear-gradient(180deg,rgba(47,107,255,.45),rgba(47,107,255,.10))}
 #product .m-fc{border:1px solid var(--line);border-radius:14px;background:var(--card);overflow:hidden;transition:border-color .35s}
 #product .m-fi.open .m-fc{border-color:rgba(47,107,255,.38)}
-#product .m-fh{padding:14px 16px;cursor:pointer;user-select:none;-webkit-user-select:none}
-#product .m-fstage{font-size:9.5px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--pl)}
-#product .m-fstage em{font-style:normal;opacity:.45;margin:0 3px}
-#product .m-fname{font-size:15px;font-weight:800;margin:5px 0;line-height:1.28;color:var(--ink)}
+#product .m-fh{padding:15px 16px 14px;cursor:pointer;user-select:none;-webkit-user-select:none}
+#product .m-fstage{display:flex;align-items:center;gap:8px;font-size:9.5px;font-weight:800;
+  letter-spacing:.15em;text-transform:uppercase;color:var(--pl)}
+#product .m-fstage::before{content:"";flex:none;width:9px;height:9px;border-radius:50%;
+  background:#0a0a0d;border:2px solid rgba(47,107,255,.5);
+  transition:background .35s,border-color .35s,box-shadow .35s}
+#product .m-fi.open .m-fstage::before{background:var(--purple);border-color:var(--purple);
+  box-shadow:0 0 0 3px rgba(47,107,255,.16)}
+#product .m-fstage em{font-style:normal;opacity:.45;margin:0 2px}
+#product .m-fname{font-size:16px;font-weight:800;margin:7px 0 5px;line-height:1.28;color:var(--ink)}
 #product .m-fbrief{font-size:12.5px;color:var(--mut);line-height:1.5}
 #product .m-fb{max-height:0;overflow:hidden;transition:max-height .55s cubic-bezier(.2,.7,.2,1)}
-#product .m-fi.open .m-fb{max-height:2200px}
-#product .m-fbi{padding:2px 16px 16px}
-#product .m-fbi>p{font-size:13.5px;color:var(--mut);line-height:1.6;margin-bottom:11px}
-/* zig-zag once there is room for two columns */
+#product .m-fi.open .m-fb{max-height:2600px}
+/* body padding moved onto the text, so the screenshot can go full-bleed */
+#product .m-fbi{padding:0 0 16px}
+#product .m-fbi>p{font-size:13.5px;color:var(--mut);line-height:1.6;margin:0 16px 12px}
+#product .m-fbi>.m-bl{margin:0 16px}
+#product .m-fbi .m-frame{border-radius:0;border-left:0;border-right:0;margin:0 0 14px}
+/* zig-zag once there is room for two real columns — spine returns to the centre */
 @media(min-width:620px){
-  #product .m-flow{padding-left:0}
-  #product .m-flow::before{left:50%;margin-left:-1px}
+  #product .m-flow::before{content:"";position:absolute;left:50%;margin-left:-1px;top:8px;bottom:8px;width:2px;
+    border-radius:2px;background:linear-gradient(180deg,rgba(47,107,255,.55),rgba(47,107,255,.10))}
   #product .m-fi{width:calc(50% - 26px);margin-bottom:18px}
   #product .m-fi:nth-child(even){margin-left:calc(50% + 26px)}
-  #product .m-fi:nth-child(odd)::before{left:auto;right:-32px}
+  #product .m-fi:not(:last-child)::after{display:none}
+  #product .m-fi::before{content:"";position:absolute;top:19px;width:12px;height:12px;border-radius:50%;
+    background:#0a0a0d;border:2px solid rgba(47,107,255,.45);z-index:2;
+    transition:background .35s,border-color .35s,box-shadow .35s}
+  #product .m-fi:nth-child(odd)::before{right:-32px}
   #product .m-fi:nth-child(even)::before{left:-32px}
+  #product .m-fi.open::before{background:var(--purple);border-color:var(--purple);box-shadow:0 0 0 4px rgba(47,107,255,.16)}
+  #product .m-fstage::before{display:none}
 }
 #product .m-proof{margin-top:12px;padding:10px 13px;border-left:2px solid var(--purple);background:rgba(47,107,255,.07);
   border-radius:0 8px 8px 0;font-size:12.5px;color:var(--pl);font-style:italic;line-height:1.45}
@@ -1183,7 +1200,7 @@ function mobileHTML(){
   + '<div class="m-step"><div class="m-stepn">04</div><div><b>Deliver</b><h3>Client-ready out</h3><p>Export a branded, defensible proposal.</p></div></div>'
   + '</div></section>',
   // capabilities
-  '<section class="m-sect alt" data-m>'
+  '<section class="m-sect alt m-flowsect" data-m>'
   + '<div class="m-kick rv">The platform</div>'
   + '<h2 class="m-h2 rv d1">Eight capabilities, <span class="grad">in the order a proposal moves</span></h2>'
   + '<p class="m-lead rv d2">From the route landing on your desk to the finished document going out — each step opens as you reach it.</p>'
