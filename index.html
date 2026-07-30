@@ -628,6 +628,39 @@ section{position:relative;z-index:2}
 #product.m .m-pricing .m-kick{justify-content:center}
 #product.m .m-pricing .m-lead{max-width:36ch;margin:0 auto}
 
+
+/* ── card surfaces: ghost index numerals + depth ──────────────────
+   Extends the outline-numeral motif already used by .proj-card-num
+   and .divider .pt (color:transparent + -webkit-text-stroke).
+   Numerals come from a CSS counter, so no markup changes.          */
+#product .pcards{counter-reset:pcn}
+#product .pc{position:relative;overflow:hidden;
+  background:linear-gradient(157deg,rgba(255,255,255,.078),rgba(255,255,255,.02) 62%);
+  border:1px solid rgba(255,255,255,.13);
+  transition:transform .38s cubic-bezier(.2,.7,.2,1),border-color .38s,background .38s}
+#product .pc::before{counter-increment:pcn;content:counter(pcn,decimal-leading-zero);
+  position:absolute;right:16px;top:-4px;font-size:92px;font-weight:800;line-height:1;
+  letter-spacing:-.05em;color:transparent;-webkit-text-stroke:1.2px rgba(255,255,255,.13);
+  pointer-events:none;user-select:none}
+#product .pc>*{position:relative;z-index:1}
+#product .pc h3{padding-right:52px}
+#product .pc:hover,#product .gc:hover,#product .step:hover{transform:translateY(-4px)}
+#product .pc:hover{border-color:rgba(47,107,255,.45);
+  background:linear-gradient(157deg,rgba(47,107,255,.11),rgba(255,255,255,.024) 62%)}
+#product .gc,#product .step{
+  background:linear-gradient(157deg,rgba(255,255,255,.078),rgba(255,255,255,.02) 62%);
+  border:1px solid rgba(255,255,255,.13);
+  transition:transform .38s cubic-bezier(.2,.7,.2,1),border-color .38s,background .38s}
+#product .gc:hover,#product .step:hover{border-color:rgba(47,107,255,.4);
+  background:linear-gradient(157deg,rgba(47,107,255,.10),rgba(255,255,255,.024) 62%)}
+/* the big stat inside .gc reads as the hero of its card */
+#product .gc .big{text-shadow:0 0 34px rgba(47,107,255,.32)}
+/* stop the intro paragraph running the full slide width */
+#product .slide>.lead{max-width:58ch}
+@media(prefers-reduced-motion:reduce){
+  #product .pc,#product .gc,#product .step{transition:none}
+  #product .pc:hover,#product .gc:hover,#product .step:hover{transform:none}
+}
 </style>
 </head>
 <body>
@@ -1012,7 +1045,7 @@ const DECK=[
  `<section class="slide" data-s>
    <div class="kick rv">Your reality today</div>
    <h2 class="rv d1">Proposals get built <span class="grad">in chaos</span> — and it costs you</h2>
-   <p class="lead rv d1" style="margin-top:16px">A CRO/CDMO bid pulls together chemistry, costing, manufacturing, quality and regulatory into one quote — yet there’s no system holding it. The route lives in one head, the costing in a fragile spreadsheet, the reviews scattered across email, and every estimator prices differently. It’s an unorganised process in an unorganised industry, and it leaks speed, margin and deals.</p>
+   <p class="lead rv d1" style="margin-top:16px">A CRO/CDMO bid pulls together chemistry, costing, manufacturing, quality and regulatory into one quote — yet there’s no system holding it. The route lives in one head, the costing in a fragile spreadsheet, the reviews scattered across email, and every estimator prices differently. It’s a slow and costly process to get wrong — and it leaks speed, margin and deals.</p>
    <div class="pcards">
      <div class="pc rv d1"><h3>No <span>single system</span></h3><p>Chemistry, costing and review live in different tools and different inboxes — nothing joined up.</p></div>
      <div class="pc rv d2"><h3>Fragile &amp; <span>inconsistent</span></h3><p>One wrong spreadsheet cell re-prices the bid, and two estimators quote the same job two different ways.</p></div>
