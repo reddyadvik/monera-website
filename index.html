@@ -552,26 +552,36 @@ section{position:relative;z-index:2}
 #product .m-step b{font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--pl)}
 #product .m-step h3{font-size:15.5px;font-weight:800;margin:3px 0}
 #product .m-step p{font-size:13px;color:var(--mut);line-height:1.5}
-#product .m-caps{margin-top:22px;border:1px solid var(--line);border-radius:16px;overflow:hidden}
-#product .m-cap{border-bottom:1px solid var(--line)}
-#product .m-cap:last-child{border-bottom:none}
-#product .m-caph{display:flex;align-items:center;gap:11px;padding:15px 16px;cursor:pointer;background:var(--card);
-  user-select:none;-webkit-user-select:none}
-#product .m-caph:active{background:rgba(47,107,255,.06)}
-#product .m-captag{font-size:10px;font-weight:800;letter-spacing:.08em;color:var(--pl);flex:none}
-#product .m-caplab{font-size:12.8px;font-weight:700;flex:1;line-height:1.35;color:var(--ink)}
-#product .m-capic{flex:none;width:22px;height:22px;border-radius:50%;background:rgba(47,107,255,.13);
-  display:flex;align-items:center;justify-content:center;transition:transform .25s}
-#product .m-capic svg{width:10px;height:10px;stroke:var(--purple);fill:none;stroke-width:2.5}
-#product .m-cap.open .m-capic{transform:rotate(180deg)}
-#product .m-capb{display:none;padding:0 16px 17px}
-#product .m-cap.open .m-capb{display:block}
-#product .m-capb>p{font-size:13.5px;color:var(--mut);line-height:1.6;margin-bottom:11px}
-#product .m-bl{list-style:none;display:flex;flex-direction:column;gap:8px}
-#product .m-bl li{display:flex;gap:9px;font-size:13px;color:var(--mut);line-height:1.45}
-#product .m-bl li span{flex:1}
-#product .m-bl li b{color:var(--ink);font-weight:700}
-#product .m-bl li::before{content:"";flex:none;width:6px;height:6px;margin-top:5px;border-radius:2px;background:var(--purple)}
+/* ── capability flow timeline (auto-opens on scroll) ── */
+#product .m-flow{position:relative;margin-top:26px;padding-left:32px}
+#product .m-flow::before{content:"";position:absolute;left:10px;top:8px;bottom:8px;width:2px;border-radius:2px;
+  background:linear-gradient(180deg,rgba(47,107,255,.55),rgba(47,107,255,.10))}
+#product .m-fi{position:relative;margin-bottom:13px}
+#product .m-fi:last-child{margin-bottom:0}
+#product .m-fi::before{content:"";position:absolute;left:-27px;top:19px;width:12px;height:12px;border-radius:50%;
+  background:#0a0a0d;border:2px solid rgba(47,107,255,.45);z-index:2;
+  transition:background .35s,border-color .35s,box-shadow .35s}
+#product .m-fi.open::before{background:var(--purple);border-color:var(--purple);box-shadow:0 0 0 4px rgba(47,107,255,.16)}
+#product .m-fc{border:1px solid var(--line);border-radius:14px;background:var(--card);overflow:hidden;transition:border-color .35s}
+#product .m-fi.open .m-fc{border-color:rgba(47,107,255,.38)}
+#product .m-fh{padding:14px 16px;cursor:pointer;user-select:none;-webkit-user-select:none}
+#product .m-fstage{font-size:9.5px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--pl)}
+#product .m-fstage em{font-style:normal;opacity:.45;margin:0 3px}
+#product .m-fname{font-size:15px;font-weight:800;margin:5px 0;line-height:1.28;color:var(--ink)}
+#product .m-fbrief{font-size:12.5px;color:var(--mut);line-height:1.5}
+#product .m-fb{max-height:0;overflow:hidden;transition:max-height .55s cubic-bezier(.2,.7,.2,1)}
+#product .m-fi.open .m-fb{max-height:2200px}
+#product .m-fbi{padding:2px 16px 16px}
+#product .m-fbi>p{font-size:13.5px;color:var(--mut);line-height:1.6;margin-bottom:11px}
+/* zig-zag once there is room for two columns */
+@media(min-width:620px){
+  #product .m-flow{padding-left:0}
+  #product .m-flow::before{left:50%;margin-left:-1px}
+  #product .m-fi{width:calc(50% - 26px);margin-bottom:18px}
+  #product .m-fi:nth-child(even){margin-left:calc(50% + 26px)}
+  #product .m-fi:nth-child(odd)::before{left:auto;right:-32px}
+  #product .m-fi:nth-child(even)::before{left:-32px}
+}
 #product .m-proof{margin-top:12px;padding:10px 13px;border-left:2px solid var(--purple);background:rgba(47,107,255,.07);
   border-radius:0 8px 8px 0;font-size:12.5px;color:var(--pl);font-style:italic;line-height:1.45}
 #product .m-frame{border-radius:10px;overflow:hidden;border:1px solid var(--line);margin-bottom:13px}
@@ -1103,20 +1113,34 @@ const DECK=[
 
 /* ── mobile-native markup, built from the same SHOTS/FEATS data ── */
 function mobileHTML(){
-  var caps = FEATS.map(function(f,i){
-    var d = SHOTS[f.shot] || {};
-    var n = ('0'+(i+1)).slice(-2);
-    var label = f.kick.replace(/^Capability \d+ · /,'');
-    return '<div class="m-cap'+(i===0?' open':'')+'">'
-      + '<div class="m-caph"><span class="m-captag">'+n+'</span>'
-      + '<span class="m-caplab">'+label+' — '+f.title.join('').trim()+'</span>'
-      + '<span class="m-capic"><svg viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg></span></div>'
-      + '<div class="m-capb">'
+  /* the eight capabilities, ordered the way a proposal actually moves.
+     FLOW maps each step to its FEATS index, so the desktop deck order is untouched. */
+  var FLOW = [
+    {i:0, stage:'Ingest'},
+    {i:4, stage:'Reuse'},
+    {i:2, stage:'Price'},
+    {i:3, stage:'Plan the plant'},
+    {i:1, stage:'Review'},
+    {i:5, stage:'Ask'},
+    {i:6, stage:'Measure'},
+    {i:7, stage:'Deliver'}
+  ];
+  var caps = FLOW.map(function(o){
+    var f = FEATS[o.i], d = SHOTS[f.shot] || {};
+    var cap = f.kick.replace(/^Capability \d+ · /,'');
+    return '<div class="m-fi" data-fi>'
+      + '<div class="m-fc">'
+      + '<div class="m-fh">'
+      + '<div class="m-fstage">' + o.stage + ' <em>·</em> ' + cap + '</div>'
+      + '<h3 class="m-fname">' + f.title.join('').trim() + '</h3>'
+      + '<p class="m-fbrief">' + f.proof + '</p>'
+      + '</div>'
+      + '<div class="m-fb"><div class="m-fbi">'
       + '<div class="m-frame"><div class="m-fbar"><i></i><i></i><i></i><span>vonera.app</span></div>'
-      + '<img src="'+(d.b64||'')+'" alt="" decoding="async"></div>'
-      + '<p>'+f.intro+'</p>'
-      + '<ul class="m-bl">'+f.bul.map(function(b){return '<li><span>'+b+'</span></li>'}).join('')+'</ul>'
-      + '<div class="m-proof">'+f.proof+'</div>'
+      + '<img src="' + (d.b64||'') + '" alt="" decoding="async"></div>'
+      + '<p>' + f.intro + '</p>'
+      + '<ul class="m-bl">' + f.bul.map(function(b){ return '<li><span>'+b+'</span></li>' }).join('') + '</ul>'
+      + '</div></div>'
       + '</div></div>';
   }).join('');
 
@@ -1161,8 +1185,9 @@ function mobileHTML(){
   // capabilities
   '<section class="m-sect alt" data-m>'
   + '<div class="m-kick rv">The platform</div>'
-  + '<h2 class="m-h2 rv d1">8 capabilities. <span class="grad">One system.</span></h2>'
-  + '<div class="m-caps rv d2">'+caps+'</div></section>',
+  + '<h2 class="m-h2 rv d1">Eight capabilities, <span class="grad">in the order a proposal moves</span></h2>'
+  + '<p class="m-lead rv d2">From the route landing on your desk to the finished document going out — each step opens as you reach it.</p>'
+  + '<div class="m-flow rv d2">'+caps+'</div></section>',
   // divider
   '<div class="m-div" data-m>'
   + '<span class="pt rv">So what?</span>'
@@ -1245,13 +1270,36 @@ var dotsEl  = document.getElementById('dots');
 var progEl  = document.getElementById('prog');
 
 /* accordion — delegated once; inert in desktop mode */
+/* tapping a step still toggles it — but nobody has to, scrolling opens them */
 deckEl.addEventListener('click', function(e){
-  var h = e.target.closest ? e.target.closest('.m-caph') : null;
+  var h = e.target.closest ? e.target.closest('.m-fh') : null;
   if(!h) return;
-  var cap = h.parentNode, was = cap.classList.contains('open');
-  Array.prototype.forEach.call(deckEl.querySelectorAll('.m-cap.open'), function(c){ c.classList.remove('open') });
-  if(!was) cap.classList.add('open');
+  var item = h.parentNode.parentNode;
+  if(item && item.classList.contains('m-fi')) item.classList.toggle('open');
 });
+
+/* each step opens itself as it scrolls into view, and stays open */
+function flowAuto(root){
+  var items = Array.prototype.slice.call(root.querySelectorAll('[data-fi]'));
+  if(!items.length) return;
+  function openAll(){ items.forEach(function(i){ i.classList.add('open') }) }
+  try{
+    if(!('IntersectionObserver' in window)){ openAll(); return; }
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('open'); io.unobserve(e.target); }
+      });
+    },{threshold:.25,rootMargin:'-6% 0px -14% 0px'});
+    items.forEach(function(i){ io.observe(i) });
+    // first step is open on arrival so the section never reads as empty
+    if(items[0]) items[0].classList.add('open');
+    setTimeout(function(){
+      items.forEach(function(i){
+        if(!i.classList.contains('open') && i.getBoundingClientRect().top < innerHeight) i.classList.add('open');
+      });
+    },1400);
+  }catch(err){ openAll() }
+}
 
 function revealIn(root){
   var rv = Array.prototype.slice.call(root.querySelectorAll('.rv'));
@@ -1325,7 +1373,7 @@ function renderProduct(){
     })});
   }
   revealIn(deckEl);
-  if(!mobile) deckNav();
+  if(mobile) flowAuto(deckEl); else deckNav();
 }
 renderProduct();
 /* re-check whenever the viewport could have settled or flipped across the breakpoint
