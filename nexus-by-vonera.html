@@ -3,10 +3,12 @@
 <title>Nexus by Vonera</title>
 <link rel="icon" type="image/png" href="assets/favicon.png" />
 <style>
+@font-face{font-family:'Saira';src:url('assets/Saira-Var.ttf') format('truetype');font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:'Saira';src:url('assets/Saira-Italic-Var.ttf') format('truetype');font-weight:100 900;font-style:italic;font-display:swap}
 :root{--bg:#000000;--bg2:#0A0A0D;--card:#0E0E12;--ink:#F5F5F7;--mut:#A8A8B2;--faint:#6E6E78;--purple:#2F6BFF;--pl:#2563EB;--line:rgba(255,255,255,.14);}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);font-family:"Helvetica Neue",Arial,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{background:var(--bg);color:var(--ink);font-family:'Saira',"Helvetica Neue",Arial,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 .bgfx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 .glow{position:absolute;border-radius:50%;filter:blur(130px)}
 .g1{width:48vw;height:48vw;left:-12vw;top:-10vw;background:radial-gradient(circle,rgba(47,107,255,.13),transparent 62%)}
