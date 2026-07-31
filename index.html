@@ -72,26 +72,40 @@ section{padding:76px 0}
 
 /* hero workflow diagram — first-pass layout, to be iterated on */
 .flowcard{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 18px 44px rgba(12,20,36,.10)}
-.flowcard-top{padding:11px 16px;background:#F7F9FC;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.flowcard .flow-wrap{overflow-x:auto}
+.flowcard-top{padding:11px 16px;background:#F7F9FC;border-bottom:1px solid var(--line)}
 .flowcard-top span{font-size:11.5px;font-weight:600;letter-spacing:.04em;color:var(--faint)}
-.flowcard-top em{font-style:normal;font-size:10.5px;font-weight:600;color:var(--blue-dk);white-space:nowrap}
-.flow-scroll{max-height:min(72vh,600px);overflow:auto;position:relative}
-.flow-scroll::after{content:"";position:sticky;display:block;left:0;bottom:0;height:0;pointer-events:none}
-.flow{display:block;width:100%;min-width:440px;height:auto;padding:18px 16px 16px;font-family:var(--sans)}
-.flow text{font-size:13.5px;font-weight:600;fill:var(--ink)}
-.flow .num{font-size:10.5px;font-weight:700;fill:var(--blue)}
-.flow .t-sm{font-size:10.5px;font-weight:700;fill:var(--blue-dk);letter-spacing:.1em;text-transform:uppercase}
-.flow .t-c{font-size:12px;font-weight:600;fill:var(--ink)}
+.flow{display:block;width:100%;min-width:400px;height:auto;padding:12px 12px 10px;font-family:var(--sans)}
+.flow text{font-size:9px;font-weight:600;fill:var(--ink)}
+.flow .num{font-size:7px;font-weight:800;letter-spacing:.01em}
+.flow .t-sm{font-size:6.8px;font-weight:700;fill:var(--blue-dk);letter-spacing:.07em;text-transform:uppercase}
+.flow .t-c{font-size:7.2px;font-weight:600}
 .flow .t-w{fill:#fff}
-.flow .t-tag{fill:#fff;font-size:10.5px;font-weight:700;letter-spacing:.16em}
-.flow .bx{fill:none;stroke:var(--blue);stroke-width:1.6;stroke-dasharray:5 4}
+.flow .t-w2{fill:#fff;font-size:7.5px;font-weight:700}
+.flow .t-tag{fill:#fff;font-size:6.8px;font-weight:700;letter-spacing:.1em}
+.flow .bx{fill:none;stroke:var(--blue);stroke-width:1.1;stroke-dasharray:4 3}
 .flow .tag{fill:var(--blue)}
-.flow .nd{fill:#fff;stroke:var(--line);stroke-width:1.2}
-.flow .band{fill:var(--blue-tint);stroke:#C9D6F0;stroke-width:1.2}
-.flow .chip{fill:#fff;stroke:var(--line);stroke-width:1}
+.flow .nd{stroke:var(--line);stroke-width:.9}
+.flow .band{fill:#F7F9FC;stroke:var(--line);stroke-width:1.1}
+.flow .chip{fill:#fff;stroke-width:1.2}
+.flow .dchip{stroke:none}
+.flow .accent{stroke:none}
 .flow .pill-in{fill:var(--ink)}
 .flow .pill-out{fill:var(--blue)}
-.flow .ar{stroke:#9FB3D4;stroke-width:1.5;fill:none;marker-end:url(#fcAr)}
+.flow .ar{stroke:#9FB3D4;stroke-width:1.1;fill:none;marker-end:url(#fcAr)}
+
+/* per-stage colour identity, so every box reads as its own thing at a glance */
+.flow .fill-1{fill:#EAF1FF}      .flow .fill-1-solid{fill:#2F6BFF}   .flow .c-1{fill:#1D4ED8}
+.flow .fill-2{fill:#EFEEFE}      .flow .fill-2-solid{fill:#6D5EF5}   .flow .c-2{fill:#5B4FE0}
+.flow .fill-3{fill:#E9EEFB}      .flow .fill-3-solid{fill:#1D4ED8}   .flow .c-3{fill:#1D4ED8}
+.flow .fill-5{fill:#FCE9F2}      .flow .fill-5-solid{fill:#DB2777}   .flow .c-5{fill:#DB2777}
+.flow .fill-6{fill:#EEF1F5}      .flow .fill-6-solid{fill:#334155}   .flow .c-6{fill:#334155}
+.flow .chip-3{stroke:#B9C9F5}    .flow .chip-3.t-c,.flow text.c-3{fill:#1D4ED8}
+.flow .chip-5{stroke:#F3B8D6}    .flow .chip-5.t-c{fill:#DB2777}
+.flow .fill-mfg{fill:#7C5CFC}
+.flow .fill-qa{fill:#16A34A}
+.flow .fill-sc{fill:#D97706}
+.flow .fill-ehs{fill:#0D9488}
 
 /* 2 alternating cost rows */
 .alt{margin-top:10px}
@@ -286,6 +300,11 @@ html.has-js .rv.in{opacity:1;transform:none}
   .burger{display:block}
   .nav-cta .btn{display:none}
 }
+@media(max-width:760px){
+  /* render the diagram larger than the card and let it scroll, rather than
+     scaling it down until the labels are unreadable */
+  .flow{min-width:600px}
+}
 @media(max-width:620px){
   section,.scene,.wheel-scene{padding:52px 0}
   .hero{padding:36px 0 48px}
@@ -325,63 +344,67 @@ html.has-js .rv.in{opacity:1;transform:none}
       <p class="hero-note">Chemistry-native &middot; Deterministic costing &middot; Your chemistry never trains any model</p>
     </div>
 <div class="flowcard">
-      <div class="flowcard-top"><span>How a bid runs, and where Vonera sits</span><em>Scroll to see the full flow</em></div>
-      <div class="flow-scroll">
-      <svg class="flow" viewBox="0 0 480 812" role="img" aria-label="A customer RFQ is collected by business development, enters pool management, and is scoped by R&amp;D with AI table generation and reaction scheme drafting. It then parallelises across manufacturing, quality, supply chain and EHS, converges for R&amp;D approval, moves to proposal management for proposal generation and AI evaluation, goes to upper management review, and leaves as a client-ready proposal.">
+      <div class="flowcard-top"><span>How a bid runs, and where Vonera sits</span></div>
+      <div class="flow-wrap"><svg class="flow" viewBox="0 0 480 330" role="img" aria-label="A customer RFQ is collected by business development, enters pool management, and is scoped by R&amp;D with AI table generation and reaction scheme drafting. It then parallelises across manufacturing, quality, supply chain and EHS, converges for R&amp;D approval, moves to proposal management for proposal generation and AI evaluation, goes to upper management review, and leaves as a client-ready proposal.">
         <defs>
-          <marker id="fcAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <marker id="fcAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
             <path d="M0,0 L10,5 L0,10 z" fill="#9FB3D4"/>
           </marker>
         </defs>
 
-        <rect class="pill-in" x="140" y="8" width="200" height="36" rx="18"/>
-        <text class="t-w" x="240" y="31" text-anchor="middle">Customer RFQ</text>
-        <path class="ar" d="M240,44 L240,66"/>
+        <rect class="pill-in" x="160" y="2" width="160" height="20" rx="10"/>
+        <text class="t-w" x="240" y="16" text-anchor="middle">Customer RFQ</text>
+        <path class="ar" d="M240,22 L240,29"/>
 
-        <rect class="bx" x="20" y="76" width="440" height="660" rx="18"/>
-        <rect class="tag" x="44" y="64" width="104" height="26" rx="13"/>
-        <text class="t-tag" x="96" y="81" text-anchor="middle">VONERA</text>
+        <rect class="bx" x="20" y="35" width="440" height="270" rx="14"/>
+        <rect class="tag" x="40" y="26" width="86" height="18" rx="9"/>
+        <text class="t-tag" x="83" y="39" text-anchor="middle">VONERA</text>
 
-        <rect class="nd" x="40" y="92" width="400" height="52" rx="10"/>
-        <text class="num" x="56" y="112">01</text><text x="56" y="130">BD collection</text>
-        <path class="ar" d="M240,144 L240,166"/>
+        <rect class="nd fill-1" x="40" y="42" width="400" height="24" rx="7"/>
+        <rect class="accent fill-1-solid" x="40" y="42" width="4" height="24" rx="2"/>
+        <text class="num c-1" x="54" y="57">01</text><text x="71" y="57">BD collection</text>
+        <path class="ar" d="M240,66 L240,73"/>
 
-        <rect class="nd" x="40" y="166" width="400" height="52" rx="10"/>
-        <text class="num" x="56" y="186">02</text><text x="56" y="204">Pool management</text>
-        <path class="ar" d="M240,218 L240,240"/>
+        <rect class="nd fill-2" x="40" y="73" width="400" height="24" rx="7"/>
+        <rect class="accent fill-2-solid" x="40" y="73" width="4" height="24" rx="2"/>
+        <text class="num c-2" x="54" y="88">02</text><text x="71" y="88">Pool management</text>
+        <path class="ar" d="M240,97 L240,104"/>
 
-        <rect class="nd" x="40" y="240" width="400" height="96" rx="10"/>
-        <text class="num" x="56" y="260">03</text><text x="56" y="278">R&amp;D</text>
-        <rect class="chip" x="56" y="292" width="176" height="30" rx="8"/><text class="t-c" x="144" y="311" text-anchor="middle">AI table generation</text>
-        <rect class="chip" x="248" y="292" width="176" height="30" rx="8"/><text class="t-c" x="336" y="311" text-anchor="middle">Reaction scheme</text>
-        <path class="ar" d="M240,336 L240,360"/>
+        <rect class="nd fill-3" x="40" y="104" width="400" height="42" rx="7"/>
+        <rect class="accent fill-3-solid" x="40" y="104" width="4" height="42" rx="2"/>
+        <text class="num c-3" x="54" y="117">03</text><text x="71" y="117">R&amp;D</text>
+        <rect class="chip chip-3" x="54" y="126" width="178" height="15" rx="5"/><text class="t-c c-3" x="143" y="137" text-anchor="middle">AI table generation</text>
+        <rect class="chip chip-3" x="248" y="126" width="178" height="15" rx="5"/><text class="t-c c-3" x="337" y="137" text-anchor="middle">Reaction scheme</text>
+        <path class="ar" d="M240,146 L240,153"/>
 
-        <rect class="band" x="40" y="360" width="400" height="92" rx="12"/>
-        <text class="t-sm" x="56" y="381">Parallel department review</text>
-        <rect class="chip" x="56"  y="391" width="80" height="36" rx="8"/><text class="t-c" x="96"  y="413" text-anchor="middle">Mfg</text>
-        <rect class="chip" x="152" y="391" width="80" height="36" rx="8"/><text class="t-c" x="192" y="413" text-anchor="middle">Quality</text>
-        <rect class="chip" x="248" y="391" width="80" height="36" rx="8"/><text class="t-c" x="288" y="408" text-anchor="middle">Supply</text><text class="t-c" x="288" y="420" text-anchor="middle">chain</text>
-        <rect class="chip" x="344" y="391" width="80" height="36" rx="8"/><text class="t-c" x="384" y="413" text-anchor="middle">EHS</text>
-        <path class="ar" d="M240,452 L240,476"/>
+        <rect class="band" x="40" y="153" width="400" height="38" rx="9"/>
+        <text class="t-sm" x="54" y="166">Parallel department review</text>
+        <rect class="dchip fill-mfg" x="54"  y="171" width="82" height="16" rx="5"/><text class="t-w2" x="95"  y="182" text-anchor="middle">Mfg</text>
+        <rect class="dchip fill-qa"  x="150" y="171" width="82" height="16" rx="5"/><text class="t-w2" x="191" y="182" text-anchor="middle">Quality</text>
+        <rect class="dchip fill-sc"  x="246" y="171" width="82" height="16" rx="5"/><text class="t-w2" x="287" y="182" text-anchor="middle">Supply chain</text>
+        <rect class="dchip fill-ehs" x="342" y="171" width="82" height="16" rx="5"/><text class="t-w2" x="383" y="182" text-anchor="middle">EHS</text>
+        <path class="ar" d="M240,191 L240,198"/>
 
-        <rect class="nd" x="40" y="476" width="400" height="52" rx="10"/>
-        <text class="num" x="56" y="496">04</text><text x="56" y="514">R&amp;D approval</text>
-        <path class="ar" d="M240,528 L240,552"/>
+        <rect class="nd fill-3" x="40" y="198" width="400" height="24" rx="7"/>
+        <rect class="accent fill-3-solid" x="40" y="198" width="4" height="24" rx="2"/>
+        <text class="num c-3" x="54" y="213">04</text><text x="71" y="213">R&amp;D approval</text>
+        <path class="ar" d="M240,222 L240,229"/>
 
-        <rect class="nd" x="40" y="552" width="400" height="96" rx="10"/>
-        <text class="num" x="56" y="572">05</text><text x="56" y="590">Proposal management</text>
-        <rect class="chip" x="56" y="604" width="176" height="30" rx="8"/><text class="t-c" x="144" y="623" text-anchor="middle">Proposal generation</text>
-        <rect class="chip" x="248" y="604" width="176" height="30" rx="8"/><text class="t-c" x="336" y="623" text-anchor="middle">AI evaluation</text>
-        <path class="ar" d="M240,648 L240,672"/>
+        <rect class="nd fill-5" x="40" y="229" width="400" height="42" rx="7"/>
+        <rect class="accent fill-5-solid" x="40" y="229" width="4" height="42" rx="2"/>
+        <text class="num c-5" x="54" y="242">05</text><text x="71" y="242">Proposal management</text>
+        <rect class="chip chip-5" x="54" y="251" width="178" height="15" rx="5"/><text class="t-c c-5" x="143" y="262" text-anchor="middle">Proposal generation</text>
+        <rect class="chip chip-5" x="248" y="251" width="178" height="15" rx="5"/><text class="t-c c-5" x="337" y="262" text-anchor="middle">AI evaluation</text>
+        <path class="ar" d="M240,271 L240,278"/>
 
-        <rect class="nd" x="40" y="672" width="400" height="52" rx="10"/>
-        <text class="num" x="56" y="692">06</text><text x="56" y="710">Upper management review</text>
+        <rect class="nd fill-6" x="40" y="278" width="400" height="24" rx="7"/>
+        <rect class="accent fill-6-solid" x="40" y="278" width="4" height="24" rx="2"/>
+        <text class="num c-6" x="54" y="293">06</text><text x="71" y="293">Upper management review</text>
 
-        <path class="ar" d="M240,724 L240,760"/>
-        <rect class="pill-out" x="140" y="760" width="200" height="40" rx="20"/>
-        <text class="t-w" x="240" y="785" text-anchor="middle">Client-ready proposal</text>
-      </svg>
-      </div>
+        <path class="ar" d="M240,302 L240,311"/>
+        <rect class="pill-out" x="160" y="311" width="160" height="19" rx="9.5"/>
+        <text class="t-w" x="240" y="324" text-anchor="middle">Client-ready proposal</text>
+      </svg></div>
     </div>
   </div>
 </section>
