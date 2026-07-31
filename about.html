@@ -1,419 +1,220 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>About Us — Vonera</title>
-<link rel="icon" type="image/png" href="assets/favicon.png" />
-<meta name="description" content="Vonera Private Limited — the team building AI-native proposal and costing software for pharma CRO / CDMO." />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>About — Vonera</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<meta name="description" content="Vonera Private Limited builds proposal and costing software for pharma CRO and CDMO bid desks.">
 <style>
 @font-face{font-family:'Saira';src:url('assets/Saira-Var.ttf') format('truetype');font-weight:100 900;font-style:normal;font-display:swap}
-@font-face{font-family:'Saira';src:url('assets/Saira-Italic-Var.ttf') format('truetype');font-weight:100 900;font-style:italic;font-display:swap}
 :root{
-  --void:#040406;--panel:#0b0b12;
-  --gold:#8a8a8a;--gold-bright:#b0b0b0;
-  --star:#f4efe6;--mist:rgba(244,239,230,.62);--faint:rgba(244,239,230,.32);
-  --line:rgba(160,160,160,.18);
-  --serif:'Saira',sans-serif;--sans:'Saira',sans-serif;
+  --bg:#FFFFFF;--tint:#F4F7FC;--ink:#0C1424;--mut:#55617A;--faint:#8792A8;
+  --line:#E3E8F0;--blue:#2F6BFF;--blue-dk:#1D4ED8;--blue-tint:#EEF3FF;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --display:'Saira',var(--sans);--wrap:1200px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{-webkit-font-smoothing:antialiased;overflow-x:hidden;scroll-behavior:smooth}
-body{background:var(--void);color:var(--star);font-family:var(--sans);font-weight:300;line-height:1.6;overflow-x:hidden}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
-img{max-width:100%;display:block}
-::selection{background:var(--gold);color:#000}
-::-webkit-scrollbar{width:9px}
-::-webkit-scrollbar-track{background:#000}
-::-webkit-scrollbar-thumb{background:linear-gradient(#555,#8a8a8a);border-radius:9px}
+h1,h2,h3{font-family:var(--display);font-weight:650;letter-spacing:-.021em;line-height:1.12}
+h1{font-size:clamp(32px,4.2vw,50px)}
+h2{font-size:clamp(25px,2.9vw,36px)}
+h3{font-size:18px;letter-spacing:-.01em}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+section{padding:68px 0;border-top:1px solid var(--line)}
+section.tint{background:var(--tint)}
+.eyebrow{font-family:var(--display);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-dk);margin-bottom:12px}
+.lede{color:var(--mut);font-size:17px;max-width:62ch}
+.sec-head{margin-bottom:34px;max-width:70ch}
 
-/* scanlines + grain */
-body::before{content:'';pointer-events:none;position:fixed;inset:0;z-index:99999;
-  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,255,255,.018) 3px,rgba(255,255,255,.018) 4px)}
-body::after{content:'';pointer-events:none;position:fixed;inset:0;z-index:99998;opacity:.045;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-size:160px 160px}
+.nav{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.92);backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line)}
+.nav-in{max-width:var(--wrap);margin:0 auto;padding:0 24px;height:62px;display:flex;align-items:center;gap:28px}
+.brand{font-family:var(--display);font-weight:700;font-size:20px;letter-spacing:.02em;display:flex;align-items:baseline;gap:8px}
+.brand span{font-family:var(--sans);font-size:10.5px;font-weight:600;letter-spacing:.16em;color:var(--faint);text-transform:uppercase}
+.nav-links{display:flex;gap:26px;margin-left:auto}
+.nav-links a{font-size:14.5px;color:var(--mut);font-weight:500}
+.nav-links a:hover,.nav-links a.on{color:var(--ink)}
+.nav-cta{display:flex;align-items:center;gap:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:600;font-size:15px;padding:12px 22px;
+  border-radius:8px;border:1px solid transparent;cursor:pointer;white-space:nowrap;transition:background .18s,border-color .18s,color .18s}
+.btn-pri{background:var(--blue);color:#fff}
+.btn-pri:hover{background:var(--blue-dk)}
+.btn-sm{padding:9px 16px;font-size:14px}
+.burger{display:none;margin-left:auto;background:none;border:1px solid var(--line);border-radius:8px;padding:9px 11px;cursor:pointer}
+.burger i{display:block;width:18px;height:2px;background:var(--ink);border-radius:2px}
+.burger i+i{margin-top:4px}
 
-#bg-stars{position:fixed;inset:0;z-index:0;pointer-events:none}
+.intro{border-top:none;padding:60px 0 56px}
+.intro h1{margin-bottom:16px;max-width:18ch}
+.intro h1 em{font-style:normal;color:var(--blue)}
+.intro .lede{font-size:18px}
 
-/* cursor */
-.cursor-dot,.cursor-ring{position:fixed;top:0;left:0;z-index:99999;pointer-events:none;border-radius:50%;mix-blend-mode:screen;will-change:transform}
-.cursor-dot{width:7px;height:7px;margin:-3.5px 0 0 -3.5px;background:radial-gradient(circle,#fff 0%,var(--gold-bright) 60%,transparent 75%);box-shadow:0 0 12px 3px rgba(160,160,160,.9)}
-.cursor-ring{width:38px;height:38px;margin:-19px 0 0 -19px;border:1px solid rgba(140,140,140,.55);
-  transition:width .25s,height .25s,margin .25s,border-color .25s,background .25s}
-.cursor-ring.hover{width:64px;height:64px;margin:-32px 0 0 -32px;border-color:var(--gold-bright);background:rgba(140,140,140,.06)}
-@media(pointer:coarse){.cursor-dot,.cursor-ring{display:none}}
-@media(pointer:fine){body{cursor:none}}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:34px}
+.stat{background:#fff;padding:24px 22px}
+.stat b{display:block;font-family:var(--display);font-size:clamp(27px,3vw,34px);font-weight:700;color:var(--blue-dk);line-height:1.05}
+.stat span{display:block;margin-top:6px;font-size:14px;color:var(--mut)}
 
-/* nav */
-nav{position:fixed;top:0;left:0;width:100%;z-index:900;display:flex;align-items:center;justify-content:space-between;
-  padding:14px clamp(20px,5vw,64px);background:rgba(6,6,10,.62);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--line)}
-.nav-brand{font-family:var(--serif);font-size:1.5rem;letter-spacing:.34em;padding-left:.34em;font-weight:500;color:var(--star)}
-.nav-brand small{display:block;font-family:var(--sans);font-size:.5rem;letter-spacing:.42em;color:var(--gold);margin-top:2px;font-weight:400}
-.nav-links{display:flex;gap:clamp(18px,2.4vw,40px);align-items:center}
-.nav-links a{font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--mist);position:relative;padding:6px 2px;font-weight:300;transition:color .35s}
-.nav-links a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--gold);transition:width .4s ease}
-.nav-links a:hover,.nav-links a.active{color:var(--star)}
-.nav-links a:hover::after,.nav-links a.active::after{width:100%}
-.nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
-.nav-toggle span{width:26px;height:1.5px;background:var(--star);transition:.3s;display:block}
-@media(max-width:860px){
-  .nav-links{display:none;position:fixed;inset:0;background:rgba(4,4,6,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-    flex-direction:column;justify-content:center;align-items:center;gap:32px;z-index:901}
-  .nav-links.open{display:flex}
-  .nav-links a{font-size:1.15rem;letter-spacing:.18em}
-  .nav-toggle{display:flex;z-index:902;position:relative}
-  nav.menu-open .nav-toggle span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
-  nav.menu-open .nav-toggle span:nth-child(2){opacity:0}
-  nav.menu-open .nav-toggle span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
-  .nav-brand{font-size:1.15rem}
-}
+.team{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;max-width:860px}
+.member{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.member-photo{aspect-ratio:4/3;background:var(--tint);overflow:hidden}
+.member-photo img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.member-body{padding:20px 22px 24px}
+.member-role{display:inline-block;font-family:var(--display);font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--blue-dk);background:var(--blue-tint);padding:4px 9px;border-radius:5px;margin-bottom:10px}
+.member h3{margin-bottom:8px}
+.member p{color:var(--mut);font-size:14.5px}
 
-section{position:relative;z-index:2}
-.wrap{max-width:1280px;margin:0 auto;padding:0 clamp(20px,5vw,64px)}
-.eyebrow{font-size:.66rem;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);font-weight:400;display:inline-flex;align-items:center;gap:14px}
-.eyebrow::before{content:'';width:34px;height:1px;background:var(--gold);flex:none}
+.close{background:var(--ink);color:#fff;border-top:none;text-align:center}
+.close h2{color:#fff;margin-bottom:12px}
+.close p{color:rgba(255,255,255,.68);max-width:50ch;margin:0 auto 24px;font-size:17px}
 
-/* ── reveal (fail-safe: only hidden once JS confirms it is running) ── */
-html.has-js .rv{opacity:0;transform:translateY(28px);
-  transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+footer{background:var(--ink);color:rgba(255,255,255,.62);padding:44px 0 34px;border-top:1px solid rgba(255,255,255,.10)}
+.foot{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:36px}
+.foot h4{font-family:var(--display);font-size:12px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:#fff;margin-bottom:14px}
+.foot a,.foot p{display:block;font-size:14.5px;margin-bottom:9px;color:rgba(255,255,255,.62)}
+.foot a:hover{color:#fff}
+.foot .brand{color:#fff;margin-bottom:10px}
+.foot-btm{margin-top:32px;padding-top:20px;border-top:1px solid rgba(255,255,255,.10);font-size:13px;color:rgba(255,255,255,.42)}
+
+html.has-js .rv{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
 html.has-js .rv.in{opacity:1;transform:none}
-.rv.d1{transition-delay:.08s}.rv.d2{transition-delay:.16s}.rv.d3{transition-delay:.24s}
 @media(prefers-reduced-motion:reduce){html.has-js .rv{transition:none;opacity:1;transform:none}}
 
-/* ── ABOUT ── */
-#about{padding:clamp(96px,15vh,180px) 0 clamp(70px,11vh,120px)}
-.about-inner{display:flex;flex-direction:column;align-items:center;text-align:center}
-.about-heading{font-family:var(--sans);font-size:clamp(2rem,4.5vw,5rem);font-weight:400;line-height:1.1;color:#fff;
-  letter-spacing:.14em;text-transform:uppercase;margin-bottom:26px}
-.about-heading em{font-style:normal;font-weight:400}
-.about-lead{font-size:clamp(1rem,1.4vw,1.3rem);line-height:1.75;color:rgba(255,255,255,.55);font-weight:300;max-width:52ch}
-.about-lead em{color:var(--gold-bright);font-style:normal;font-weight:400}
-.about-stats{display:flex;justify-content:center;gap:clamp(40px,8vw,120px);margin-top:clamp(44px,7vh,84px);width:100%;flex-wrap:wrap}
-.stat{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
-.stat .n{font-size:clamp(2.6rem,6.5vw,6rem);font-weight:400;color:#fff;line-height:1;letter-spacing:.04em}
-.stat .l{font-size:.7rem;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.45);font-weight:300}
-
-/* ── TEAM ── */
-#team{padding:clamp(70px,11vh,120px) 0 clamp(90px,14vh,150px);position:relative;overflow:hidden}
-/* decorative moon — purely CSS, cannot break layout */
-.moon-wrap{position:absolute;top:50%;right:0;--msize:min(78vh,680px);width:var(--msize);height:var(--msize);
-  transform:translate(46%,-50%);z-index:0;pointer-events:none}
-.moon-glow{position:absolute;inset:-15%;border-radius:50%;
-  background:radial-gradient(circle at 35% 50%,rgba(244,239,230,.13),rgba(244,239,230,.035) 40%,transparent 64%);filter:blur(10px)}
-.moon-ring{position:absolute;inset:-5%;border-radius:50%;border:1px dashed rgba(140,140,140,.22);animation:ringSpin 90s linear infinite}
-.moon-ring::before{content:'✦';position:absolute;top:50%;left:0;transform:translate(-50%,-50%);color:var(--gold-bright);
-  font-size:1.1rem;text-shadow:0 0 14px rgba(160,160,160,.9)}
-.moon{position:absolute;inset:0;border-radius:50%;overflow:hidden;box-shadow:0 0 90px rgba(140,140,140,.16),0 0 200px rgba(140,140,140,.07)}
-.moon img{position:absolute;width:115%;height:115%;top:-7.5%;left:-7.5%;border-radius:50%;object-fit:cover;
-  animation:moonSpin 240s linear infinite}
-.moon-terminator{position:absolute;inset:0;border-radius:50%;
-  background:linear-gradient(90deg,transparent 28%,rgba(4,4,7,.45) 64%,rgba(4,4,7,.9) 100%)}
-.moon-sheen{position:absolute;inset:0;border-radius:50%;
-  background:radial-gradient(circle at 30% 34%,rgba(244,239,230,.18),transparent 40%)}
-@keyframes moonSpin{to{transform:rotate(360deg)}}
-@keyframes ringSpin{to{transform:rotate(-360deg)}}
-@media(prefers-reduced-motion:reduce){.moon img,.moon-ring{animation:none}}
-
-.team-head{margin-bottom:clamp(36px,6vh,60px);position:relative;z-index:2}
-.team-head h2{font-size:clamp(2rem,4vw,3.4rem);font-weight:400;letter-spacing:.02em;margin-top:18px;color:#fff}
-.team-grid{position:relative;z-index:2;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(24px,3.4vw,48px);max-width:900px}
-.member{display:flex;flex-direction:column;gap:20px}
-.member-photo{position:relative;width:100%;aspect-ratio:3/4;border-radius:4px;overflow:hidden;
-  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1)}
-.member-photo img{width:100%;height:100%;object-fit:cover;object-position:center top}
-.member-photo::after{content:'';position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(transparent 58%,rgba(0,0,0,.55));z-index:1}
-/* HUD corner brackets */
-.member-photo::before{content:'';pointer-events:none;position:absolute;inset:0;z-index:2;opacity:.25;border-radius:inherit;
-  background:
-    linear-gradient(#fff,#fff) top left / 14px 1px no-repeat,
-    linear-gradient(#fff,#fff) top left / 1px 14px no-repeat,
-    linear-gradient(#fff,#fff) top right / 14px 1px no-repeat,
-    linear-gradient(#fff,#fff) top right / 1px 14px no-repeat,
-    linear-gradient(#fff,#fff) bottom left / 14px 1px no-repeat,
-    linear-gradient(#fff,#fff) bottom left / 1px 14px no-repeat,
-    linear-gradient(#fff,#fff) bottom right / 14px 1px no-repeat,
-    linear-gradient(#fff,#fff) bottom right / 1px 14px no-repeat}
-.member-num{font-size:.85rem;color:var(--gold);letter-spacing:.34em}
-.member-name{font-size:clamp(1.4rem,2.4vw,2.1rem);font-weight:400;line-height:1.1;margin:8px 0 6px;color:var(--star)}
-.member-role{font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
-.member-bio{color:var(--mist);font-size:.98rem;line-height:1.7}
-
-/* ── FOOTER ── */
-#contact{padding:clamp(70px,11vh,120px) 0 44px;background:linear-gradient(to bottom,transparent,rgba(8,8,14,.6))}
-.contact-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;border-top:1px solid var(--line);padding-top:56px}
-.foot-brand .nb{font-family:var(--serif);font-size:1.8rem;letter-spacing:.3em;padding-left:.3em}
-.foot-brand p{color:var(--faint);font-size:.9rem;max-width:34ch;margin-top:16px}
-.foot-col h4{font-size:.64rem;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);margin-bottom:22px;font-weight:400}
-.foot-col a,.foot-col p{display:block;color:var(--mist);font-size:.92rem;margin-bottom:12px;transition:color .3s}
-.foot-col a:hover{color:var(--star)}
-.foot-bottom{border-top:1px solid var(--line);margin-top:52px;padding-top:26px}
-.foot-bottom p{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
-
-/* ── MOBILE ── */
-@media(max-width:820px){
-  .contact-grid{grid-template-columns:1fr;gap:36px}
+@media(max-width:860px){
+  .nav-links{display:none;position:absolute;top:62px;left:0;right:0;background:#fff;border-bottom:1px solid var(--line);
+    flex-direction:column;gap:0;padding:8px 24px 16px}
+  .nav-links.open{display:flex}
+  .nav-links a{padding:11px 0;font-size:16px;border-bottom:1px solid var(--line)}
+  .burger{display:block}
+  .nav-cta .btn{display:none}
 }
-@media(max-width:720px){
-  .team-grid{grid-template-columns:1fr;gap:44px;max-width:440px}
-  .member-photo{aspect-ratio:4/3}
-  .moon-wrap{--msize:min(112vw,460px);right:50%;top:auto;bottom:-14%;transform:translate(50%,0);opacity:.3}
-  #team{padding-bottom:clamp(70px,11vh,110px)}
-}
-@media(max-width:600px){
-  .wrap{padding:0 20px}
-  .about-heading{font-size:clamp(1.6rem,8vw,2.6rem);letter-spacing:.08em}
-  .about-lead{font-size:1rem}
-  .about-stats{flex-direction:column;gap:30px}
-  .stat .n{font-size:clamp(2.2rem,11vw,3.2rem)}
-  .stat .l{font-size:.58rem}
-  .member-bio{font-size:.92rem}
+@media(max-width:620px){
+  section{padding:48px 0}
+  .intro{padding:38px 0 44px}
+  .wrap{padding:0 18px}
+  .team,.stats{grid-template-columns:1fr}
+  .foot{grid-template-columns:1fr;gap:26px}
 }
 </style>
 </head>
 <body>
 
-<div class="cursor-ring" id="cRing"></div>
-<div class="cursor-dot" id="cDot"></div>
-<canvas id="bg-stars"></canvas>
-
-<nav id="nav">
-  <a href="index.html#home" class="nav-brand">VONERA<small>PRIVATE LIMITED</small></a>
-  <div class="nav-links" id="navLinks">
-    <a href="index.html#home">Home</a>
-    <a href="index.html#product">Product</a>
-    <a href="#about" class="active">About Us</a>
-    <a href="#team">Our Team</a>
-    <a href="index.html#contact">Contact Us</a>
+<header class="nav">
+  <div class="nav-in">
+    <a href="index.html" class="brand">VONERA <span>Pharma</span></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html#product">Product</a>
+      <a href="index.html#how">How it works</a>
+      <a href="index.html#roi">ROI</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="about.html" class="on">About</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn-pri btn-sm" href="mailto:contact@vonera.in?subject=Vonera%20walkthrough">Book a walkthrough</a>
+      <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><i></i><i></i><i></i></button>
+    </div>
   </div>
-  <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
-</nav>
+</header>
 
-<!-- ABOUT -->
-<section id="about">
+<section class="intro">
   <div class="wrap">
-    <div class="about-inner">
-      <h1 class="about-heading rv">Built&nbsp;for&nbsp;<em>Industries</em></h1>
-      <p class="about-lead rv d1">Vonera builds <em>AI-native software</em> engineered for an entire industry — not individual clients.<br><br>We encode the workflows, terminology, regulations and edge-cases of a sector into a single intelligent platform. Every operator who adopts it gets software that already speaks their language — without a custom build, without starting over.<br><br>One platform. Many operators. The intelligence compounds every time.</p>
-      <div class="about-stats rv d2">
-        <div class="stat"><div class="n" data-count="2026">2026</div><div class="l">Started</div></div>
-        <div class="stat"><div class="n" data-count="8">8</div><div class="l">Capabilities</div></div>
-        <div class="stat"><div class="n" data-count="20" data-suffix="+">20+</div><div class="l">Tasks Automated</div></div>
-      </div>
+    <div class="eyebrow">About Vonera</div>
+    <h1>Software built for one industry, <em>not one client</em></h1>
+    <p class="lede">Vonera Private Limited builds proposal and costing software for pharma CRO and CDMO bid desks. We encode the workflows, terminology and regulatory expectations of the sector into a single platform — so every operator who adopts it gets software that already speaks their language.</p>
+    <div class="stats rv">
+      <div class="stat"><b>2026</b><span>Founded</span></div>
+      <div class="stat"><b>8</b><span>Platform capabilities shipped</span></div>
+      <div class="stat"><b>1</b><span>Industry, deliberately</span></div>
     </div>
   </div>
 </section>
 
-<!-- TEAM -->
-<section id="team">
-  <div class="moon-wrap" aria-hidden="true">
-    <div class="moon-glow"></div>
-    <div class="moon-ring"></div>
-    <div class="moon">
-      <img src="assets/moon.png" alt="" />
-      <div class="moon-terminator"></div>
-      <div class="moon-sheen"></div>
-    </div>
-  </div>
+<section class="tint">
   <div class="wrap">
-    <div class="team-head">
-      <span class="eyebrow rv">Our Team</span>
-      <h2 class="rv d1">The people building it</h2>
+    <div class="sec-head">
+      <div class="eyebrow">Our team</div>
+      <h2>The people building it</h2>
     </div>
-    <div class="team-grid">
-      <article class="member rv d1">
-        <div class="member-photo"><img src="assets/team-1.webp" alt="Advik Reddy Bommineni" /></div>
-        <div>
-          <div class="member-num">01 / 02</div>
-          <h3 class="member-name">Advik Reddy Bommineni</h3>
-          <div class="member-role">Founder</div>
-          <p class="member-bio">Building the AI-native proposal and costing platform for pharma CRO / CDMO. Advik leads product, strategy and engineering at Vonera.</p>
+    <div class="team rv">
+      <article class="member">
+        <div class="member-photo"><img src="assets/team-1.webp" alt="Advik Reddy Bommineni"></div>
+        <div class="member-body">
+          <span class="member-role">Founder</span>
+          <h3>Advik Reddy Bommineni</h3>
+          <p>Leads product, strategy and engineering at Vonera, building the proposal and costing platform for pharma CRO / CDMO.</p>
         </div>
       </article>
-      <article class="member rv d2">
-        <div class="member-photo"><img src="assets/team-2.webp" alt="Nomula Venkat Reddy" /></div>
-        <div>
-          <div class="member-num">02 / 02</div>
-          <h3 class="member-name">Nomula Venkat Reddy</h3>
-          <div class="member-role">Co-Founder</div>
-          <p class="member-bio">Brings operational depth and domain expertise to Vonera. Venkat anchors the business foundation that lets the engineering side move fast without breaking the things that matter.</p>
+      <article class="member">
+        <div class="member-photo"><img src="assets/team-2.webp" alt="Nomula Venkat Reddy"></div>
+        <div class="member-body">
+          <span class="member-role">Co-Founder</span>
+          <h3>Nomula Venkat Reddy</h3>
+          <p>Brings operational depth and domain expertise, anchoring the business foundation that lets engineering move fast.</p>
         </div>
       </article>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
-<section id="contact">
+<section class="close">
   <div class="wrap">
-    <div class="contact-grid">
-      <div class="foot-brand">
-        <div class="nb">VONERA</div>
-        <p>Vonera Private Limited — AI-native proposal &amp; costing software for pharma CRO / CDMO.</p>
-      </div>
-      <div class="foot-col">
-        <h4>Navigate</h4>
-        <a href="index.html#home">Home</a>
-        <a href="index.html#product">Product</a>
-        <a href="#about">About Us</a>
-        <a href="#team">Our Team</a>
-      </div>
-      <div class="foot-col">
-        <h4>Reach Us</h4>
-        <a href="mailto:contact@vonera.in">contact@vonera.in</a>
-        <a href="tel:+919390962688">+91 93909 62688</a>
-        <p>H.No. 6-3-1109/9 &amp; 10, 4th Floor,<br>G.S. Mall, Rajbhavan Road,<br>Somajiguda, Hyderabad,<br>Telangana 500082</p>
-      </div>
-    </div>
-    <div class="foot-bottom"><p>© <span id="yr">2026</span> Vonera Private Limited</p></div>
+    <h2>See Vonera run on one of your own routes</h2>
+    <p>Bring a real bid. We'll cost it live and model the ROI on your actual volume.</p>
+    <a class="btn btn-pri" href="mailto:contact@vonera.in?subject=Vonera%20walkthrough">Book a walkthrough</a>
   </div>
 </section>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<footer>
+  <div class="wrap foot">
+    <div>
+      <div class="brand">VONERA <span>Pharma</span></div>
+      <p>AI-native proposal and costing software for pharma CRO / CDMO bid desks.</p>
+    </div>
+    <div>
+      <h4>Product</h4>
+      <a href="index.html#product">Platform</a>
+      <a href="index.html#how">How it works</a>
+      <a href="index.html#roi">ROI</a>
+      <a href="index.html#pricing">Pricing</a>
+    </div>
+    <div>
+      <h4>Company</h4>
+      <a href="about.html">About us</a>
+      <a href="mailto:contact@vonera.in">contact@vonera.in</a>
+      <a href="tel:+919390962688">+91 93909 62688</a>
+      <p>Somajiguda, Hyderabad,<br>Telangana 500082</p>
+    </div>
+  </div>
+  <div class="wrap foot-btm">© <span id="yr">2026</span> Vonera Private Limited</div>
+</footer>
+
 <script>
 document.documentElement.classList.add('has-js');
-var $=function(s){return document.querySelector(s)};
-var $$=function(s){return [].slice.call(document.querySelectorAll(s))};
-var lerp=function(a,b,t){return a+(b-a)*t};
-var clamp=function(v,a,b){return Math.max(a,Math.min(b,v))};
-
-/* ── reveals: if anything throws, show everything ── */
 (function(){
-  var els=$$('.rv');
+  var b=document.getElementById('burger'), l=document.getElementById('navLinks');
+  b.addEventListener('click',function(){
+    var open=l.classList.toggle('open');
+    b.setAttribute('aria-expanded',open?'true':'false');
+  });
+  l.addEventListener('click',function(e){ if(e.target.tagName==='A') l.classList.remove('open'); });
+})();
+(function(){
+  var els=[].slice.call(document.querySelectorAll('.rv'));
   function showAll(){els.forEach(function(e){e.classList.add('in')})}
   try{
-    if(!('IntersectionObserver' in window)){showAll();return;}
+    if(!('IntersectionObserver' in window)){showAll();return}
     var io=new IntersectionObserver(function(es){
       es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})
-    },{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+    },{threshold:.12,rootMargin:'0px 0px -5% 0px'});
     els.forEach(function(e){io.observe(e)});
-    // safety net — nothing should stay hidden if the observer never fires
-    setTimeout(function(){
-      var vh=innerHeight;
-      els.forEach(function(e){
-        if(!e.classList.contains('in')&&e.getBoundingClientRect().top<vh) e.classList.add('in');
-      });
-    },1200);
+    setTimeout(function(){els.forEach(function(e){
+      if(!e.classList.contains('in')&&e.getBoundingClientRect().top<innerHeight)e.classList.add('in')})},1200);
   }catch(err){showAll()}
 })();
-
-/* ── counters ── */
-(function(){
-  try{
-    $$('.stat .n').forEach(function(el){
-      var end=+el.dataset.count,suffix=el.dataset.suffix||'';
-      if(end>=2000){el.textContent=end+suffix;return;}
-      var done=false;
-      var io=new IntersectionObserver(function(es){
-        es.forEach(function(e){
-          if(!e.isIntersecting||done)return; done=true; io.disconnect();
-          var t0=null,dur=1500;
-          function step(ts){
-            if(!t0)t0=ts;
-            var p=Math.min((ts-t0)/dur,1);
-            el.textContent=Math.round(end*(1-Math.pow(1-p,3)))+suffix;
-            if(p<1)requestAnimationFrame(step);
-          }
-          requestAnimationFrame(step);
-        });
-      },{threshold:.4});
-      io.observe(el);
-    });
-  }catch(e){}
-})();
-
-/* ── nav ── */
-(function(){
-  var nav=$('#nav'),links=$('#navLinks'),toggle=$('#navToggle');
-  toggle.addEventListener('click',function(){
-    links.classList.toggle('open');nav.classList.toggle('menu-open');
-  });
-  $$('#navLinks a').forEach(function(a){
-    a.addEventListener('click',function(){
-      links.classList.remove('open');nav.classList.remove('menu-open');
-    });
-  });
-  // active link on scroll
-  try{
-    ['about','team'].forEach(function(id){
-      var sec=$('#'+id),link=$('.nav-links a[href="#'+id+'"]');
-      if(!sec||!link)return;
-      new IntersectionObserver(function(es){
-        es.forEach(function(e){
-          if(e.isIntersecting){$$('.nav-links a').forEach(function(x){x.classList.remove('active')});link.classList.add('active');}
-        });
-      },{threshold:.35}).observe(sec);
-    });
-  }catch(e){}
-})();
-
-/* ── cursor (pointer devices only) ── */
-(function(){
-  if(!matchMedia('(pointer:fine)').matches)return;
-  var dot=$('#cDot'),ring=$('#cRing');
-  var mx=innerWidth/2,my=innerHeight/2,rx=mx,ry=my,dx=mx,dy=my;
-  addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY});
-  (function loop(){
-    dx=lerp(dx,mx,.35);dy=lerp(dy,my,.35);rx=lerp(rx,mx,.16);ry=lerp(ry,my,.16);
-    dot.style.transform='translate('+dx+'px,'+dy+'px)';
-    ring.style.transform='translate('+rx+'px,'+ry+'px)';
-    requestAnimationFrame(loop);
-  })();
-  document.addEventListener('mouseover',function(e){if(e.target.closest('a,button'))ring.classList.add('hover')});
-  document.addEventListener('mouseout',function(e){if(e.target.closest('a,button'))ring.classList.remove('hover')});
-})();
-
-/* ── starfield ── */
-(function(){
-  var canvas=$('#bg-stars');
-  if(!window.THREE||matchMedia('(prefers-reduced-motion:reduce)').matches){
-    canvas.style.background='radial-gradient(circle at 50% 30%,#0c0c16,#040406)';return;
-  }
-  try{
-    var renderer=new THREE.WebGLRenderer({canvas:canvas,alpha:true,antialias:true,powerPreference:'high-performance'});
-    renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
-    var scene=new THREE.Scene();
-    var cam=new THREE.PerspectiveCamera(70,innerWidth/innerHeight,1,2200);cam.position.z=600;
-    var mobile=innerWidth<760;
-    function L(count,spread,size,opacity,color){
-      var g=new THREE.BufferGeometry(),pos=new Float32Array(count*3);
-      for(var i=0;i<count;i++){
-        pos[i*3]=(Math.random()-.5)*spread;pos[i*3+1]=(Math.random()-.5)*spread;pos[i*3+2]=(Math.random()-.5)*spread;
-      }
-      g.setAttribute('position',new THREE.BufferAttribute(pos,3));
-      var p=new THREE.Points(g,new THREE.PointsMaterial({size:size,color:color,transparent:true,opacity:opacity,
-        depthWrite:false,blending:THREE.AdditiveBlending,sizeAttenuation:true}));
-      scene.add(p);return p;
-    }
-    var far=L(mobile?260:560,2400,1.6,.5,0xbfc6d4),
-        mid=L(mobile?130:260,1600,2.3,.78,0xf4efe6),
-        near=L(mobile?50:90,1100,3.4,1,0xa0a0a0);
-    var tmx=0,tmy=0,cmx=0,cmy=0,scrollNorm=0;
-    addEventListener('mousemove',function(e){tmx=(e.clientX/innerWidth-.5);tmy=(e.clientY/innerHeight-.5)});
-    addEventListener('scroll',function(){
-      var m=document.body.scrollHeight-innerHeight;scrollNorm=m>0?clamp(scrollY/m,0,1):0;
-    },{passive:true});
-    function rs(){renderer.setSize(innerWidth,innerHeight);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix()}
-    addEventListener('resize',rs);rs();
-    var clock=new THREE.Clock();
-    (function render(){
-      var t=clock.getElapsedTime();
-      cmx=lerp(cmx,tmx,.04);cmy=lerp(cmy,tmy,.04);
-      far.rotation.y=t*.006+cmx*.18; far.rotation.x=cmy*.10;
-      mid.rotation.y=t*.012+cmx*.34; mid.rotation.x=cmy*.20;
-      near.rotation.y=t*.02+cmx*.55; near.rotation.x=cmy*.34;
-      cam.position.z=600-scrollNorm*520;
-      cam.position.x=lerp(cam.position.x,cmx*120,.05);
-      cam.position.y=lerp(cam.position.y,-cmy*120,.05);
-      cam.lookAt(0,0,0);renderer.render(scene,cam);requestAnimationFrame(render);
-    })();
-  }catch(e){
-    canvas.style.background='radial-gradient(circle at 50% 30%,#0c0c16,#040406)';
-  }
-})();
-
-$('#yr').textContent=new Date().getFullYear();
+document.getElementById('yr').textContent=new Date().getFullYear();
 </script>
 </body>
 </html>
