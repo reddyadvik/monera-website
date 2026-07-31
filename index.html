@@ -107,6 +107,12 @@ section{padding:76px 0}
 .flow .fill-sc{fill:#D97706}
 .flow .fill-ehs{fill:#0D9488}
 
+/* 2 problem row — three across, one horizontal band */
+.costs{display:grid;grid-template-columns:repeat(3,1fr);gap:38px;margin-top:30px}
+.cost b{display:block;font-family:var(--display);font-size:12.5px;font-weight:700;color:var(--blue);letter-spacing:.1em;margin-bottom:9px}
+.cost h3{margin-bottom:7px}
+.cost p{color:var(--mut);font-size:14.5px}
+
 /* 2 alternating cost rows */
 .alt{margin-top:10px}
 .alt-row{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center;padding:38px 0}
@@ -141,8 +147,8 @@ html.has-js .sl.in,html.has-js .sr.in{opacity:1;transform:none}
 .screen.on{opacity:1;transform:none}
 .screen img{width:100%;height:100%;object-fit:cover;object-position:top center}
 /* the detail pop-up */
-.details{position:absolute;left:22px;bottom:18px;height:186px;width:min(430px,60%);margin:0;z-index:3}
-.detail{position:absolute;top:0;left:0;right:0;background:#fff;border:1px solid var(--line);border-radius:12px;
+.details{position:absolute;left:0;bottom:0;height:170px;width:min(430px,56%);margin:0;z-index:3}
+.detail{position:absolute;bottom:0;left:0;right:0;background:#fff;border:1px solid var(--line);border-radius:0 12px 0 12px;
   padding:16px 18px;box-shadow:0 18px 40px rgba(12,20,36,.16);opacity:0;transform:translateY(10px);
   transition:opacity .45s ease,transform .45s ease;pointer-events:none}
 .detail.on{opacity:1;transform:none;pointer-events:auto}
@@ -305,6 +311,9 @@ html.has-js .rv.in{opacity:1;transform:none}
      scaling it down until the labels are unreadable */
   .flow{min-width:600px}
 }
+@media(max-width:760px){
+  .costs{grid-template-columns:1fr;gap:24px}
+}
 @media(max-width:620px){
   section,.scene,.wheel-scene{padding:52px 0}
   .hero{padding:36px 0 48px}
@@ -335,7 +344,7 @@ html.has-js .rv.in{opacity:1;transform:none}
   <div class="wrap-wide hero-grid">
     <div>
       <div class="badge">Proposal intelligence for pharma <b>CDMO / CRO</b> teams</div>
-      <h1>The route arrives Monday.<br><em>The quote goes out Thursday.</em></h1>
+      <h1>RFQ in today.<br><em>Proposal out tomorrow.</em></h1>
       <p class="lede">One system carries a synthesis route through costing, five departmental reviews and a finished proposal. What took three weeks of senior chemist and estimator time now takes an afternoon.</p>
       <div class="hero-cta">
         <a class="btn btn-pri" href="mailto:contact@vonera.in?subject=Vonera%20walkthrough">Book a walkthrough</a>
@@ -345,65 +354,65 @@ html.has-js .rv.in{opacity:1;transform:none}
     </div>
 <div class="flowcard">
       <div class="flowcard-top"><span>How a bid runs, and where Vonera sits</span></div>
-      <div class="flow-wrap"><svg class="flow" viewBox="0 0 480 330" role="img" aria-label="A customer RFQ is collected by business development, enters pool management, and is scoped by R&amp;D with AI table generation and reaction scheme drafting. It then parallelises across manufacturing, quality, supply chain and EHS, converges for R&amp;D approval, moves to proposal management for proposal generation and AI evaluation, goes to upper management review, and leaves as a client-ready proposal.">
+      <div class="flow-wrap"><svg class="flow" viewBox="0 0 480 296" role="img" aria-label="A customer RFQ is collected by business development, passes to proposal management, is scoped by R&amp;D with AI table generation and reaction schemes, parallelises across manufacturing, quality, supply chain and EHS, converges for R&amp;D approval, returns to proposal management for generation and AI evaluation, goes to upper management review, and leaves as a client-ready proposal.">
         <defs>
-          <marker id="fcAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <marker id="fcAr" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse">
             <path d="M0,0 L10,5 L0,10 z" fill="#9FB3D4"/>
           </marker>
         </defs>
 
-        <rect class="pill-in" x="160" y="2" width="160" height="20" rx="10"/>
-        <text class="t-w" x="240" y="16" text-anchor="middle">Customer RFQ</text>
-        <path class="ar" d="M240,22 L240,29"/>
+        <rect class="pill-in" x="160" y="0" width="160" height="18" rx="9"/>
+        <text class="t-w" x="240" y="12.5" text-anchor="middle">Customer RFQ</text>
+        <path class="ar" d="M240,18 L240,26"/>
 
-        <rect class="bx" x="20" y="35" width="440" height="270" rx="14"/>
-        <rect class="tag" x="40" y="26" width="86" height="18" rx="9"/>
-        <text class="t-tag" x="83" y="39" text-anchor="middle">VONERA</text>
+        <rect class="bx" x="18" y="28" width="444" height="234" rx="13"/>
+        <rect class="tag" x="38" y="20.5" width="80" height="15" rx="7.5"/>
+        <text class="t-tag" x="78" y="31" text-anchor="middle">VONERA</text>
 
-        <rect class="nd fill-1" x="40" y="42" width="400" height="24" rx="7"/>
-        <rect class="accent fill-1-solid" x="40" y="42" width="4" height="24" rx="2"/>
-        <text class="num c-1" x="54" y="57">01</text><text x="71" y="57">BD collection</text>
-        <path class="ar" d="M240,66 L240,73"/>
+        <rect class="nd fill-1" x="38" y="34" width="404" height="20" rx="6"/>
+        <rect class="accent fill-1-solid" x="38" y="34" width="3.5" height="20" rx="1.75"/>
+        <text class="num c-1" x="52" y="47">01</text><text x="69" y="47">BD collection</text>
+        <path class="ar" d="M240,54 L240,60"/>
 
-        <rect class="nd fill-2" x="40" y="73" width="400" height="24" rx="7"/>
-        <rect class="accent fill-2-solid" x="40" y="73" width="4" height="24" rx="2"/>
-        <text class="num c-2" x="54" y="88">02</text><text x="71" y="88">Pool management</text>
-        <path class="ar" d="M240,97 L240,104"/>
+        <rect class="nd fill-2" x="38" y="60" width="404" height="20" rx="6"/>
+        <rect class="accent fill-2-solid" x="38" y="60" width="3.5" height="20" rx="1.75"/>
+        <text class="num c-2" x="52" y="73">02</text><text x="69" y="73">Proposal management</text>
+        <path class="ar" d="M240,80 L240,86"/>
 
-        <rect class="nd fill-3" x="40" y="104" width="400" height="42" rx="7"/>
-        <rect class="accent fill-3-solid" x="40" y="104" width="4" height="42" rx="2"/>
-        <text class="num c-3" x="54" y="117">03</text><text x="71" y="117">R&amp;D</text>
-        <rect class="chip chip-3" x="54" y="126" width="178" height="15" rx="5"/><text class="t-c c-3" x="143" y="137" text-anchor="middle">AI table generation</text>
-        <rect class="chip chip-3" x="248" y="126" width="178" height="15" rx="5"/><text class="t-c c-3" x="337" y="137" text-anchor="middle">Reaction scheme</text>
-        <path class="ar" d="M240,146 L240,153"/>
+        <rect class="nd fill-3" x="38" y="86" width="404" height="36" rx="6"/>
+        <rect class="accent fill-3-solid" x="38" y="86" width="3.5" height="36" rx="1.75"/>
+        <text class="num c-3" x="52" y="98">03</text><text x="69" y="98">R&amp;D</text>
+        <rect class="chip chip-3" x="52" y="104" width="184" height="13" rx="4"/><text class="t-c c-3" x="144" y="113" text-anchor="middle">AI table generation</text>
+        <rect class="chip chip-3" x="244" y="104" width="184" height="13" rx="4"/><text class="t-c c-3" x="336" y="113" text-anchor="middle">Reaction schemes</text>
+        <path class="ar" d="M240,122 L240,128"/>
 
-        <rect class="band" x="40" y="153" width="400" height="38" rx="9"/>
-        <text class="t-sm" x="54" y="166">Parallel department review</text>
-        <rect class="dchip fill-mfg" x="54"  y="171" width="82" height="16" rx="5"/><text class="t-w2" x="95"  y="182" text-anchor="middle">Mfg</text>
-        <rect class="dchip fill-qa"  x="150" y="171" width="82" height="16" rx="5"/><text class="t-w2" x="191" y="182" text-anchor="middle">Quality</text>
-        <rect class="dchip fill-sc"  x="246" y="171" width="82" height="16" rx="5"/><text class="t-w2" x="287" y="182" text-anchor="middle">Supply chain</text>
-        <rect class="dchip fill-ehs" x="342" y="171" width="82" height="16" rx="5"/><text class="t-w2" x="383" y="182" text-anchor="middle">EHS</text>
-        <path class="ar" d="M240,191 L240,198"/>
+        <rect class="band" x="38" y="128" width="404" height="34" rx="8"/>
+        <text class="t-sm" x="52" y="139">Parallel department review</text>
+        <rect class="dchip fill-mfg" x="52"  y="143" width="90" height="14" rx="4"/><text class="t-w2" x="97"  y="152.5" text-anchor="middle">Manufacturing</text>
+        <rect class="dchip fill-qa"  x="148" y="143" width="90" height="14" rx="4"/><text class="t-w2" x="193" y="152.5" text-anchor="middle">Quality</text>
+        <rect class="dchip fill-sc"  x="244" y="143" width="90" height="14" rx="4"/><text class="t-w2" x="289" y="152.5" text-anchor="middle">Supply chain</text>
+        <rect class="dchip fill-ehs" x="340" y="143" width="90" height="14" rx="4"/><text class="t-w2" x="385" y="152.5" text-anchor="middle">EHS</text>
+        <path class="ar" d="M240,162 L240,168"/>
 
-        <rect class="nd fill-3" x="40" y="198" width="400" height="24" rx="7"/>
-        <rect class="accent fill-3-solid" x="40" y="198" width="4" height="24" rx="2"/>
-        <text class="num c-3" x="54" y="213">04</text><text x="71" y="213">R&amp;D approval</text>
-        <path class="ar" d="M240,222 L240,229"/>
+        <rect class="nd fill-3" x="38" y="168" width="404" height="20" rx="6"/>
+        <rect class="accent fill-3-solid" x="38" y="168" width="3.5" height="20" rx="1.75"/>
+        <text class="num c-3" x="52" y="181">04</text><text x="69" y="181">R&amp;D approval</text>
+        <path class="ar" d="M240,188 L240,194"/>
 
-        <rect class="nd fill-5" x="40" y="229" width="400" height="42" rx="7"/>
-        <rect class="accent fill-5-solid" x="40" y="229" width="4" height="42" rx="2"/>
-        <text class="num c-5" x="54" y="242">05</text><text x="71" y="242">Proposal management</text>
-        <rect class="chip chip-5" x="54" y="251" width="178" height="15" rx="5"/><text class="t-c c-5" x="143" y="262" text-anchor="middle">Proposal generation</text>
-        <rect class="chip chip-5" x="248" y="251" width="178" height="15" rx="5"/><text class="t-c c-5" x="337" y="262" text-anchor="middle">AI evaluation</text>
-        <path class="ar" d="M240,271 L240,278"/>
+        <rect class="nd fill-5" x="38" y="194" width="404" height="36" rx="6"/>
+        <rect class="accent fill-5-solid" x="38" y="194" width="3.5" height="36" rx="1.75"/>
+        <text class="num c-5" x="52" y="206">05</text><text x="69" y="206">Proposal management</text>
+        <rect class="chip chip-5" x="52" y="212" width="184" height="13" rx="4"/><text class="t-c c-5" x="144" y="221" text-anchor="middle">Proposal generation</text>
+        <rect class="chip chip-5" x="244" y="212" width="184" height="13" rx="4"/><text class="t-c c-5" x="336" y="221" text-anchor="middle">AI evaluation</text>
+        <path class="ar" d="M240,230 L240,236"/>
 
-        <rect class="nd fill-6" x="40" y="278" width="400" height="24" rx="7"/>
-        <rect class="accent fill-6-solid" x="40" y="278" width="4" height="24" rx="2"/>
-        <text class="num c-6" x="54" y="293">06</text><text x="71" y="293">Upper management review</text>
+        <rect class="nd fill-6" x="38" y="236" width="404" height="20" rx="6"/>
+        <rect class="accent fill-6-solid" x="38" y="236" width="3.5" height="20" rx="1.75"/>
+        <text class="num c-6" x="52" y="249">06</text><text x="69" y="249">Upper management review</text>
 
-        <path class="ar" d="M240,302 L240,311"/>
-        <rect class="pill-out" x="160" y="311" width="160" height="19" rx="9.5"/>
-        <text class="t-w" x="240" y="324" text-anchor="middle">Client-ready proposal</text>
+        <path class="ar" d="M240,256 L240,270"/>
+        <rect class="pill-out" x="160" y="272" width="160" height="18" rx="9"/>
+        <text class="t-w" x="240" y="284.5" text-anchor="middle">Client-ready proposal</text>
       </svg></div>
     </div>
   </div>
@@ -414,21 +423,11 @@ html.has-js .rv.in{opacity:1;transform:none}
     <div class="sec-head">
       <div class="eyebrow">Today</div>
       <h2>Five departments hold five pieces of one number</h2>
-      <p class="lede">Chemistry sits with R&amp;D, conversion cost with manufacturing, testing with quality, rates with supply chain, disposal with EHS. Each function can defend its own figure. No one can defend the total.</p>
     </div>
-    <div class="alt">
-      <div class="alt-row">
-        <div class="txt sl"><h3>It moves in a queue</h3><p>Manufacturing cannot size a reactor until R&amp;D fixes the volumes. Every dependency becomes an email, and every email becomes another spreadsheet nobody can open without asking which version is current.</p></div>
-        <div class="fig sr">01</div>
-      </div>
-      <div class="alt-row rev">
-        <div class="txt sr"><h3>The arithmetic is fragile</h3><p>A yield entered as 85 where the chemist meant 8.5 changes the raw-material requirement of every stage above it, and nothing recomputes the chain. Two estimators handed the same route return two different prices.</p></div>
-        <div class="fig sl">02</div>
-      </div>
-      <div class="alt-row">
-        <div class="txt sl"><h3>The cost of being wrong is asymmetric</h3><p>Quote late and a repeat customer places the work elsewhere; quote low and the margin evaporates by the third campaign. A single project runs from &#8377;15 lakh to well past &#8377;1 crore.</p></div>
-        <div class="fig sr">03</div>
-      </div>
+    <div class="costs rv">
+      <div class="cost"><b>01</b><h3>It moves in a queue</h3><p>Each function waits on the one before it, and every hand-off is another email.</p></div>
+      <div class="cost"><b>02</b><h3>The arithmetic is fragile</h3><p>One wrong cell re-prices the bid. Two estimators return two different numbers.</p></div>
+      <div class="cost"><b>03</b><h3>Being wrong is expensive</h3><p>A single project runs from &#8377;15 lakh to well past &#8377;1 crore.</p></div>
     </div>
     <p class="handoff">So we put the entire path onto one system. Here is what happens to that RFQ instead.</p>
   </div>
@@ -511,29 +510,27 @@ html.has-js .rv.in{opacity:1;transform:none}
         <div class="wheel-ring"></div>
         <div class="wheel-ring r2"></div>
         <div class="wheel-rot" id="wheelRot">
-          <div class="tick on" data-i="0" style="--a:-52.5deg"><i></i><em>01</em></div>
-          <div class="tick" data-i="1" style="--a:-31.5deg"><i></i><em>02</em></div>
-          <div class="tick" data-i="2" style="--a:-10.5deg"><i></i><em>03</em></div>
-          <div class="tick" data-i="3" style="--a:10.5deg"><i></i><em>04</em></div>
-          <div class="tick" data-i="4" style="--a:31.5deg"><i></i><em>05</em></div>
-          <div class="tick" data-i="5" style="--a:52.5deg"><i></i><em>06</em></div>
+          <div class="tick on" data-i="0" style="--a:-42.0deg"><i></i><em>01</em></div>
+          <div class="tick" data-i="1" style="--a:-14.0deg"><i></i><em>02</em></div>
+          <div class="tick" data-i="2" style="--a:14.0deg"><i></i><em>03</em></div>
+          <div class="tick" data-i="3" style="--a:42.0deg"><i></i><em>04</em></div>
+        
         </div>
         <div class="wheel-pointer"></div>
-        <div class="wheel-hub"><b id="hubNum">01</b><span>of 06</span></div>
+        <div class="wheel-hub"><b id="hubNum">01</b><span>of 04</span></div>
       </div>
       <div>
         <div class="sec-head" style="margin-bottom:22px">
           <div class="eyebrow">Where the AI acts</div>
-          <h2>The judgement stays with your chemists. The transcription does not.</h2>
-          <p class="lede">Six places Vonera does work your team would otherwise do by hand. Every one of them is reviewable.</p>
+          <h2>Four places the AI does the work</h2>
+          <p class="lede">Where the AI is actually doing the work, and what it produces at each point.</p>
         </div>
         <div class="wheel-text" id="wheelText">
-        <div class="wtext on" data-i="0"><b>01</b><h3>Reads the route</h3><p>Converts a pasted synthesis or an uploaded brief into a complete structured table covering every stage, reagent and quantity.</p></div>
-        <div class="wtext" data-i="1"><b>02</b><h3>Resolves the chemistry</h3><p>Checks identity, molecular weight and structure against trusted references, and flags anything it could not verify rather than presenting a guess as fact.</p></div>
-        <div class="wtext" data-i="2"><b>03</b><h3>Designs the process</h3><p>Lays out each stage&rsquo;s unit operations with realistic durations, and estimates waste, cleaning and staffing from the chemistry rather than from a template.</p></div>
-        <div class="wtext" data-i="3"><b>04</b><h3>Recalls prior work</h3><p>Surfaces past projects with comparable chemistry, so a quote is built from routes your team has already defended.</p></div>
-        <div class="wtext" data-i="4"><b>05</b><h3>Answers from your archive</h3><p>Plain-language questions returned with the source proposal cited, every time.</p></div>
-        <div class="wtext" data-i="5"><b>06</b><h3>Scores the bid before it ships</h3><p>Quality and risk checks run while there is still time to act on them.</p></div>
+        <div class="wtext on" data-i="0"><b>01 &middot; R&amp;D</b><h3>AI table generation and reaction schemes</h3><p>Paste the route and the R&amp;D table is generated for you, with the reaction schemes drawn alongside it.</p></div>
+        <div class="wtext" data-i="1"><b>02 &middot; Manufacturing</b><h3>Reactor and production mapping</h3><p>Reactors and production steps are mapped by the AI against your own plant, rather than assigned by hand.</p></div>
+        <div class="wtext" data-i="2"><b>03 &middot; Proposal generation</b><h3>Written in your style, in your document</h3><p>The proposal is generated to match your house writing style and downloads as your own branded document.</p></div>
+        <div class="wtext" data-i="3"><b>04 &middot; Evaluation</b><h3>A 30-test suite on every finished proposal</h3><p>Once the proposal is final, the AI runs a 30-test evaluation across it before it goes anywhere near a client.</p></div>
+      
         </div>
       </div>
     </div>
@@ -739,9 +736,9 @@ function drive(sceneId, stickySel, onIndex, count){
   var ticks=[].slice.call(rot.querySelectorAll('.tick'));
   var texts=[].slice.call(document.querySelectorAll('.wtext'));
   var hub=document.getElementById('hubNum');
-  var STEP=21;
+  var STEP=28;
   drive('ai','.wheel-sticky',function(i){
-    var deg=52.5-i*STEP;rot.style.transform='rotate('+deg+'deg)';rot.style.setProperty('--r',deg+'deg');
+    var deg=42-i*STEP;rot.style.transform='rotate('+deg+'deg)';rot.style.setProperty('--r',deg+'deg');
     for(var n=0;n<ticks.length;n++) ticks[n].classList.toggle('on',n===i);
     for(var m=0;m<texts.length;m++) texts[m].classList.toggle('on',m===i);
     if(hub) hub.textContent='0'+(i+1);
