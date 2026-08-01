@@ -320,7 +320,8 @@ html.has-js .rv.in{opacity:1;transform:none}
   .wrap,.wrap-wide{padding:0 18px}
   .foot{grid-template-columns:1fr;gap:26px}
   .cmp{min-width:520px}
-  .hero-cta .btn{flex:1;min-width:160px}
+  /* stack the CTAs full width; nowrap made the longer label spill the button */
+  .hero-cta .btn{flex:1 1 100%;min-width:0;white-space:normal}
   .roi-side b{min-width:88px;font-size:26px}
 }
 </style>
