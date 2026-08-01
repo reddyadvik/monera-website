@@ -239,7 +239,8 @@ html.has-js .sl.in,html.has-js .sr.in{opacity:1;transform:none}
 .roi-hero p{margin-top:12px;max-width:38ch}
 .roi-side{display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.12);border-radius:12px;overflow:hidden}
 .roi-side div{background:var(--ink);padding:20px 22px;display:flex;align-items:baseline;gap:14px}
-.roi-side b{font-family:var(--display);font-size:30px;font-weight:700;color:#fff;min-width:104px}
+/* flex:none — otherwise the number is shrunk to min-width and spills over the label */
+.roi-side b{font-family:var(--display);font-size:30px;font-weight:700;color:#fff;min-width:104px;flex:none;white-space:nowrap}
 .roi-side span{font-size:14.5px;color:rgba(255,255,255,.66)}
 .stat-note{margin-top:20px;font-size:13px;color:rgba(255,255,255,.42)}
 
