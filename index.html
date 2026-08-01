@@ -73,8 +73,19 @@ section{padding:76px 0}
 /* hero workflow diagram — first-pass layout, to be iterated on */
 .flowcard{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 18px 44px rgba(12,20,36,.10)}
 .flowcard .flow-wrap{overflow-x:auto}
-.flowcard-top{padding:11px 16px;background:#F7F9FC;border-bottom:1px solid var(--line)}
+.flowcard-top{padding:11px 16px;background:#F7F9FC;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px}
 .flowcard-top span{font-size:11.5px;font-weight:600;letter-spacing:.04em;color:var(--faint)}
+.flow-view{display:none;margin-left:auto;flex:none;background:#fff;border:1px solid var(--line);border-radius:7px;color:var(--blue);font-family:inherit;font-size:12px;font-weight:700;letter-spacing:.03em;padding:6px 14px;cursor:pointer}
+.flow-view:hover{border-color:var(--blue)}
+.flow-modal{display:none;position:fixed;inset:0;z-index:120;background:rgba(12,20,36,.55);padding:14px;align-items:center;justify-content:center}
+.flow-modal.open{display:flex}
+.flow-modal-panel{background:#fff;border-radius:14px;width:100%;max-width:760px;max-height:100%;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 60px rgba(12,20,36,.35)}
+.flow-modal-top{display:flex;align-items:center;gap:12px;padding:11px 8px 11px 16px;background:#F7F9FC;border-bottom:1px solid var(--line)}
+.flow-modal-top span{font-size:11.5px;font-weight:600;letter-spacing:.04em;color:var(--faint)}
+.flow-close{margin-left:auto;flex:none;background:none;border:0;color:var(--ink);font-size:26px;line-height:1;padding:2px 12px;cursor:pointer}
+.flow-modal-body{overflow:auto;-webkit-overflow-scrolling:touch}
+/* fit the whole diagram in the overlay rather than making it scroll again */
+.flow-modal .flow{min-width:0}
 .flow{display:block;width:100%;min-width:400px;height:auto;padding:12px 12px 10px;font-family:var(--sans)}
 .flow text{font-size:9px;font-weight:600;fill:var(--ink)}
 .flow .num{font-size:7px;font-weight:800;letter-spacing:.01em}
@@ -310,6 +321,11 @@ html.has-js .rv.in{opacity:1;transform:none}
   /* render the diagram larger than the card and let it scroll, rather than
      scaling it down until the labels are unreadable */
   .flow{min-width:600px}
+  /* ...but inline that scroll reads as a broken, half-shown diagram, so on
+     phones the card collapses to a "View" button that opens the overlay */
+  html.has-js .flowcard>.flow-wrap{display:none}
+  html.has-js .flow-view{display:block}
+  html.has-js .flowcard-top{padding:9px 9px 9px 16px}
 }
 @media(max-width:760px){
   .costs{grid-template-columns:1fr;gap:24px}
@@ -354,8 +370,8 @@ html.has-js .rv.in{opacity:1;transform:none}
       <p class="hero-note">Chemistry-native &middot; Deterministic costing &middot; Your chemistry never trains any model</p>
     </div>
 <div class="flowcard">
-      <div class="flowcard-top"><span>How a bid runs, and where Vonera sits</span></div>
-      <div class="flow-wrap"><svg class="flow" viewBox="0 0 480 296" role="img" aria-label="A customer RFQ is collected by business development, passes to proposal management, is scoped by R&amp;D with AI table generation and reaction schemes, parallelises across manufacturing, quality, supply chain and EHS, converges for R&amp;D approval, returns to proposal management for generation and AI evaluation, goes to upper management review, and leaves as a client-ready proposal.">
+      <div class="flowcard-top"><span>How a bid runs, and where Vonera sits</span><button class="flow-view" id="flowView" type="button">View</button></div>
+      <div class="flow-wrap" id="flowWrap"><svg class="flow" viewBox="0 0 480 296" role="img" aria-label="A customer RFQ is collected by business development, passes to proposal management, is scoped by R&amp;D with AI table generation and reaction schemes, parallelises across manufacturing, quality, supply chain and EHS, converges for R&amp;D approval, returns to proposal management for generation and AI evaluation, goes to upper management review, and leaves as a client-ready proposal.">
         <defs>
           <marker id="fcAr" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse">
             <path d="M0,0 L10,5 L0,10 z" fill="#9FB3D4"/>
@@ -625,6 +641,15 @@ html.has-js .rv.in{opacity:1;transform:none}
   </div>
 </footer>
 
+<div class="flow-modal" id="flowModal" role="dialog" aria-modal="true" aria-label="How a bid runs, and where Vonera sits">
+  <div class="flow-modal-panel">
+    <div class="flow-modal-top">
+      <span>How a bid runs, and where Vonera sits</span>
+      <button class="flow-close" type="button" aria-label="Close">&times;</button>
+    </div>
+    <div class="flow-modal-body" id="flowSlot"></div>
+  </div>
+</div>
 <script>
 
 document.documentElement.classList.add('has-js');
@@ -747,6 +772,33 @@ function drive(sceneId, stickySel, onIndex, count){
 })();
 
 document.getElementById('yr').textContent=new Date().getFullYear();
+
+/* mobile: the flow diagram is too wide to read inline, so it is hidden and
+   opened in a full-screen overlay from the "View" button instead. The real
+   node is moved in and out — no clone, so the svg marker ids stay unique. */
+(function(){
+  var btn=document.getElementById('flowView'), wrap=document.getElementById('flowWrap'),
+      modal=document.getElementById('flowModal'), slot=document.getElementById('flowSlot'),
+      card=wrap&&wrap.parentNode, anchor=wrap&&wrap.nextSibling;
+  if(!btn||!wrap||!modal||!slot) return;
+  function open(){
+    slot.appendChild(wrap);
+    modal.classList.add('open');
+    document.body.style.overflow='hidden';
+    modal.querySelector('.flow-close').focus();
+  }
+  function close(){
+    card.insertBefore(wrap,anchor);
+    modal.classList.remove('open');
+    document.body.style.overflow='';
+    btn.focus();
+  }
+  btn.addEventListener('click',open);
+  modal.addEventListener('click',function(e){
+    if(e.target===modal||e.target.closest('.flow-close')) close();
+  });
+  addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('open'))close()});
+})();
 
 </script>
 </body>
