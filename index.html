@@ -289,6 +289,20 @@ html.has-js .rv.in{opacity:1;transform:none}
   .details{position:static;height:auto;margin:16px 0 0;width:100%}
   .detail{position:static;opacity:1;transform:none;display:block;box-shadow:none;margin-bottom:12px}
   .detail:last-child{margin-bottom:0}
+  /* stacked workflow: each stage carries its own description and screenshot,
+     rather than the copy and the visuals sitting in separate columns */
+  .scene.stacked .stage-vis{display:none} /* its screens and details now live in the rail */
+  .rail-stacked .stage{padding:0 0 34px 16px;border-left-color:var(--blue)}
+  .rail-stacked .stage:last-child{padding-bottom:0}
+  .rail-stacked .stage h3{font-size:19px;margin-bottom:6px}
+  .rail-stacked .stage>p{display:none} /* the detail below says the same thing, at length */
+  .rail-stacked .detail{padding:0;margin:0;border:0;border-radius:0;background:none}
+  .rail-stacked .detail>b{display:none} /* duplicates the stage heading */
+  .rail-stacked .detail p{font-size:15px}
+  .rail-stacked .screen{position:static;opacity:1;transform:none;display:block;margin:14px 0 0;
+    border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;
+    box-shadow:0 14px 32px rgba(12,20,36,.12)}
+  .rail-stacked .screen img{width:100%;height:auto;aspect-ratio:1500/683;object-fit:cover;object-position:top center}
   .wheel{display:none}
   /* scroller becomes a native, touch-swipeable carousel */
   .hs-sticky{position:static;height:auto;min-height:0;overflow:visible;gap:20px}
@@ -720,6 +734,39 @@ function drive(sceneId, stickySel, onIndex, count){
     s.addEventListener('click',go);
     s.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}});
   });
+})();
+
+/* below the pinning breakpoint the workflow reads as one stack, so each stage
+   takes its own detail and screenshot inline. Nodes are moved, not cloned, and
+   moved back if the viewport grows past the breakpoint again. */
+(function(){
+  var rail=document.getElementById('rail'),
+      screensBox=document.getElementById('screens'),
+      detailsBox=document.getElementById('details');
+  if(!rail||!screensBox||!detailsBox) return;
+  var stages=[].slice.call(rail.children),
+      screens=[].slice.call(screensBox.children),
+      details=[].slice.call(detailsBox.children),
+      small=matchMedia('(max-width:899px)'), stacked=false;
+  function sync(){
+    if(small.matches===stacked) return;
+    stacked=small.matches;
+    if(stacked){
+      stages.forEach(function(s,i){
+        if(details[i]) s.appendChild(details[i]);
+        if(screens[i]) s.appendChild(screens[i]);
+      });
+    }else{
+      screens.forEach(function(f){screensBox.appendChild(f)});
+      details.forEach(function(d){detailsBox.appendChild(d)});
+    }
+    rail.classList.toggle('rail-stacked',stacked);
+    document.getElementById('workflow').classList.toggle('stacked',stacked);
+  }
+  small.addEventListener?small.addEventListener('change',sync):small.addListener(sync);
+  addEventListener('resize',sync);
+  addEventListener('load',sync); /* re-check once layout has settled */
+  sync();
 })();
 
 /* horizontal scroller — vertical scroll is mapped to horizontal travel while pinned.
