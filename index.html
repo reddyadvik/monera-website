@@ -579,7 +579,8 @@ html.has-js .rv.in{opacity:1;transform:none}
         </div>
       </div>
     </div>
-  <img class="ai-bot" id="aiBot" src="assets/bot-mfg.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
+  <img class="ai-bot" data-step="1" src="assets/bot-mfg.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
+    <img class="ai-bot" data-step="2" src="assets/bot-proposal.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
   </div>
   <div class="wheel-track" aria-hidden="true"></div>
 </section>
@@ -830,8 +831,9 @@ function drive(sceneId, stickySel, onIndex, count){
     for(var n=0;n<ticks.length;n++) ticks[n].classList.toggle('on',n===i);
     for(var m=0;m<texts.length;m++) texts[m].classList.toggle('on',m===i);
     if(hub) hub.textContent='0'+(i+1);
-    var bot=document.getElementById('aiBot');
-    if(bot) bot.classList.toggle('on', i===1);
+    Array.prototype.forEach.call(document.querySelectorAll('.ai-bot'), function(b){
+      b.classList.toggle('on', +b.dataset.step===i);
+    });
   },texts.length);
 })();
 
