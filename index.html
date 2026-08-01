@@ -217,9 +217,18 @@ html.has-js .sl.in,html.has-js .sr.in{opacity:1;transform:none}
 .wheel-text{position:relative;min-height:230px}
 .wtext{position:absolute;inset:0;opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease;pointer-events:none}
 .wtext.on{opacity:1;transform:none;pointer-events:auto}
-.wtext b{font-family:var(--display);font-size:13px;font-weight:700;color:var(--blue);letter-spacing:.1em}
+.wtext b{display:block;font-family:var(--display);font-size:clamp(20px,2.1vw,27px);font-weight:800;color:var(--blue);letter-spacing:.01em;margin-bottom:6px}
 .wtext h3{font-size:clamp(22px,2.4vw,30px);margin:8px 0 12px}
 .wtext p{color:var(--mut);font-size:16.5px;max-width:44ch}
+
+/* AI mascot — appears on the Manufacturing step only */
+.ai-bot{position:absolute;right:2.5vw;bottom:0;width:clamp(150px,15vw,230px);height:auto;
+  opacity:0;transform:translateY(26px) scale(.96);pointer-events:none;z-index:4;
+  transition:opacity .5s cubic-bezier(.2,.7,.2,1),transform .5s cubic-bezier(.2,.7,.2,1);
+  filter:drop-shadow(0 14px 30px rgba(180,90,20,.22))}
+.ai-bot.on{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.ai-bot{transition:none}}
+@media(max-width:899px){.ai-bot{display:none}}
 
 /* 6 comparison */
 .cmp-wrap{overflow-x:auto}
@@ -559,9 +568,7 @@ html.has-js .rv.in{opacity:1;transform:none}
       </div>
       <div>
         <div class="sec-head" style="margin-bottom:22px">
-          <div class="eyebrow">Where the AI acts</div>
           <h2>Four places the AI does the work</h2>
-          <p class="lede">Where the AI is actually doing the work, and what it produces at each point.</p>
         </div>
         <div class="wheel-text" id="wheelText">
         <div class="wtext on" data-i="0"><b>01 &middot; R&amp;D</b><h3>AI table generation and reaction schemes</h3><p>Paste the route and the R&amp;D table is generated for you, with the reaction schemes drawn alongside it.</p></div>
@@ -572,6 +579,7 @@ html.has-js .rv.in{opacity:1;transform:none}
         </div>
       </div>
     </div>
+  <img class="ai-bot" id="aiBot" src="assets/bot-mfg.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
   </div>
   <div class="wheel-track" aria-hidden="true"></div>
 </section>
@@ -822,6 +830,8 @@ function drive(sceneId, stickySel, onIndex, count){
     for(var n=0;n<ticks.length;n++) ticks[n].classList.toggle('on',n===i);
     for(var m=0;m<texts.length;m++) texts[m].classList.toggle('on',m===i);
     if(hub) hub.textContent='0'+(i+1);
+    var bot=document.getElementById('aiBot');
+    if(bot) bot.classList.toggle('on', i===1);
   },texts.length);
 })();
 
