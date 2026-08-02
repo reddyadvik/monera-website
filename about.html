@@ -32,8 +32,8 @@ section.tint{background:var(--tint)}
 
 .nav{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.92);backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line)}
 .nav-in{max-width:var(--wrap);margin:0 auto;padding:0 24px;height:62px;display:flex;align-items:center;gap:28px}
-.brand{font-family:var(--display);font-weight:700;font-size:20px;letter-spacing:.02em;display:flex;align-items:baseline;gap:8px}
-.brand span{font-family:var(--sans);font-size:10.5px;font-weight:600;letter-spacing:.16em;color:var(--faint);text-transform:uppercase}
+.brand{font-family:var(--display);font-weight:700;font-size:20px;letter-spacing:.02em;display:flex;align-items:center;gap:9px}
+.brand-mark{height:23px;width:auto;display:block;flex:none}
 .nav-links{display:flex;gap:26px;margin-left:auto}
 .nav-links a{font-size:14.5px;color:var(--mut);font-weight:500}
 .nav-links a:hover,.nav-links a.on{color:var(--ink)}
@@ -104,7 +104,7 @@ html.has-js .rv.in{opacity:1;transform:none}
 
 <header class="nav">
   <div class="nav-in">
-    <a href="index.html" class="brand">VONERA <span>Pharma</span></a>
+    <a href="index.html" class="brand"><img class="brand-mark" src="assets/logo-mark.png" alt="" aria-hidden="true">VONERA</a>
     <nav class="nav-links" id="navLinks">
       <a href="index.html#platform">Platform</a>
       <a href="index.html#workflow">Workflow</a>
@@ -170,7 +170,7 @@ html.has-js .rv.in{opacity:1;transform:none}
 <footer>
   <div class="wrap foot">
     <div>
-      <div class="brand">VONERA <span>Pharma</span></div>
+      <div class="brand"><img class="brand-mark" src="assets/logo-mark-w.png" alt="" aria-hidden="true">VONERA</div>
       <p>AI-native proposal and costing software for pharma CRO / CDMO bid desks.</p>
     </div>
     <div>

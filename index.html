@@ -42,8 +42,8 @@ section{padding:76px 0}
 
 .nav{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.93);backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line)}
 .nav-in{max-width:var(--wide);margin:0 auto;padding:0 24px;height:var(--navh);display:flex;align-items:center;gap:28px}
-.brand{font-family:var(--display);font-weight:700;font-size:20px;letter-spacing:.02em;display:flex;align-items:baseline;gap:8px}
-.brand span{font-family:var(--sans);font-size:10.5px;font-weight:600;letter-spacing:.16em;color:var(--faint);text-transform:uppercase}
+.brand{font-family:var(--display);font-weight:700;font-size:20px;letter-spacing:.02em;display:flex;align-items:center;gap:9px}
+.brand-mark{height:23px;width:auto;display:block;flex:none}
 .nav-links{display:flex;gap:26px;margin-left:auto}
 .nav-links a{font-size:14.5px;color:var(--mut);font-weight:500}
 .nav-links a:hover{color:var(--ink)}
@@ -403,7 +403,7 @@ html.has-js .rv.in{opacity:1;transform:none}
 
 <header class="nav">
   <div class="nav-in">
-    <a href="#top" class="brand">VONERA <span>Pharma</span></a>
+    <a href="#top" class="brand"><img class="brand-mark" src="assets/logo-mark.png" alt="" aria-hidden="true">VONERA</a>
     <nav class="nav-links" id="navLinks">
       <a href="#workflow">Workflow</a><a href="#platform">Platform</a><a href="#ai">AI</a><a href="#roi">ROI</a><a href="about.html">About</a>
     </nav>
@@ -748,7 +748,7 @@ html.has-js .rv.in{opacity:1;transform:none}
 <footer>
   <div class="wrap">
     <div class="foot">
-      <div><div class="brand">VONERA <span>Pharma</span></div><p>Proposal intelligence for pharma CDMO / CRO teams.</p></div>
+      <div><div class="brand"><img class="brand-mark" src="assets/logo-mark-w.png" alt="" aria-hidden="true">VONERA</div><p>Proposal intelligence for pharma CDMO / CRO teams.</p></div>
       <div><h4>Product</h4><a href="#workflow">Workflow</a><a href="#platform">Platform</a><a href="#ai">AI</a><a href="#roi">ROI</a></div>
       <div><h4>Company</h4><a href="about.html">About us</a><a href="mailto:contact@vonera.in">contact@vonera.in</a><a href="tel:+919390962688">+91 93909 62688</a><p>Somajiguda, Hyderabad,<br>Telangana 500082</p></div>
     </div>
