@@ -254,7 +254,17 @@ html.has-js .sl.in,html.has-js .sr.in{opacity:1;transform:none}
 .stat-note{margin-top:20px;font-size:13px;color:rgba(255,255,255,.42)}
 
 /* 8 governance — spec sheet */
-.spec{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.spec{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+
+/* section 2: the problem on the left, governance in a dark panel on the right */
+.sp-grid{display:grid;grid-template-columns:30fr 70fr;gap:38px;align-items:stretch}
+.sp-left .sec-head{margin-bottom:26px;max-width:none}
+.sp-left h2{font-size:clamp(23px,2vw,29px)}
+.sp-left .costs{grid-template-columns:1fr;gap:22px;margin-top:0}
+.sp-left .handoff{margin-top:26px;max-width:none}
+.sp-right{background:var(--ink);color:#fff;border-radius:16px;padding:34px 34px 38px}
+.sp-right .eyebrow{color:#7FA5FF}
+.sp-right h2{font-size:clamp(23px,2.1vw,31px);margin-bottom:24px}
 .spec>div{padding:22px 24px;border:1px solid rgba(255,255,255,.14);border-radius:12px;background:rgba(255,255,255,.035)}
 .spec dt{font-family:var(--display);font-size:12.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:#7FA5FF;margin-bottom:9px}
 .spec dd{color:rgba(255,255,255,.72);font-size:15.5px;margin:0}
@@ -283,6 +293,9 @@ html.has-js .rv.in{opacity:1;transform:none}
   .scene-grid{grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:32px}
 }
 @media(max-width:1000px){
+  .sp-grid{grid-template-columns:1fr;gap:34px}
+  .sp-left h2{font-size:clamp(25px,2.9vw,38px)}
+  .sp-left .costs{grid-template-columns:repeat(3,1fr);gap:30px}
   .hero-grid{grid-template-columns:1fr;gap:34px}
   .roi{grid-template-columns:1fr;gap:30px}
   .spec{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -352,8 +365,9 @@ html.has-js .rv.in{opacity:1;transform:none}
   html.has-js .flowcard-top{padding:9px 9px 9px 16px}
 }
 @media(max-width:760px){
-  .costs{grid-template-columns:1fr;gap:24px}
+  .costs,.sp-left .costs{grid-template-columns:1fr;gap:24px}
   .spec{grid-template-columns:1fr}
+  .sp-right{padding:26px 22px 30px}
 }
 @media(max-width:620px){
   section,.scene,.wheel-scene{padding:52px 0}
@@ -467,17 +481,32 @@ html.has-js .rv.in{opacity:1;transform:none}
 </section>
 
 <section class="tint2">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="eyebrow">Today</div>
-      <h2>Five departments hold five pieces of one number</h2>
+  <div class="wrap sp-grid">
+    <div class="sp-left">
+      <div class="sec-head">
+        <div class="eyebrow">Today</div>
+        <h2>Five departments hold five pieces of one number</h2>
+      </div>
+      <div class="costs rv">
+        <div class="cost"><b>01</b><h3>It moves in a queue</h3><p>Each function waits on the one before it, and every hand-off is another email.</p></div>
+        <div class="cost"><b>02</b><h3>The arithmetic is fragile</h3><p>One wrong cell re-prices the bid. Two estimators return two different numbers.</p></div>
+        <div class="cost"><b>03</b><h3>Being wrong is expensive</h3><p>A single project runs from &#8377;15 lakh to well past &#8377;1 crore.</p></div>
+      </div>
+      <p class="handoff">So we put the entire path onto one system. Here is what happens to that RFQ instead.</p>
     </div>
-    <div class="costs rv">
-      <div class="cost"><b>01</b><h3>It moves in a queue</h3><p>Each function waits on the one before it, and every hand-off is another email.</p></div>
-      <div class="cost"><b>02</b><h3>The arithmetic is fragile</h3><p>One wrong cell re-prices the bid. Two estimators return two different numbers.</p></div>
-      <div class="cost"><b>03</b><h3>Being wrong is expensive</h3><p>A single project runs from &#8377;15 lakh to well past &#8377;1 crore.</p></div>
-    </div>
-    <p class="handoff">So we put the entire path onto one system. Here is what happens to that RFQ instead.</p>
+
+    <aside class="sp-right rv">
+      <div class="eyebrow">Governance &amp; IP</div>
+      <h2>Your molecules stay yours</h2>
+      <dl class="spec">
+        <div><dt>Infrastructure</dt><dd>Enterprise AWS with row-level isolation between tenants.</dd></div>
+        <div><dt>Model training</dt><dd>Your data is never used to train any model, by us or by any provider.</dd></div>
+        <div><dt>Access control</dt><dd>Role-scoped to each user&rsquo;s function.</dd></div>
+        <div><dt>Encryption</dt><dd>Applied in transit and at rest.</dd></div>
+        <div><dt>Auditability</dt><dd>Full version history and activity trail on every revision.</dd></div>
+        <div><dt>Export</dt><dd>Proposals and data out in the formats your stakeholders require.</dd></div>
+      </dl>
+    </aside>
   </div>
 </section>
 
@@ -631,23 +660,6 @@ html.has-js .rv.in{opacity:1;transform:none}
         <div><b>~3 wks</b><span>to payback, reached on the first proposal the system saves</span></div>
       </div>
     </div>
-  </div>
-</section>
-
-<section class="dark" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="eyebrow">Governance &amp; IP</div>
-      <h2>Your molecules stay yours</h2>
-    </div>
-    <dl class="spec rv">
-      <div><dt>Infrastructure</dt><dd>Enterprise AWS with row-level isolation between tenants.</dd></div>
-      <div><dt>Model training</dt><dd>Your data is never used to train any model, by us or by any provider.</dd></div>
-      <div><dt>Access control</dt><dd>Role-scoped to each user&rsquo;s function.</dd></div>
-      <div><dt>Encryption</dt><dd>Applied in transit and at rest.</dd></div>
-      <div><dt>Auditability</dt><dd>Full version history and activity trail on every revision.</dd></div>
-      <div><dt>Export</dt><dd>Proposals and data out in the formats your stakeholders require.</dd></div>
-    </dl>
   </div>
 </section>
 
