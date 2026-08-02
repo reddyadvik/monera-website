@@ -258,9 +258,25 @@ html.has-js .sl.in,html.has-js .sr.in{opacity:1;transform:none}
 
 /* section 2: the problem on the left, governance in a dark panel on the right */
 .sp-grid{display:grid;grid-template-columns:30fr 70fr;gap:38px;align-items:stretch}
-.sp-left .sec-head{margin-bottom:26px;max-width:none}
-.sp-left h2{font-size:clamp(23px,2vw,29px)}
-.sp-left .costs{grid-template-columns:1fr;gap:22px;margin-top:0}
+.sp-left{display:flex;flex-direction:column}
+.sp-left .costs{grid-template-columns:1fr;gap:22px;margin-top:0;flex:1;align-content:space-between}
+
+/* how a bid runs today: one queue, left to right */
+.oldflow-wrap{overflow-x:auto;margin:0 0 38px}
+.oldflow{display:block;width:100%;min-width:920px;height:auto;font-family:var(--sans)}
+.oldflow text{font-size:10.5px;font-weight:600;fill:var(--mut)}
+.oldflow .of-nd{fill:#fff;stroke:#D9E0EC;stroke-width:1}
+.oldflow .of-start{fill:var(--ink);stroke:none}
+.oldflow .of-end{fill:#fff;stroke:#C3CDDE;stroke-width:1;stroke-dasharray:4 3}
+.oldflow .of-w{fill:#fff}
+.oldflow .of-ar{stroke:#B9C4D6;stroke-width:1.2;fill:none;marker-end:url(#ofAr)}
+.oldflow .of-dim{stroke:#C3CDDE;stroke-width:1;fill:none}
+.oldflow .of-dimt{font-size:9.5px;font-weight:700;letter-spacing:.1em;fill:var(--faint)}
+.oldflow .of-chip{fill:#F1F4F9;stroke:#DFE5EF;stroke-width:.9}
+.oldflow .of-chipt{font-size:7.5px;font-weight:700;letter-spacing:.06em;fill:#8792A8}
+.oldflow .of-loop{stroke:#DC2626;stroke-width:1.2;fill:none;stroke-dasharray:5 3.5;marker-end:url(#ofLoop)}
+.oldflow .of-loop-tail{marker-end:none}
+.oldflow .of-loopt{font-size:9.5px;font-weight:700;letter-spacing:.08em;fill:#DC2626}
 .sp-left .handoff{margin-top:26px;max-width:none}
 .sp-right{background:var(--ink);color:#fff;border-radius:16px;padding:34px 34px 38px}
 .sp-right .eyebrow{color:#7FA5FF}
@@ -294,7 +310,6 @@ html.has-js .rv.in{opacity:1;transform:none}
 }
 @media(max-width:1000px){
   .sp-grid{grid-template-columns:1fr;gap:34px}
-  .sp-left h2{font-size:clamp(25px,2.9vw,38px)}
   .sp-left .costs{grid-template-columns:repeat(3,1fr);gap:30px}
   .hero-grid{grid-template-columns:1fr;gap:34px}
   .roi{grid-template-columns:1fr;gap:30px}
@@ -481,32 +496,90 @@ html.has-js .rv.in{opacity:1;transform:none}
 </section>
 
 <section class="tint2">
-  <div class="wrap sp-grid">
-    <div class="sp-left">
-      <div class="sec-head">
-        <div class="eyebrow">Today</div>
-        <h2>Five departments hold five pieces of one number</h2>
-      </div>
-      <div class="costs rv">
-        <div class="cost"><b>01</b><h3>It moves in a queue</h3><p>Each function waits on the one before it, and every hand-off is another email.</p></div>
-        <div class="cost"><b>02</b><h3>The arithmetic is fragile</h3><p>One wrong cell re-prices the bid. Two estimators return two different numbers.</p></div>
-        <div class="cost"><b>03</b><h3>Being wrong is expensive</h3><p>A single project runs from &#8377;15 lakh to well past &#8377;1 crore.</p></div>
-      </div>
-      <p class="handoff">So we put the entire path onto one system. Here is what happens to that RFQ instead.</p>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Today</div>
+      <h2>Five departments hold five pieces of one number</h2>
     </div>
 
-    <aside class="sp-right rv">
-      <div class="eyebrow">Governance &amp; IP</div>
-      <h2>Your molecules stay yours</h2>
-      <dl class="spec">
-        <div><dt>Infrastructure</dt><dd>Enterprise AWS with row-level isolation between tenants.</dd></div>
-        <div><dt>Model training</dt><dd>Your data is never used to train any model, by us or by any provider.</dd></div>
-        <div><dt>Access control</dt><dd>Role-scoped to each user&rsquo;s function.</dd></div>
-        <div><dt>Encryption</dt><dd>Applied in transit and at rest.</dd></div>
-        <div><dt>Auditability</dt><dd>Full version history and activity trail on every revision.</dd></div>
-        <div><dt>Export</dt><dd>Proposals and data out in the formats your stakeholders require.</dd></div>
-      </dl>
-    </aside>
+    <div class="oldflow-wrap rv">
+      <svg class="oldflow" viewBox="0 0 1120 132" role="img" aria-label="Today a bid runs as one strict queue: the customer RFQ goes to business development, then R&amp;D scoping, then manufacturing, quality, supply chain and EHS one after another, then sign-off, and only then does the quote go out. The whole run takes three to four weeks, every stage is held in its own spreadsheet, and a single correction sends the chain back to the first department.">
+        <defs>
+          <marker id="ofAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#B9C4D6"/>
+          </marker>
+          <marker id="ofLoop" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#DC2626"/>
+          </marker>
+        </defs>
+
+        <path class="of-dim" d="M8,10 L8,22"/><path class="of-dim" d="M1111,10 L1111,22"/>
+        <path class="of-dim" d="M8,16 L488,16"/><path class="of-dim" d="M632,16 L1111,16"/>
+        <text class="of-dimt" x="560" y="19.5" text-anchor="middle">3&ndash;4 WEEKS END TO END</text>
+
+        <rect class="of-nd of-start" x="8" y="36" width="103" height="38" rx="7"/>
+        <text class="of-w" x="59.5" y="59" text-anchor="middle">Customer RFQ</text>
+        <rect class="of-nd" x="133" y="36" width="103" height="38" rx="7"/>
+        <text x="184.5" y="59" text-anchor="middle">BD collection</text>
+        <rect class="of-nd" x="258" y="36" width="103" height="38" rx="7"/>
+        <text x="309.5" y="59" text-anchor="middle">R&amp;D scoping</text>
+        <rect class="of-nd" x="383" y="36" width="103" height="38" rx="7"/>
+        <text x="434.5" y="59" text-anchor="middle">Manufacturing</text>
+        <rect class="of-nd" x="508" y="36" width="103" height="38" rx="7"/>
+        <text x="559.5" y="59" text-anchor="middle">Quality</text>
+        <rect class="of-nd" x="633" y="36" width="103" height="38" rx="7"/>
+        <text x="684.5" y="59" text-anchor="middle">Supply chain</text>
+        <rect class="of-nd" x="758" y="36" width="103" height="38" rx="7"/>
+        <text x="809.5" y="59" text-anchor="middle">EHS</text>
+        <rect class="of-nd" x="883" y="36" width="103" height="38" rx="7"/>
+        <text x="934.5" y="59" text-anchor="middle">Sign-off</text>
+        <rect class="of-nd of-end" x="1008" y="36" width="103" height="38" rx="7"/>
+        <text x="1059.5" y="59" text-anchor="middle">Quote sent</text>
+        <path class="of-ar" d="M113,55 L131,55"/>
+        <path class="of-ar" d="M238,55 L256,55"/>
+        <path class="of-ar" d="M363,55 L381,55"/>
+        <path class="of-ar" d="M488,55 L506,55"/>
+        <path class="of-ar" d="M613,55 L631,55"/>
+        <path class="of-ar" d="M738,55 L756,55"/>
+        <path class="of-ar" d="M863,55 L881,55"/>
+        <path class="of-ar" d="M988,55 L1006,55"/>
+        <rect class="of-chip" x="163.5" y="80" width="42" height="13" rx="3.5"/><text class="of-chipt" x="184.5" y="89.5" text-anchor="middle">.XLSX</text>
+        <rect class="of-chip" x="288.5" y="80" width="42" height="13" rx="3.5"/><text class="of-chipt" x="309.5" y="89.5" text-anchor="middle">.XLSX</text>
+        <rect class="of-chip" x="413.5" y="80" width="42" height="13" rx="3.5"/><text class="of-chipt" x="434.5" y="89.5" text-anchor="middle">.XLSX</text>
+        <rect class="of-chip" x="538.5" y="80" width="42" height="13" rx="3.5"/><text class="of-chipt" x="559.5" y="89.5" text-anchor="middle">.XLSX</text>
+        <rect class="of-chip" x="663.5" y="80" width="42" height="13" rx="3.5"/><text class="of-chipt" x="684.5" y="89.5" text-anchor="middle">.XLSX</text>
+        <rect class="of-chip" x="788.5" y="80" width="42" height="13" rx="3.5"/><text class="of-chipt" x="809.5" y="89.5" text-anchor="middle">.XLSX</text>
+        <rect class="of-chip" x="913.5" y="80" width="42" height="13" rx="3.5"/><text class="of-chipt" x="934.5" y="89.5" text-anchor="middle">.XLSX</text>
+
+        <path class="of-loop of-loop-tail" d="M809.5,95 L809.5,106 Q809.5,112 803.5,112 L611,112"/>
+        <path class="of-loop" d="M321,112 L128,112 Q122,112 122,106 L122,61 Q122,55 128,55 L131,55"/>
+        <text class="of-loopt" x="466" y="115.5" text-anchor="middle">ONE CORRECTION AND THE CHAIN STARTS AGAIN</text>
+      </svg>
+    </div>
+
+    <div class="sp-grid">
+      <div class="sp-left">
+        <div class="costs rv">
+          <div class="cost"><b>01</b><h3>Nothing runs in parallel</h3><p>Every stage waits for the one before it to finish. Five departments, one queue, three to four weeks.</p></div>
+          <div class="cost"><b>02</b><h3>One correction restarts it</h3><p>A changed number sends the bid back to the first department, not to the stage that changed it.</p></div>
+          <div class="cost"><b>03</b><h3>It all lives in spreadsheets</h3><p>No searchable record of past bids, no analytics across them, and no way to show how a number was reached.</p></div>
+        </div>
+        <p class="handoff">So we put the entire path onto one system. Here is what happens to that RFQ instead.</p>
+      </div>
+
+      <aside class="sp-right rv">
+        <div class="eyebrow">Governance &amp; IP</div>
+        <h2>Your molecules stay yours</h2>
+        <dl class="spec">
+          <div><dt>Infrastructure</dt><dd>Enterprise AWS with row-level isolation between tenants.</dd></div>
+          <div><dt>Model training</dt><dd>Your data is never used to train any model, by us or by any provider.</dd></div>
+          <div><dt>Access control</dt><dd>Role-scoped to each user&rsquo;s function.</dd></div>
+          <div><dt>Encryption</dt><dd>Applied in transit and at rest.</dd></div>
+          <div><dt>Auditability</dt><dd>Full version history and activity trail on every revision.</dd></div>
+          <div><dt>Export</dt><dd>Proposals and data out in the formats your stakeholders require.</dd></div>
+        </dl>
+      </aside>
+    </div>
   </div>
 </section>
 
