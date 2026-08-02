@@ -254,12 +254,9 @@ html.has-js .sl.in,html.has-js .sr.in{opacity:1;transform:none}
 .stat-note{margin-top:20px;font-size:13px;color:rgba(255,255,255,.42)}
 
 /* 8 governance — spec sheet */
-.spec{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.spec{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 
 /* section 2: the problem on the left, governance in a dark panel on the right */
-.sp-grid{display:grid;grid-template-columns:30fr 70fr;gap:38px;align-items:stretch}
-.sp-left{display:flex;flex-direction:column}
-.sp-left .costs{grid-template-columns:1fr;gap:22px;margin-top:0;flex:1;align-content:space-between}
 
 /* how a bid runs today: one queue, left to right */
 .oldflow-wrap{overflow-x:auto;margin:0 0 38px}
@@ -284,10 +281,6 @@ html.has-js .sl.in,html.has-js .sr.in{opacity:1;transform:none}
 .oldflow .of-loop{stroke:#DC2626;stroke-width:1.2;fill:none;stroke-dasharray:5 3.5;marker-end:url(#ofLoop)}
 .oldflow .of-loop-tail{marker-end:none}
 .oldflow .of-loopt{font-size:9.5px;font-weight:700;letter-spacing:.08em;fill:#DC2626}
-.sp-left .handoff{margin-top:26px;max-width:none}
-.sp-right{background:var(--ink);color:#fff;border-radius:16px;padding:34px 34px 38px}
-.sp-right .eyebrow{color:#7FA5FF}
-.sp-right h2{font-size:clamp(23px,2.1vw,31px);margin-bottom:24px}
 .spec>div{padding:22px 24px;border:1px solid rgba(255,255,255,.14);border-radius:12px;background:rgba(255,255,255,.035)}
 .spec dt{font-family:var(--display);font-size:12.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:#7FA5FF;margin-bottom:9px}
 .spec dd{color:rgba(255,255,255,.72);font-size:15.5px;margin:0}
@@ -316,8 +309,6 @@ html.has-js .rv.in{opacity:1;transform:none}
   .scene-grid{grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:32px}
 }
 @media(max-width:1000px){
-  .sp-grid{grid-template-columns:1fr;gap:34px}
-  .sp-left .costs{grid-template-columns:repeat(3,1fr);gap:30px}
   .hero-grid{grid-template-columns:1fr;gap:34px}
   .roi{grid-template-columns:1fr;gap:30px}
   .spec{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -387,9 +378,8 @@ html.has-js .rv.in{opacity:1;transform:none}
   html.has-js .flowcard-top{padding:9px 9px 9px 16px}
 }
 @media(max-width:760px){
-  .costs,.sp-left .costs{grid-template-columns:1fr;gap:24px}
+  .costs{grid-template-columns:1fr;gap:24px}
   .spec{grid-template-columns:1fr}
-  .sp-right{padding:26px 22px 30px}
 }
 @media(max-width:620px){
   section,.scene,.wheel-scene{padding:52px 0}
@@ -564,28 +554,12 @@ html.has-js .rv.in{opacity:1;transform:none}
       </svg>
     </div>
 
-    <div class="sp-grid">
-      <div class="sp-left">
-        <div class="costs rv">
-          <div class="cost"><b>01</b><h3>Nothing runs in parallel</h3><p>Every stage waits for the one before it to finish. Five departments, one queue, three to four weeks.</p></div>
-          <div class="cost"><b>02</b><h3>One correction restarts it</h3><p>A changed number sends the bid back to the first department, not to the stage that changed it.</p></div>
-          <div class="cost"><b>03</b><h3>It all lives in spreadsheets</h3><p>No searchable record of past bids, no analytics across them, and no way to show how a number was reached.</p></div>
-        </div>
-        <p class="handoff">So we put the entire path onto one system. Here is what happens to that RFQ instead.</p>
-      </div>
-
-      <aside class="sp-right rv">
-        <div class="eyebrow">Governance &amp; IP</div>
-        <h2>Your molecules stay yours</h2>
-        <dl class="spec">
-          <div><dt>Infrastructure</dt><dd>Enterprise AWS with row-level isolation between tenants.</dd></div>
-          <div><dt>Model training</dt><dd>Your data is never used to train any model, by us or by any provider.</dd></div>
-          <div><dt>Access control</dt><dd>Role-scoped to each user&rsquo;s function.</dd></div>
-          <div><dt>Encryption</dt><dd>Applied in transit and at rest.</dd></div>
-          <div><dt>Auditability</dt><dd>Full version history and activity trail on every revision.</dd></div>
-          <div><dt>Export</dt><dd>Proposals and data out in the formats your stakeholders require.</dd></div>
-        </dl>
-      </aside>
+    <div class="costs rv">
+      <div class="cost"><b>01</b><h3>Nothing runs in parallel</h3><p>Every stage waits for the one before it to finish. Five departments, one queue, three to four weeks.</p></div>
+      <div class="cost"><b>02</b><h3>One correction restarts it</h3><p>A changed number sends the bid back to the first department, not to the stage that changed it.</p></div>
+      <div class="cost"><b>03</b><h3>It all lives in spreadsheets</h3><p>No searchable record of past bids, no analytics across them, and no way to show how a number was reached.</p></div>
+    </div>
+    <p class="handoff">So we put the entire path onto one system. Here is what happens to that RFQ instead.</p>
     </div>
   </div>
 </section>
@@ -658,6 +632,23 @@ html.has-js .rv.in{opacity:1;transform:none}
     <div class="wrap-wide"><div class="hs-meter"><span id="hsCount">01 / 03</span><i><b id="hsBar"></b></i></div></div>
   </div>
   <div class="hs-track" aria-hidden="true"></div>
+</section>
+
+<section class="dark" id="governance">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Governance &amp; IP</div>
+      <h2>Your molecules stay yours</h2>
+    </div>
+    <dl class="spec rv">
+      <div><dt>Infrastructure</dt><dd>Enterprise AWS with row-level isolation between tenants.</dd></div>
+      <div><dt>Model training</dt><dd>Your data is never used to train any model, by us or by any provider.</dd></div>
+      <div><dt>Access control</dt><dd>Role-scoped to each user&rsquo;s function.</dd></div>
+      <div><dt>Encryption</dt><dd>Applied in transit and at rest.</dd></div>
+      <div><dt>Auditability</dt><dd>Full version history and activity trail on every revision.</dd></div>
+      <div><dt>Export</dt><dd>Proposals and data out in the formats your stakeholders require.</dd></div>
+    </dl>
+  </div>
 </section>
 
 <section class="wheel-scene" id="ai">
