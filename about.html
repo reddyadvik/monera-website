@@ -59,48 +59,55 @@ section.tint{background:var(--tint)}
 
 .people{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;max-width:860px}
 
-/* shared hover/tap-to-expand card: short teaser always visible, full bio
-   drops in as an overlay below the card so expanding never reflows the grid */
-.pcard{position:relative;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:visible;cursor:pointer;
-  transition:transform .28s cubic-bezier(.2,.8,.2,1),box-shadow .28s cubic-bezier(.2,.8,.2,1);z-index:1}
-.pcard:hover,.pcard.open,.pcard:focus-within{transform:translateY(-6px);box-shadow:0 26px 54px rgba(12,20,36,.18);z-index:30}
+/* preview card: photo, name, one-line teaser. Hover/tap opens the shared
+   spotlight modal below rather than expanding the card in place — so
+   opening one person never covers or shifts anyone else on the page. */
+.pcard{position:relative;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;cursor:pointer;
+  transition:transform .24s cubic-bezier(.2,.8,.2,1),box-shadow .24s cubic-bezier(.2,.8,.2,1)}
+.pcard:hover,.pcard:focus-within{transform:translateY(-4px);box-shadow:0 18px 38px rgba(12,20,36,.14)}
 .pcard-role{display:inline-block;font-family:var(--display);font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
   color:var(--blue-dk);background:var(--blue-tint);padding:4px 9px;border-radius:5px;margin-bottom:10px}
 .pcard h3{margin-bottom:8px}
 .pcard-teaser{color:var(--mut);font-size:14.5px}
-.pcard-hint{margin-top:10px;font-size:12.5px;color:var(--faint);font-weight:600;display:flex;align-items:center;gap:5px;transition:opacity .2s}
-.pcard:hover .pcard-hint,.pcard.open .pcard-hint,.pcard:focus-within .pcard-hint{opacity:0}
-/* full bio flies out sideways into the neighbouring column, not downward */
-.pcard-full{position:absolute;top:0;width:100%;background:#fff;border:1px solid var(--line);border-radius:12px;
-  overflow:hidden;opacity:0;pointer-events:none;box-shadow:0 26px 54px rgba(12,20,36,.18);z-index:25;
-  transition:opacity .3s ease,transform .32s cubic-bezier(.2,.8,.2,1)}
-.pcard:nth-child(odd) .pcard-full{left:calc(100% + 26px);transform:translateX(-14px)}
-.pcard:nth-child(even) .pcard-full{right:calc(100% + 26px);transform:translateX(14px)}
-.pcard:hover .pcard-full,.pcard.open .pcard-full,.pcard:focus-within .pcard-full{opacity:1;pointer-events:auto;transform:translateX(0);z-index:40}
-.pcard-full-in{padding:20px 22px}
-@media(max-width:620px){
-  /* no room to the side once the grid stacks to one column — fall back to a panel below.
-     Selectors mirror the desktop nth-child rules' specificity so this actually wins the cascade. */
-  .pcard-full,.pcard:nth-child(odd) .pcard-full,.pcard:nth-child(even) .pcard-full{
-    position:absolute;top:100%;left:0;right:0;width:auto;border-top:none;border-radius:0 0 12px 12px;
-    max-height:0;overflow:hidden;transform:none}
-  .pcard:hover .pcard-full,.pcard.open .pcard-full,.pcard:focus-within .pcard-full{max-height:640px}
-}
-.pcard-full p{color:var(--mut);font-size:14px;margin-bottom:10px}
-.pcard-full p:last-child{margin-bottom:0}
-
-/* founders: full photo, unchanged size */
-.member-photo{aspect-ratio:4/3;background:var(--tint);overflow:hidden;border-radius:12px 12px 0 0}
-.member-photo img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.pcard-hint{margin-top:10px;font-size:12.5px;color:var(--faint);font-weight:600;display:flex;align-items:center;gap:5px}
+.pcard-bio{display:none}
 .pcard-body{padding:20px 22px 24px}
 
-/* advisors: smaller, centered avatar area instead of a full-bleed photo */
-.adv-photo{height:150px;background:var(--tint);display:flex;align-items:center;justify-content:center;border-radius:12px 12px 0 0}
-.adv-avatar{width:92px;height:92px;border-radius:50%;background:#fff;border:1px solid var(--line);
-  display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:24px;color:var(--blue-dk);overflow:hidden}
+/* founders: full photo, made a little bigger (taller crop) */
+.member-photo{aspect-ratio:1/1;background:var(--tint);overflow:hidden}
+.member-photo img{width:100%;height:100%;object-fit:cover;object-position:center top}
+
+/* advisors: smaller than the founder photo, centred avatar — also bigger than before */
+.adv-photo{height:190px;background:var(--tint);display:flex;align-items:center;justify-content:center}
+.adv-avatar{width:130px;height:130px;border-radius:50%;background:#fff;border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:32px;color:var(--blue-dk);overflow:hidden}
 .adv-avatar img{width:100%;height:100%;object-fit:cover;object-position:center top}
 
 @media(max-width:620px){.people{grid-template-columns:1fr}}
+
+/* ── spotlight: the rest of the page blurs behind a single centred, enlarged card ── */
+.spot-backdrop{position:fixed;inset:0;background:rgba(12,20,36,.38);backdrop-filter:blur(9px) saturate(120%);-webkit-backdrop-filter:blur(9px) saturate(120%);
+  opacity:0;pointer-events:none;transition:opacity .35s ease;z-index:90}
+.spot-backdrop.on{opacity:1;pointer-events:auto}
+.spotlight{position:fixed;top:50%;left:50%;width:min(700px,92vw);max-height:86vh;display:flex;background:#fff;border-radius:18px;
+  box-shadow:0 46px 100px rgba(12,20,36,.4);overflow:hidden;opacity:0;pointer-events:none;
+  transform:translate(-50%,-50%) scale(.94);transition:opacity .32s ease,transform .32s cubic-bezier(.2,.8,.2,1);z-index:100}
+.spotlight.on{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
+.spot-photo{width:250px;flex:none;background:var(--tint);overflow:hidden}
+.spot-photo img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.spot-initials{width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  font-family:var(--display);font-weight:700;font-size:56px;color:var(--blue-dk)}
+.spot-body{padding:34px 34px 30px;overflow-y:auto}
+.spot-body p{color:var(--mut);font-size:14.5px;margin-bottom:12px}
+.spot-body p:last-child{margin-bottom:0}
+.spot-close{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);
+  background:#fff;cursor:pointer;font-size:19px;line-height:1;color:var(--mut);display:flex;align-items:center;justify-content:center}
+.spot-close:hover{color:var(--ink);border-color:var(--faint)}
+@media(max-width:700px){
+  .spotlight{flex-direction:column;width:92vw;max-height:90vh}
+  .spot-photo{width:100%;height:200px}
+  .spot-body{padding:26px 22px}
+}
 
 .close{background:var(--ink);color:#fff;border-top:none;text-align:center}
 .close h2{color:#fff;margin-bottom:12px}
@@ -182,7 +189,7 @@ html.has-js .rv.in{opacity:1;transform:none}
           <p class="pcard-teaser">Founder of Vonera, building the platform after a track record of founding ventures and civic initiatives.</p>
           <p class="pcard-hint">Read more &rarr;</p>
         </div>
-        <div class="pcard-full"><div class="pcard-full-in">
+        <div class="pcard-bio" hidden><div class="pcard-bio-in">
           <p>Advik Reddy Bommineni is the Founder and Director of Vonera. Alongside Vonera, he founded Solus India and leads the Vikranti Foundation, a registered NGO delivering food security and essential-needs support to underserved communities.</p>
           <p>His background spans venture development, product design and applied data work &mdash; from leading entrepreneurship and innovation initiatives to AI research on machine learning applications in cancer-treatment planning, and startup feasibility and pricing work for early-stage ventures. That combination of technical grounding, commercial thinking and hands-on execution shapes how he approaches building Vonera.</p>
         </div></div>
@@ -195,7 +202,7 @@ html.has-js .rv.in{opacity:1;transform:none}
           <p class="pcard-teaser">Co-Founder of Vonera, drawing on a background across pharmaceutical science, presales and project management.</p>
           <p class="pcard-hint">Read more &rarr;</p>
         </div>
-        <div class="pcard-full"><div class="pcard-full-in">
+        <div class="pcard-bio" hidden><div class="pcard-bio-in">
           <p>Nomula Venkat Reddy is a pharmaceutical industry professional with a background across drug discovery, CROs, CDMOs and API manufacturing, holding master&rsquo;s degrees in both science and business administration. With a foundation in organic chemistry and formal expertise in operations and project management, he has built and led high-performing presales and proposal management functions.</p>
           <p>As Co-Founder of Vonera, he leads development of the platform&rsquo;s AI-powered automation for API cost estimation, manufacturing process design, proposal management and end-to-end workflow &mdash; replacing fragmented manual processes with one system built to help pharmaceutical teams respond faster and more competitively.</p>
         </div></div>
@@ -219,7 +226,7 @@ html.has-js .rv.in{opacity:1;transform:none}
           <p class="pcard-teaser">Veteran R&amp;D and CDMO leader, guiding Vonera&rsquo;s product and industry strategy.</p>
           <p class="pcard-hint">Read more &rarr;</p>
         </div>
-        <div class="pcard-full"><div class="pcard-full-in">
+        <div class="pcard-bio" hidden><div class="pcard-bio-in">
           <p>Mahender Rao Siripragada has worked at the intersection of chemistry, drug development, technology transfer, commercial manufacturing, project management and regulatory affairs &mdash; building the R&amp;D and CDMO capabilities that take a molecule from laboratory concept to a reliable, market-ready product. His career spans leadership roles at Dr. Reddy&rsquo;s, Orchid, Panacea Biotec, Alembic and Neuland, and a Ph.D. in Synthetic Organic Chemistry from IICT grounds work across API R&amp;D, process development, technology transfer, GMP manufacturing and CDMO strategy.</p>
           <p>From Principal Scientist at Dr. Reddy&rsquo;s to President of R&amp;D at Neuland, he has repeatedly built systems around science &mdash; taking promising chemistry and making it reproducible, scalable, compliant and commercially sustainable. Today he advises pharmaceutical and CDMO organisations, including Vonera, on R&amp;D strategy, API and NCE development, and process and technology transfer.</p>
         </div></div>
@@ -232,7 +239,7 @@ html.has-js .rv.in{opacity:1;transform:none}
           <p class="pcard-teaser">Global technology and business leader, advising on strategy, people and financial management.</p>
           <p class="pcard-hint">Read more &rarr;</p>
         </div>
-        <div class="pcard-full"><div class="pcard-full-in">
+        <div class="pcard-bio" hidden><div class="pcard-bio-in">
           <p>Ramesh P holds a postgraduate degree in Thermal Engineering from IIT, New Delhi and built his career in the IT industry across global delivery roles, meeting customer commitments across large accounts, projects and programs. His experience spans customer experience management, P&amp;L accountability, team development, strategy and execution &mdash; the discipline of turning a plan into something a team can actually deliver.</p>
           <p>He advises a number of IT and non-IT organisations in various capacities, including a long-standing engagement with the Saadvi team on people and financial management. As a business coach, he works to keep teams aligned to strategy and centred on the customer &mdash; bringing that same discipline to how Vonera scales.</p>
         </div></div>
@@ -273,6 +280,17 @@ html.has-js .rv.in{opacity:1;transform:none}
   <div class="wrap foot-btm">© <span id="yr">2026</span> Vonera Private Limited</div>
 </footer>
 
+<div class="spot-backdrop" id="spotBackdrop"></div>
+<div class="spotlight" id="spotlight" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="spotName">
+  <button class="spot-close" id="spotClose" aria-label="Close" type="button">&times;</button>
+  <div class="spot-photo" id="spotPhoto"></div>
+  <div class="spot-body">
+    <span class="pcard-role" id="spotRole"></span>
+    <h3 id="spotName"></h3>
+    <div id="spotBio"></div>
+  </div>
+</div>
+
 <script>
 document.documentElement.classList.add('has-js');
 (function(){
@@ -298,16 +316,57 @@ document.documentElement.classList.add('has-js');
 })();
 (function(){
   var cards=[].slice.call(document.querySelectorAll('.pcard'));
+  var backdrop=document.getElementById('spotBackdrop'), spot=document.getElementById('spotlight'),
+      photo=document.getElementById('spotPhoto'), role=document.getElementById('spotRole'),
+      name=document.getElementById('spotName'), bio=document.getElementById('spotBio'),
+      closeBtn=document.getElementById('spotClose');
+  var closeTimer=null, openCard=null;
+
+  function cancelClose(){ if(closeTimer){ clearTimeout(closeTimer); closeTimer=null; } }
+  function scheduleClose(){ cancelClose(); closeTimer=setTimeout(close,180); }
+
+  function open(card){
+    cancelClose();
+    if(openCard===card && spot.classList.contains('on')) return;
+    openCard=card;
+    var img=card.querySelector('.member-photo img, .adv-avatar img');
+    photo.innerHTML='';
+    if(img){
+      var im=document.createElement('img'); im.src=img.currentSrc||img.src; im.alt=img.alt||'';
+      photo.appendChild(im);
+    } else {
+      var av=card.querySelector('.adv-avatar');
+      var d=document.createElement('div'); d.className='spot-initials'; d.textContent=av?av.textContent.trim():'';
+      photo.appendChild(d);
+    }
+    role.textContent=card.querySelector('.pcard-role').textContent;
+    name.textContent=card.querySelector('h3').textContent;
+    bio.innerHTML=card.querySelector('.pcard-bio').innerHTML;
+    backdrop.classList.add('on');
+    spot.classList.add('on');
+    spot.setAttribute('aria-hidden','false');
+  }
+  function close(){
+    cancelClose();
+    backdrop.classList.remove('on');
+    spot.classList.remove('on');
+    spot.setAttribute('aria-hidden','true');
+    openCard=null;
+  }
+
   cards.forEach(function(c){
-    c.addEventListener('click',function(){
-      var isOpen=c.classList.contains('open');
-      cards.forEach(function(o){o.classList.remove('open')});
-      if(!isOpen) c.classList.add('open');
-    });
+    c.addEventListener('mouseenter',function(){ open(c); });
+    c.addEventListener('mouseleave',function(){ scheduleClose(); });
+    c.addEventListener('focus',function(){ open(c); });
+    c.addEventListener('blur',function(){ scheduleClose(); });
+    c.addEventListener('click',function(){ open(c); });
+    c.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(c); } });
   });
-  document.addEventListener('click',function(e){
-    if(!e.target.closest('.pcard')) cards.forEach(function(o){o.classList.remove('open')});
-  });
+  spot.addEventListener('mouseenter',cancelClose);
+  spot.addEventListener('mouseleave',scheduleClose);
+  backdrop.addEventListener('click',close);
+  closeBtn.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
 })();
 document.getElementById('yr').textContent=new Date().getFullYear();
 </script>
