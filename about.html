@@ -67,6 +67,17 @@ section.tint{background:var(--tint)}
 .member h3{margin-bottom:8px}
 .member p{color:var(--mut);font-size:14.5px}
 
+.advisor{max-width:860px;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;display:grid;grid-template-columns:230px 1fr}
+.advisor-photo{background:var(--tint);position:relative;min-height:230px}
+.advisor-photo::after{content:'';position:absolute;inset:0;background:
+  linear-gradient(135deg,transparent 47%,var(--line) 47%,var(--line) 53%,transparent 53%),
+  linear-gradient(45deg,transparent 47%,var(--line) 47%,var(--line) 53%,transparent 53%)}
+.advisor-body{padding:26px 28px 28px}
+.advisor h3{margin-bottom:10px}
+.advisor p{color:var(--mut);font-size:14.5px;margin-bottom:12px}
+.advisor p:last-child{margin-bottom:0}
+@media(max-width:620px){.advisor{grid-template-columns:1fr}.advisor-photo{aspect-ratio:16/9;min-height:0}}
+
 .close{background:var(--ink);color:#fff;border-top:none;text-align:center}
 .close h2{color:#fff;margin-bottom:12px}
 .close p{color:rgba(255,255,255,.68);max-width:50ch;margin:0 auto 24px;font-size:17px}
@@ -144,7 +155,7 @@ html.has-js .rv.in{opacity:1;transform:none}
         <div class="member-body">
           <span class="member-role">Founder</span>
           <h3>Advik Reddy Bommineni</h3>
-          <p>Leads product, strategy and engineering at Vonera, building the proposal and costing platform for pharma CRO / CDMO.</p>
+          <p>Founder and Director of Vonera, leading product and engineering for the platform. He also founded Solus India and leads the Vikranti Foundation, and is based in Hyderabad.</p>
         </div>
       </article>
       <article class="member">
@@ -152,9 +163,28 @@ html.has-js .rv.in{opacity:1;transform:none}
         <div class="member-body">
           <span class="member-role">Co-Founder</span>
           <h3>Nomula Venkat Reddy</h3>
-          <p>Brings operational depth and domain expertise, anchoring the business foundation that lets engineering move fast.</p>
+          <p>Co-Founder of Vonera, bringing presales and project management experience from Neuland Laboratories to the business side of the platform. Based in Hyderabad.</p>
         </div>
       </article>
+    </div>
+  </div>
+</section>
+
+<section class="tint">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Chief Advisor</div>
+      <h2>Guided by someone who has built this before</h2>
+    </div>
+    <div class="advisor rv">
+      <div class="advisor-photo" aria-hidden="true"></div>
+      <div class="advisor-body">
+        <span class="member-role">Chief Advisor</span>
+        <h3>Mahender Rao Siripragada</h3>
+        <p>Mahender Rao Siripragada has worked at the intersection of chemistry, drug development, technology transfer, commercial manufacturing, project management and regulatory affairs &mdash; building the R&amp;D and CDMO capabilities that take a molecule from laboratory concept to a reliable, market-ready product.</p>
+        <p>His career spans leadership roles at Dr. Reddy&rsquo;s, Orchid, Panacea Biotec, Alembic and Neuland, combining deep expertise in synthetic organic chemistry, technology transfer and regulatory affairs with the industrial discipline needed to turn complex science into scalable, commercially viable processes. A Ph.D. in Synthetic Organic Chemistry from the Indian Institute of Chemical Technology (IICT) grounds a career across API R&amp;D, process development, technology transfer, GMP manufacturing and CDMO strategy, spanning APIs, New Chemical Entities and peptide chemistry.</p>
+        <p>From Principal Scientist at Dr. Reddy&rsquo;s to President of R&amp;D at Neuland, he has repeatedly built systems around science &mdash; taking promising chemistry and making it reproducible, scalable, compliant and commercially sustainable. Today he advises pharmaceutical and CDMO organisations on R&amp;D strategy, API and NCE development, process and technology transfer, and peptide chemistry &mdash; including Vonera.</p>
+      </div>
     </div>
   </div>
 </section>
