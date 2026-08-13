@@ -97,7 +97,8 @@ section.tint{background:var(--tint)}
 /* advisors: smaller, centered avatar area instead of a full-bleed photo */
 .adv-photo{height:150px;background:var(--tint);display:flex;align-items:center;justify-content:center;border-radius:12px 12px 0 0}
 .adv-avatar{width:92px;height:92px;border-radius:50%;background:#fff;border:1px solid var(--line);
-  display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:24px;color:var(--blue-dk)}
+  display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:24px;color:var(--blue-dk);overflow:hidden}
+.adv-avatar img{width:100%;height:100%;object-fit:cover;object-position:center top}
 
 @media(max-width:620px){.people{grid-template-columns:1fr}}
 
@@ -211,7 +212,7 @@ html.has-js .rv.in{opacity:1;transform:none}
     </div>
     <div class="people rv">
       <article class="pcard" tabindex="0">
-        <div class="adv-photo" aria-hidden="true"><div class="adv-avatar">MR</div></div>
+        <div class="adv-photo" aria-hidden="true"><div class="adv-avatar"><img src="assets/adv-mahender.jpg" alt=""></div></div>
         <div class="pcard-body">
           <span class="pcard-role">Chief Advisor</span>
           <h3>Mahender Rao Siripragada</h3>
