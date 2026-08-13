@@ -63,18 +63,29 @@ section.tint{background:var(--tint)}
    drops in as an overlay below the card so expanding never reflows the grid */
 .pcard{position:relative;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:visible;cursor:pointer;
   transition:transform .28s cubic-bezier(.2,.8,.2,1),box-shadow .28s cubic-bezier(.2,.8,.2,1);z-index:1}
-.pcard:hover,.pcard.open,.pcard:focus-within{transform:translateY(-8px);box-shadow:0 26px 54px rgba(12,20,36,.18);z-index:30}
+.pcard:hover,.pcard.open,.pcard:focus-within{transform:translateY(-6px);box-shadow:0 26px 54px rgba(12,20,36,.18);z-index:30}
 .pcard-role{display:inline-block;font-family:var(--display);font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
   color:var(--blue-dk);background:var(--blue-tint);padding:4px 9px;border-radius:5px;margin-bottom:10px}
 .pcard h3{margin-bottom:8px}
 .pcard-teaser{color:var(--mut);font-size:14.5px}
 .pcard-hint{margin-top:10px;font-size:12.5px;color:var(--faint);font-weight:600;display:flex;align-items:center;gap:5px;transition:opacity .2s}
 .pcard:hover .pcard-hint,.pcard.open .pcard-hint,.pcard:focus-within .pcard-hint{opacity:0}
-.pcard-full{position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid var(--line);border-top:none;
-  border-radius:0 0 12px 12px;overflow:hidden;max-height:0;opacity:0;box-shadow:0 26px 54px rgba(12,20,36,.18);
-  transition:max-height .4s cubic-bezier(.2,.8,.2,1),opacity .3s ease}
-.pcard:hover .pcard-full,.pcard.open .pcard-full,.pcard:focus-within .pcard-full{max-height:640px;opacity:1}
-.pcard-full-in{padding:16px 22px 22px}
+/* full bio flies out sideways into the neighbouring column, not downward */
+.pcard-full{position:absolute;top:0;width:100%;background:#fff;border:1px solid var(--line);border-radius:12px;
+  overflow:hidden;opacity:0;pointer-events:none;box-shadow:0 26px 54px rgba(12,20,36,.18);z-index:25;
+  transition:opacity .3s ease,transform .32s cubic-bezier(.2,.8,.2,1)}
+.pcard:nth-child(odd) .pcard-full{left:calc(100% + 26px);transform:translateX(-14px)}
+.pcard:nth-child(even) .pcard-full{right:calc(100% + 26px);transform:translateX(14px)}
+.pcard:hover .pcard-full,.pcard.open .pcard-full,.pcard:focus-within .pcard-full{opacity:1;pointer-events:auto;transform:translateX(0);z-index:40}
+.pcard-full-in{padding:20px 22px}
+@media(max-width:620px){
+  /* no room to the side once the grid stacks to one column — fall back to a panel below.
+     Selectors mirror the desktop nth-child rules' specificity so this actually wins the cascade. */
+  .pcard-full,.pcard:nth-child(odd) .pcard-full,.pcard:nth-child(even) .pcard-full{
+    position:absolute;top:100%;left:0;right:0;width:auto;border-top:none;border-radius:0 0 12px 12px;
+    max-height:0;overflow:hidden;transform:none}
+  .pcard:hover .pcard-full,.pcard.open .pcard-full,.pcard:focus-within .pcard-full{max-height:640px}
+}
 .pcard-full p{color:var(--mut);font-size:14px;margin-bottom:10px}
 .pcard-full p:last-child{margin-bottom:0}
 
