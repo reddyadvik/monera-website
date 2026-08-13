@@ -95,8 +95,12 @@ section.tint{background:var(--tint)}
 .spotlight.on{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
 .spot-photo{width:250px;flex:none;background:var(--tint);overflow:hidden}
 .spot-photo img{width:100%;height:100%;object-fit:cover;object-position:center top}
-.spot-initials{width:100%;height:100%;display:flex;align-items:center;justify-content:center;
-  font-family:var(--display);font-weight:700;font-size:56px;color:var(--blue-dk)}
+/* advisors keep the same small circular treatment as their preview card,
+   just bigger — not stretched to fill the wide founder-style photo panel */
+.spot-photo.is-avatar{display:flex;align-items:center;justify-content:center}
+.spot-avatar-circle{width:170px;height:170px;border-radius:50%;background:#fff;border:1px solid var(--line);overflow:hidden;
+  display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:44px;color:var(--blue-dk)}
+.spot-avatar-circle img{width:100%;height:100%;object-fit:cover;object-position:center top}
 .spot-body{padding:34px 34px 30px;overflow-y:auto}
 .spot-body p{color:var(--mut);font-size:14.5px;margin-bottom:12px}
 .spot-body p:last-child{margin-bottom:0}
@@ -329,15 +333,25 @@ document.documentElement.classList.add('has-js');
     cancelClose();
     if(openCard===card && spot.classList.contains('on')) return;
     openCard=card;
-    var img=card.querySelector('.member-photo img, .adv-avatar img');
+    var memberImg=card.querySelector('.member-photo img');
+    var avatar=card.querySelector('.adv-avatar');
     photo.innerHTML='';
-    if(img){
-      var im=document.createElement('img'); im.src=img.currentSrc||img.src; im.alt=img.alt||'';
+    photo.classList.remove('is-avatar');
+    if(memberImg){
+      var im=document.createElement('img'); im.src=memberImg.currentSrc||memberImg.src; im.alt=memberImg.alt||'';
       photo.appendChild(im);
-    } else {
-      var av=card.querySelector('.adv-avatar');
-      var d=document.createElement('div'); d.className='spot-initials'; d.textContent=av?av.textContent.trim():'';
-      photo.appendChild(d);
+    } else if(avatar){
+      /* advisor: same small circular avatar as the preview card, just bigger */
+      photo.classList.add('is-avatar');
+      var circle=document.createElement('div'); circle.className='spot-avatar-circle';
+      var avImg=avatar.querySelector('img');
+      if(avImg){
+        var ai=document.createElement('img'); ai.src=avImg.currentSrc||avImg.src; ai.alt='';
+        circle.appendChild(ai);
+      } else {
+        circle.textContent=avatar.textContent.trim();
+      }
+      photo.appendChild(circle);
     }
     role.textContent=card.querySelector('.pcard-role').textContent;
     name.textContent=card.querySelector('h3').textContent;
@@ -354,9 +368,14 @@ document.documentElement.classList.add('has-js');
     openCard=null;
   }
 
+  /* Closing is driven only by the spotlight/backdrop, never by the trigger
+     card's own mouseleave: once the backdrop covers the page, it sits on
+     top of the (still-stationary) cursor and the browser re-hit-tests —
+     that alone fires a mouseleave on the card with no real mouse movement,
+     which would schedule a close, un-block the card, fire a fresh
+     mouseenter, and reopen — an infinite open/close flicker. */
   cards.forEach(function(c){
     c.addEventListener('mouseenter',function(){ open(c); });
-    c.addEventListener('mouseleave',function(){ scheduleClose(); });
     c.addEventListener('focus',function(){ open(c); });
     c.addEventListener('blur',function(){ scheduleClose(); });
     c.addEventListener('click',function(){ open(c); });
