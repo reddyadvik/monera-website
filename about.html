@@ -57,26 +57,38 @@ section.tint{background:var(--tint)}
 .stat b{display:block;font-family:var(--display);font-size:clamp(27px,3vw,34px);font-weight:700;color:var(--blue-dk);line-height:1.05}
 .stat span{display:block;margin-top:6px;font-size:14px;color:var(--mut)}
 
-.team{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;max-width:860px}
-.member{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.member-photo{aspect-ratio:4/3;background:var(--tint);overflow:hidden}
-.member-photo img{width:100%;height:100%;object-fit:cover;object-position:center top}
-.member-body{padding:20px 22px 24px}
-.member-role{display:inline-block;font-family:var(--display);font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--blue-dk);background:var(--blue-tint);padding:4px 9px;border-radius:5px;margin-bottom:10px}
-.member h3{margin-bottom:8px}
-.member p{color:var(--mut);font-size:14.5px}
+.people{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;max-width:860px}
 
-.advisor{max-width:860px;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;display:grid;grid-template-columns:230px 1fr}
-.advisor-photo{background:var(--tint);position:relative;min-height:230px}
-.advisor-photo::after{content:'';position:absolute;inset:0;background:
-  linear-gradient(135deg,transparent 47%,var(--line) 47%,var(--line) 53%,transparent 53%),
-  linear-gradient(45deg,transparent 47%,var(--line) 47%,var(--line) 53%,transparent 53%)}
-.advisor-body{padding:26px 28px 28px}
-.advisor h3{margin-bottom:10px}
-.advisor p{color:var(--mut);font-size:14.5px;margin-bottom:12px}
-.advisor p:last-child{margin-bottom:0}
-@media(max-width:620px){.advisor{grid-template-columns:1fr}.advisor-photo{aspect-ratio:16/9;min-height:0}}
+/* shared hover/tap-to-expand card: short teaser always visible, full bio
+   drops in as an overlay below the card so expanding never reflows the grid */
+.pcard{position:relative;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:visible;cursor:pointer;
+  transition:transform .28s cubic-bezier(.2,.8,.2,1),box-shadow .28s cubic-bezier(.2,.8,.2,1);z-index:1}
+.pcard:hover,.pcard.open,.pcard:focus-within{transform:translateY(-8px);box-shadow:0 26px 54px rgba(12,20,36,.18);z-index:30}
+.pcard-role{display:inline-block;font-family:var(--display);font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--blue-dk);background:var(--blue-tint);padding:4px 9px;border-radius:5px;margin-bottom:10px}
+.pcard h3{margin-bottom:8px}
+.pcard-teaser{color:var(--mut);font-size:14.5px}
+.pcard-hint{margin-top:10px;font-size:12.5px;color:var(--faint);font-weight:600;display:flex;align-items:center;gap:5px;transition:opacity .2s}
+.pcard:hover .pcard-hint,.pcard.open .pcard-hint,.pcard:focus-within .pcard-hint{opacity:0}
+.pcard-full{position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid var(--line);border-top:none;
+  border-radius:0 0 12px 12px;overflow:hidden;max-height:0;opacity:0;box-shadow:0 26px 54px rgba(12,20,36,.18);
+  transition:max-height .4s cubic-bezier(.2,.8,.2,1),opacity .3s ease}
+.pcard:hover .pcard-full,.pcard.open .pcard-full,.pcard:focus-within .pcard-full{max-height:640px;opacity:1}
+.pcard-full-in{padding:16px 22px 22px}
+.pcard-full p{color:var(--mut);font-size:14px;margin-bottom:10px}
+.pcard-full p:last-child{margin-bottom:0}
+
+/* founders: full photo, unchanged size */
+.member-photo{aspect-ratio:4/3;background:var(--tint);overflow:hidden;border-radius:12px 12px 0 0}
+.member-photo img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.pcard-body{padding:20px 22px 24px}
+
+/* advisors: smaller, centered avatar area instead of a full-bleed photo */
+.adv-photo{height:150px;background:var(--tint);display:flex;align-items:center;justify-content:center;border-radius:12px 12px 0 0}
+.adv-avatar{width:92px;height:92px;border-radius:50%;background:#fff;border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:24px;color:var(--blue-dk)}
+
+@media(max-width:620px){.people{grid-template-columns:1fr}}
 
 .close{background:var(--ink);color:#fff;border-top:none;text-align:center}
 .close h2{color:#fff;margin-bottom:12px}
@@ -106,7 +118,7 @@ html.has-js .rv.in{opacity:1;transform:none}
   section{padding:48px 0}
   .intro{padding:38px 0 44px}
   .wrap{padding:0 18px}
-  .team,.stats{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr}
   .foot{grid-template-columns:1fr;gap:26px}
 }
 </style>
@@ -149,24 +161,32 @@ html.has-js .rv.in{opacity:1;transform:none}
       <div class="eyebrow">Our team</div>
       <h2>The people building it</h2>
     </div>
-    <div class="team rv">
-      <article class="member">
+    <div class="people rv">
+      <article class="pcard" tabindex="0">
         <div class="member-photo"><img src="assets/team-1.webp" alt="Advik Reddy Bommineni"></div>
-        <div class="member-body">
-          <span class="member-role">Founder</span>
+        <div class="pcard-body">
+          <span class="pcard-role">Founder</span>
           <h3>Advik Reddy Bommineni</h3>
-          <p>Founder and Director of Vonera, leading product and engineering for the platform. He also founded Solus India and leads the Vikranti Foundation, and is based in Hyderabad.</p>
+          <p class="pcard-teaser">Founder of Vonera, building the platform after a track record of founding ventures and civic initiatives.</p>
+          <p class="pcard-hint">Read more &rarr;</p>
         </div>
+        <div class="pcard-full"><div class="pcard-full-in">
+          <p>Advik Reddy Bommineni is the Founder and Director of Vonera. Alongside Vonera, he founded Solus India and leads the Vikranti Foundation, a registered NGO delivering food security and essential-needs support to underserved communities.</p>
+          <p>His background spans venture development, product design and applied data work &mdash; from leading entrepreneurship and innovation initiatives to AI research on machine learning applications in cancer-treatment planning, and startup feasibility and pricing work for early-stage ventures. That combination of technical grounding, commercial thinking and hands-on execution shapes how he approaches building Vonera.</p>
+        </div></div>
       </article>
-      <article class="member">
+      <article class="pcard" tabindex="0">
         <div class="member-photo"><img src="assets/team-2.webp" alt="Nomula Venkat Reddy"></div>
-        <div class="member-body">
-          <span class="member-role">Co-Founder</span>
+        <div class="pcard-body">
+          <span class="pcard-role">Co-Founder</span>
           <h3>Nomula Venkat Reddy</h3>
-          <p>Nomula Venkat Reddy is a pharmaceutical industry professional with a background across drug discovery, CROs, CDMOs and API manufacturing, holding master&rsquo;s degrees in both science and business administration.</p>
-          <p>With a foundation in organic chemistry and formal expertise in operations and project management, he has built and led high-performing presales and proposal management functions &mdash; delivering winning responses to RFIs, RFPs and RFQs while improving proposal quality, turnaround time and commercial competitiveness.</p>
-          <p>As Co-Founder of Vonera, he leads development of the platform&rsquo;s AI-powered automation for API cost estimation, manufacturing process design, proposal management and end-to-end workflow &mdash; replacing fragmented manual processes with one system built to help pharmaceutical teams respond faster and more competitively.</p>
+          <p class="pcard-teaser">Co-Founder of Vonera, drawing on a background across pharmaceutical science, presales and project management.</p>
+          <p class="pcard-hint">Read more &rarr;</p>
         </div>
+        <div class="pcard-full"><div class="pcard-full-in">
+          <p>Nomula Venkat Reddy is a pharmaceutical industry professional with a background across drug discovery, CROs, CDMOs and API manufacturing, holding master&rsquo;s degrees in both science and business administration. With a foundation in organic chemistry and formal expertise in operations and project management, he has built and led high-performing presales and proposal management functions.</p>
+          <p>As Co-Founder of Vonera, he leads development of the platform&rsquo;s AI-powered automation for API cost estimation, manufacturing process design, proposal management and end-to-end workflow &mdash; replacing fragmented manual processes with one system built to help pharmaceutical teams respond faster and more competitively.</p>
+        </div></div>
       </article>
     </div>
   </div>
@@ -175,18 +195,36 @@ html.has-js .rv.in{opacity:1;transform:none}
 <section class="tint">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow">Chief Advisor</div>
-      <h2>Guided by someone who has built this before</h2>
+      <div class="eyebrow">Advisors</div>
+      <h2>Guided by people who have built this before</h2>
     </div>
-    <div class="advisor rv">
-      <div class="advisor-photo" aria-hidden="true"></div>
-      <div class="advisor-body">
-        <span class="member-role">Chief Advisor</span>
-        <h3>Mahender Rao Siripragada</h3>
-        <p>Mahender Rao Siripragada has worked at the intersection of chemistry, drug development, technology transfer, commercial manufacturing, project management and regulatory affairs &mdash; building the R&amp;D and CDMO capabilities that take a molecule from laboratory concept to a reliable, market-ready product.</p>
-        <p>His career spans leadership roles at Dr. Reddy&rsquo;s, Orchid, Panacea Biotec, Alembic and Neuland, combining deep expertise in synthetic organic chemistry, technology transfer and regulatory affairs with the industrial discipline needed to turn complex science into scalable, commercially viable processes. A Ph.D. in Synthetic Organic Chemistry from the Indian Institute of Chemical Technology (IICT) grounds a career across API R&amp;D, process development, technology transfer, GMP manufacturing and CDMO strategy, spanning APIs, New Chemical Entities and peptide chemistry.</p>
-        <p>From Principal Scientist at Dr. Reddy&rsquo;s to President of R&amp;D at Neuland, he has repeatedly built systems around science &mdash; taking promising chemistry and making it reproducible, scalable, compliant and commercially sustainable. Today he advises pharmaceutical and CDMO organisations on R&amp;D strategy, API and NCE development, process and technology transfer, and peptide chemistry &mdash; including Vonera.</p>
-      </div>
+    <div class="people rv">
+      <article class="pcard" tabindex="0">
+        <div class="adv-photo" aria-hidden="true"><div class="adv-avatar">MR</div></div>
+        <div class="pcard-body">
+          <span class="pcard-role">Chief Advisor</span>
+          <h3>Mahender Rao Siripragada</h3>
+          <p class="pcard-teaser">Veteran R&amp;D and CDMO leader, guiding Vonera&rsquo;s product and industry strategy.</p>
+          <p class="pcard-hint">Read more &rarr;</p>
+        </div>
+        <div class="pcard-full"><div class="pcard-full-in">
+          <p>Mahender Rao Siripragada has worked at the intersection of chemistry, drug development, technology transfer, commercial manufacturing, project management and regulatory affairs &mdash; building the R&amp;D and CDMO capabilities that take a molecule from laboratory concept to a reliable, market-ready product. His career spans leadership roles at Dr. Reddy&rsquo;s, Orchid, Panacea Biotec, Alembic and Neuland, and a Ph.D. in Synthetic Organic Chemistry from IICT grounds work across API R&amp;D, process development, technology transfer, GMP manufacturing and CDMO strategy.</p>
+          <p>From Principal Scientist at Dr. Reddy&rsquo;s to President of R&amp;D at Neuland, he has repeatedly built systems around science &mdash; taking promising chemistry and making it reproducible, scalable, compliant and commercially sustainable. Today he advises pharmaceutical and CDMO organisations, including Vonera, on R&amp;D strategy, API and NCE development, and process and technology transfer.</p>
+        </div></div>
+      </article>
+      <article class="pcard" tabindex="0">
+        <div class="adv-photo" aria-hidden="true"><div class="adv-avatar">RP</div></div>
+        <div class="pcard-body">
+          <span class="pcard-role">Advisor</span>
+          <h3>Ramesh P</h3>
+          <p class="pcard-teaser">Global technology and business leader, advising on strategy, people and financial management.</p>
+          <p class="pcard-hint">Read more &rarr;</p>
+        </div>
+        <div class="pcard-full"><div class="pcard-full-in">
+          <p>Ramesh P holds a postgraduate degree in Thermal Engineering from IIT, New Delhi and built his career in the IT industry across global delivery roles, meeting customer commitments across large accounts, projects and programs. His experience spans customer experience management, P&amp;L accountability, team development, strategy and execution &mdash; the discipline of turning a plan into something a team can actually deliver.</p>
+          <p>He advises a number of IT and non-IT organisations in various capacities, including a long-standing engagement with the Saadvi team on people and financial management. As a business coach, he works to keep teams aligned to strategy and centred on the customer &mdash; bringing that same discipline to how Vonera scales.</p>
+        </div></div>
+      </article>
     </div>
   </div>
 </section>
@@ -245,6 +283,19 @@ document.documentElement.classList.add('has-js');
     setTimeout(function(){els.forEach(function(e){
       if(!e.classList.contains('in')&&e.getBoundingClientRect().top<innerHeight)e.classList.add('in')})},1200);
   }catch(err){showAll()}
+})();
+(function(){
+  var cards=[].slice.call(document.querySelectorAll('.pcard'));
+  cards.forEach(function(c){
+    c.addEventListener('click',function(){
+      var isOpen=c.classList.contains('open');
+      cards.forEach(function(o){o.classList.remove('open')});
+      if(!isOpen) c.classList.add('open');
+    });
+  });
+  document.addEventListener('click',function(e){
+    if(!e.target.closest('.pcard')) cards.forEach(function(o){o.classList.remove('open')});
+  });
 })();
 document.getElementById('yr').textContent=new Date().getFullYear();
 </script>
