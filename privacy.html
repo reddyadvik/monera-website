@@ -54,6 +54,11 @@ section{padding:0}
 .hero{padding:52px 0 20px;border-bottom:1px solid var(--line)}
 .eyebrow{font-family:var(--display);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-dk);margin-bottom:12px}
 .updated{color:var(--faint);font-size:14px;margin-top:14px}
+.legal-tabs{display:flex;gap:8px;margin-top:22px;flex-wrap:wrap}
+.legal-tabs a{font-size:13.5px;font-weight:600;color:var(--mut);background:var(--tint);border:1px solid var(--line);
+  padding:7px 13px;border-radius:7px}
+.legal-tabs a:hover{color:var(--ink);text-decoration:none;border-color:var(--faint)}
+.legal-tabs a.on{color:var(--blue-dk);background:var(--blue-tint);border-color:#C7D7FB}
 
 .notice{background:var(--tint);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:28px 0 0}
 .notice p{color:var(--mut);font-size:14px;margin:0}
@@ -128,6 +133,11 @@ footer{background:var(--ink);color:rgba(255,255,255,.62);padding:44px 0 34px;bor
     <div class="eyebrow">Legal</div>
     <h1>Privacy Policy</h1>
     <p class="updated">Last updated: <span id="upd"></span> &middot; Effective for visitors to vonera.in and users of the Vonera platform.</p>
+    <div class="legal-tabs">
+      <a href="terms.html">Terms of Service</a>
+      <a href="privacy.html" class="on">Privacy Policy</a>
+      <a href="data-processing.html">Data Processing Terms</a>
+    </div>
     <div class="notice">
       <p><strong>In one paragraph:</strong> This website does not use cookies, does not run analytics or advertising trackers, and has no forms — the only way it collects anything is if you choose to email us. The Vonera platform itself, used by our pharma CDMO/CRO customers, handles more data (accounts, proposals, chemistry data) and that handling is described in Sections 3&ndash;8 below.</p>
     </div>
@@ -234,9 +244,15 @@ footer{background:var(--ink);color:rgba(255,255,255,.62);padding:44px 0 34px;bor
     <p>To exercise any of these, contact us using the details in Section 13. If you use the platform through an employer account, some requests may need to go through your organisation&rsquo;s administrator, since they are the party that authorised your account.</p>
 
     <h2 id="grievance">10. Grievance Officer</h2>
-    <div class="notice">
-      <p><strong>[Placeholder &mdash; not yet complete.]</strong> The DPDP Act requires a named Grievance Officer with published contact details. Until one is formally appointed, grievances can be sent to <a href="mailto:contact@vonera.in?subject=Privacy%20grievance">contact@vonera.in</a>, but this section should be updated with a specific name and designation before this policy is treated as final.</p>
-    </div>
+    <p>In accordance with the DPDP Act, our Grievance Officer is:</p>
+    <dl>
+      <div><dt>Name</dt><dd>Nomula Venkat Reddy</dd></div>
+      <div><dt>Designation</dt><dd>Grievance Officer, Vonera Private Limited</dd></div>
+      <div><dt>Email</dt><dd><a href="mailto:contact@vonera.in?subject=Privacy%20grievance">contact@vonera.in</a></dd></div>
+      <div><dt>Phone</dt><dd><a href="tel:+919390962688">+91 93909 62688</a></dd></div>
+      <div><dt>Address</dt><dd>Somajiguda, Hyderabad, Telangana 500082, India</dd></div>
+    </dl>
+    <p>If you have a grievance about how your personal data has been handled, contact the Grievance Officer using the details above. We aim to acknowledge and address grievances promptly. If you remain unsatisfied with our response, you may escalate the matter to the Data Protection Board of India.</p>
 
     <h2 id="children">11. Children&rsquo;s data</h2>
     <p>Vonera is a business tool built for pharmaceutical CDMO and CRO teams and is not directed at, or intended for use by, children. We do not knowingly collect personal data from anyone under the age of 18.</p>

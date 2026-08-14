@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Terms of Service — Vonera</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<meta name="description" content="The terms governing use of the Vonera website and the Vonera platform by pharmaceutical CDMO and CRO customers.">
+<style>
+@font-face{font-family:'Saira';src:url('assets/Saira-Var.ttf') format('truetype');font-weight:100 900;font-style:normal;font-display:swap}
+:root{
+  --bg:#FFFFFF;--tint:#F4F7FC;--ink:#0C1424;--mut:#55617A;--faint:#8792A8;
+  --line:#E3E8F0;--blue:#2F6BFF;--blue-dk:#1D4ED8;--blue-tint:#EEF3FF;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --display:'Saira',var(--sans);--wrap:1200px;--doc:760px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:var(--blue-dk);text-decoration:none}
+a:hover{text-decoration:underline}
+h1,h2,h3{font-family:var(--display);font-weight:650;letter-spacing:-.021em;line-height:1.18;color:var(--ink)}
+h1{font-size:clamp(30px,3.6vw,42px)}
+h2{font-size:20px;margin:40px 0 12px}
+h3{font-size:15.5px;margin:20px 0 6px}
+p,li{color:var(--mut);font-size:15px}
+p+p,ul+p,p+ul{margin-top:12px}
+ul,ol{margin:10px 0 0 20px;color:var(--mut);font-size:15px}
+li+li{margin-top:6px}
+strong{color:var(--ink);font-weight:650}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+.doc{max-width:var(--doc)}
+section{padding:0}
+
+.nav{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.92);backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line)}
+.nav-in{max-width:var(--wrap);margin:0 auto;padding:0 24px;height:62px;display:flex;align-items:center;gap:28px}
+.brand{font-family:var(--display);font-weight:700;font-size:20px;letter-spacing:.02em;display:flex;align-items:center;gap:9px;color:var(--ink)}
+.brand:hover{text-decoration:none}
+.brand-mark{height:23px;width:auto;display:block;flex:none}
+.nav-links{display:flex;gap:26px;margin-left:auto}
+.nav-links a{font-size:14.5px;color:var(--mut);font-weight:500}
+.nav-links a:hover{color:var(--ink);text-decoration:none}
+.nav-cta{display:flex;align-items:center;gap:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:600;font-size:15px;padding:12px 22px;
+  border-radius:8px;border:1px solid transparent;cursor:pointer;white-space:nowrap;transition:background .18s,border-color .18s,color .18s}
+.btn-pri{background:var(--blue);color:#fff}
+.btn-pri:hover{background:var(--blue-dk);text-decoration:none}
+.btn-sm{padding:9px 16px;font-size:14px}
+.burger{display:none;margin-left:auto;background:none;border:1px solid var(--line);border-radius:8px;padding:9px 11px;cursor:pointer}
+.burger i{display:block;width:18px;height:2px;background:var(--ink);border-radius:2px}
+.burger i+i{margin-top:4px}
+
+.hero{padding:52px 0 20px;border-bottom:1px solid var(--line)}
+.eyebrow{font-family:var(--display);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-dk);margin-bottom:12px}
+.updated{color:var(--faint);font-size:14px;margin-top:14px}
+.legal-tabs{display:flex;gap:8px;margin-top:22px;flex-wrap:wrap}
+.legal-tabs a{font-size:13.5px;font-weight:600;color:var(--mut);background:var(--tint);border:1px solid var(--line);
+  padding:7px 13px;border-radius:7px}
+.legal-tabs a:hover{color:var(--ink);text-decoration:none;border-color:var(--faint)}
+.legal-tabs a.on{color:var(--blue-dk);background:var(--blue-tint);border-color:#C7D7FB}
+
+.notice{background:var(--tint);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:28px 0 0}
+.notice p{color:var(--mut);font-size:14px;margin:0}
+.notice p+p{margin-top:8px}
+
+.body-wrap{padding:44px 0 72px}
+.toc{background:var(--tint);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:8px}
+.toc h3{margin-top:0;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.toc ul{columns:2;column-gap:24px;margin:10px 0 0 18px}
+.toc ul li{font-size:14px;margin-bottom:6px;break-inside:avoid}
+.toc a{color:var(--mut);font-weight:500}
+.toc a:hover{color:var(--blue-dk)}
+
+.doc dl{margin-top:10px}
+.doc dl div{display:grid;grid-template-columns:170px 1fr;gap:16px;padding:10px 0;border-bottom:1px solid var(--line)}
+.doc dl dt{font-family:var(--display);font-weight:650;font-size:13.5px;color:var(--ink)}
+.doc dl dd{font-size:14.5px;color:var(--mut)}
+
+.close{background:var(--ink);color:#fff;padding:60px 0;text-align:center}
+.close h2{color:#fff;margin:0 0 12px;font-size:clamp(22px,2.6vw,30px)}
+.close p{color:rgba(255,255,255,.68);max-width:50ch;margin:0 auto 24px;font-size:16px}
+
+footer{background:var(--ink);color:rgba(255,255,255,.62);padding:44px 0 34px;border-top:1px solid rgba(255,255,255,.10)}
+.foot{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:36px}
+.foot h4{font-family:var(--display);font-size:12px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:#fff;margin-bottom:14px}
+.foot a,.foot p{display:block;font-size:14.5px;margin-bottom:9px;color:rgba(255,255,255,.62)}
+.foot a:hover{color:#fff;text-decoration:none}
+.foot .brand{color:#fff;margin-bottom:10px}
+.foot-btm{margin-top:32px;padding-top:20px;border-top:1px solid rgba(255,255,255,.10);font-size:13px;color:rgba(255,255,255,.42);display:flex;gap:18px;flex-wrap:wrap}
+.foot-btm a{color:rgba(255,255,255,.42)}
+.foot-btm a:hover{color:#fff}
+
+@media(max-width:860px){
+  .nav-links{display:none;position:absolute;top:62px;left:0;right:0;background:#fff;border-bottom:1px solid var(--line);
+    flex-direction:column;gap:0;padding:8px 24px 16px}
+  .nav-links.open{display:flex}
+  .nav-links a{padding:11px 0;font-size:16px;border-bottom:1px solid var(--line)}
+  .burger{display:block}
+  .nav-cta .btn{display:none}
+}
+@media(max-width:620px){
+  .wrap{padding:0 18px}
+  .hero{padding:38px 0 18px}
+  .body-wrap{padding:32px 0 52px}
+  .toc ul{columns:1}
+  .foot{grid-template-columns:1fr;gap:26px}
+  .doc dl div{grid-template-columns:1fr;gap:4px}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-in">
+    <a href="index.html" class="brand"><img class="brand-mark" src="assets/logo-mark.png" alt="" aria-hidden="true">VONERA</a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html#platform">Platform</a>
+      <a href="index.html#workflow">Workflow</a>
+      <a href="index.html#roi">ROI</a>
+      <a href="index.html#ai">AI</a>
+      <a href="about.html">About</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn-pri btn-sm" href="mailto:contact@vonera.in?subject=Vonera%20walkthrough">Book a walkthrough</a>
+      <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><i></i><i></i><i></i></button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap doc">
+    <div class="eyebrow">Legal</div>
+    <h1>Terms of Service</h1>
+    <p class="updated">Last updated: <span id="upd"></span> &middot; Governs use of vonera.in and the Vonera platform.</p>
+    <div class="legal-tabs">
+      <a href="terms.html" class="on">Terms of Service</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="data-processing.html">Data Processing Terms</a>
+    </div>
+  </div>
+</section>
+
+<section class="body-wrap">
+  <div class="wrap doc">
+
+    <div class="toc">
+      <h3>On this page</h3>
+      <ul>
+        <li><a href="#accept">1. Acceptance of these terms</a></li>
+        <li><a href="#service">2. The service</a></li>
+        <li><a href="#accounts">3. Accounts</a></li>
+        <li><a href="#use">4. Acceptable use</a></li>
+        <li><a href="#content">5. Your content</a></li>
+        <li><a href="#ip">6. Our intellectual property</a></li>
+        <li><a href="#fees">7. Fees</a></li>
+        <li><a href="#confidentiality">8. Confidentiality</a></li>
+        <li><a href="#data">9. Data protection</a></li>
+        <li><a href="#warranty">10. Warranties &amp; disclaimers</a></li>
+        <li><a href="#liability">11. Limitation of liability</a></li>
+        <li><a href="#term">12. Term &amp; termination</a></li>
+        <li><a href="#law">13. Governing law</a></li>
+        <li><a href="#changes">14. Changes to these terms</a></li>
+        <li><a href="#contact">15. Contact</a></li>
+      </ul>
+    </div>
+
+    <h2 id="accept">1. Acceptance of these terms</h2>
+    <p>These Terms of Service (&ldquo;Terms&rdquo;) are a legal agreement between <strong>Vonera Private Limited</strong> (&ldquo;Vonera,&rdquo; &ldquo;we,&rdquo; &ldquo;us&rdquo;), registered at Somajiguda, Hyderabad, Telangana 500082, India, and the organisation or individual using vonera.in or the Vonera platform (&ldquo;you,&rdquo; &ldquo;your,&rdquo; or &ldquo;Customer&rdquo;). By accessing this website or using the Vonera platform, you agree to these Terms. If you are accepting on behalf of an organisation, you confirm you have the authority to bind that organisation.</p>
+    <p>Where a separate signed agreement (an order form, master services agreement, or similar) exists between Vonera and your organisation, that agreement governs to the extent it conflicts with these Terms.</p>
+
+    <h2 id="service">2. The service</h2>
+    <p>Vonera provides a software platform that helps pharmaceutical CDMO and CRO teams carry a synthesis route through costing, departmental review, and proposal generation, along with AI-assisted features described on our <a href="index.html#ai">AI page</a>. We may add, change, or retire features over time as the platform develops.</p>
+
+    <h2 id="accounts">3. Accounts</h2>
+    <p>Access to the platform is provisioned to named individuals authorised by your organisation. You are responsible for:</p>
+    <ul>
+      <li>the accuracy of information provided when an account is created;</li>
+      <li>keeping login credentials confidential and not sharing them between individuals;</li>
+      <li>all activity that occurs under your account;</li>
+      <li>notifying us promptly if you suspect unauthorised access.</li>
+    </ul>
+
+    <h2 id="use">4. Acceptable use</h2>
+    <p>You agree not to:</p>
+    <ul>
+      <li>use the platform for any unlawful purpose, or in a way that infringes another party&rsquo;s rights;</li>
+      <li>attempt to gain unauthorised access to another customer&rsquo;s tenant, data, or account;</li>
+      <li>reverse-engineer, decompile, or attempt to extract the source code of the platform, except where applicable law permits it despite this restriction;</li>
+      <li>use the platform to build a competing product;</li>
+      <li>interfere with or disrupt the integrity or performance of the platform or its underlying infrastructure;</li>
+      <li>upload content you do not have the right to upload, or that contains malicious code.</li>
+    </ul>
+
+    <h2 id="content">5. Your content</h2>
+    <p>&ldquo;Your Content&rdquo; means the synthesis routes, costing data, proposals, and other material your organisation uploads to or generates within the platform. As between you and Vonera, you retain all ownership rights in Your Content. You grant Vonera a limited licence to host, process, and display Your Content solely to provide the platform to you, as described further in our <a href="data-processing.html">Data Processing Terms</a>.</p>
+    <p>You are responsible for ensuring you have the right to upload Your Content, including any third-party or customer information it contains.</p>
+
+    <h2 id="ip">6. Our intellectual property</h2>
+    <p>The Vonera platform &mdash; including its software, design, AI models and workflows, and the Vonera name and marks &mdash; is the property of Vonera Private Limited and its licensors. These Terms do not grant you any ownership rights in the platform, only the right to use it as intended for the duration of your subscription.</p>
+
+    <h2 id="fees">7. Fees</h2>
+    <p>Access to the Vonera platform is provided under a separate commercial agreement or order form scoped to the size of your bid desk, as referenced on our <a href="index.html#roi">ROI page</a>. Fees, invoicing, and payment terms are set out in that agreement. Late payment may result in suspension of access after reasonable notice.</p>
+
+    <h2 id="confidentiality">8. Confidentiality</h2>
+    <p>Each party may share confidential information with the other in the course of using or providing the platform. Both parties agree to protect the other&rsquo;s confidential information with at least the same care they use to protect their own confidential information of similar importance, and not to disclose it to third parties except as needed to perform under these Terms or as required by law.</p>
+
+    <h2 id="data">9. Data protection</h2>
+    <p>How we collect and use personal data is set out in our <a href="privacy.html">Privacy Policy</a>. How we process your organisation&rsquo;s data as part of providing the platform &mdash; including security measures, sub-processors, and data return or deletion on termination &mdash; is set out in our <a href="data-processing.html">Data Processing Terms</a>, which forms part of these Terms.</p>
+
+    <h2 id="warranty">10. Warranties &amp; disclaimers</h2>
+    <p>We will provide the platform with reasonable skill and care. Except as expressly stated in these Terms or a signed agreement between us, the platform is provided on an &ldquo;as is&rdquo; basis, and we do not warrant that it will be uninterrupted, error-free, or that any output (including AI-generated tables, schemes, or proposal text) will be free of error. Your team remains responsible for reviewing platform output before it is relied upon or sent to a customer, consistent with the review workflow the platform itself is built around.</p>
+
+    <h2 id="liability">11. Limitation of liability</h2>
+    <p>To the extent permitted by applicable law, neither party will be liable to the other for indirect, incidental, or consequential damages arising from these Terms or use of the platform. Each party&rsquo;s liability arising out of these Terms is limited as set out in the commercial agreement governing your subscription. Nothing in these Terms limits either party&rsquo;s liability for fraud, wilful misconduct, or anything else that cannot lawfully be limited or excluded under applicable law.</p>
+
+    <h2 id="term">12. Term &amp; termination</h2>
+    <p>These Terms apply for as long as your organisation has an active subscription to the Vonera platform, or as long as you access vonera.in. Either party may terminate the underlying commercial agreement in accordance with its own terms. On termination, we will make Your Content available for export in the formats described on our <a href="index.html#roi">Governance &amp; IP page</a> for a reasonable period, after which it will be deleted in accordance with our <a href="data-processing.html#retention">Data Processing Terms</a>.</p>
+
+    <h2 id="law">13. Governing law</h2>
+    <p>These Terms are governed by the laws of India. Any dispute arising out of or relating to these Terms will be subject to the exclusive jurisdiction of the courts of Hyderabad, Telangana, India.</p>
+
+    <h2 id="changes">14. Changes to these terms</h2>
+    <p>We may update these Terms from time to time. Material changes will be reflected in the &ldquo;Last updated&rdquo; date at the top of this page, and where a change materially affects an active customer, we will provide reasonable notice before it takes effect.</p>
+
+    <h2 id="contact">15. Contact</h2>
+    <dl>
+      <div><dt>Email</dt><dd><a href="mailto:contact@vonera.in">contact@vonera.in</a></dd></div>
+      <div><dt>Phone</dt><dd><a href="tel:+919390962688">+91 93909 62688</a></dd></div>
+      <div><dt>Registered address</dt><dd>Somajiguda, Hyderabad, Telangana 500082, India</dd></div>
+    </dl>
+
+  </div>
+</section>
+
+<section class="close">
+  <div class="wrap">
+    <h2>See Vonera run on one of your own routes</h2>
+    <p>Bring a real bid. We'll cost it live and model the ROI on your actual volume.</p>
+    <a class="btn btn-pri" href="mailto:contact@vonera.in?subject=Vonera%20walkthrough">Book a walkthrough</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <div>
+      <div class="brand"><img class="brand-mark" src="assets/logo-mark-w.png" alt="" aria-hidden="true">VONERA</div>
+      <p>AI-native proposal and costing software for pharma CRO / CDMO bid desks.</p>
+    </div>
+    <div>
+      <h4>Platform</h4>
+      <a href="index.html#platform">Platform</a>
+      <a href="index.html#workflow">Workflow</a>
+      <a href="index.html#roi">ROI</a>
+      <a href="index.html#ai">AI</a>
+    </div>
+    <div>
+      <h4>Company</h4>
+      <a href="about.html">About us</a>
+      <a href="mailto:contact@vonera.in">contact@vonera.in</a>
+      <a href="tel:+919390962688">+91 93909 62688</a>
+      <p>Somajiguda, Hyderabad,<br>Telangana 500082</p>
+    </div>
+  </div>
+  <div class="wrap foot-btm">
+    <span>&copy; <span id="yr"></span> Vonera Private Limited</span>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Service</a>
+    <a href="data-processing.html">Data Processing Terms</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var b=document.getElementById('burger'), l=document.getElementById('navLinks');
+  b.addEventListener('click',function(){
+    var open=l.classList.toggle('open');
+    b.setAttribute('aria-expanded',open?'true':'false');
+  });
+  l.addEventListener('click',function(e){ if(e.target.tagName==='A') l.classList.remove('open'); });
+})();
+document.getElementById('yr').textContent=new Date().getFullYear();
+document.getElementById('upd').textContent=new Date().toLocaleDateString('en-IN',{year:'numeric',month:'long',day:'numeric'});
+</script>
+</body>
+</html>
