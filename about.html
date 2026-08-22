@@ -58,6 +58,7 @@ section.tint{background:var(--tint)}
 .stat span{display:block;margin-top:6px;font-size:14px;color:var(--mut)}
 
 .people{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;max-width:860px;margin:0 auto}
+.people-advisors{max-width:1000px;grid-template-columns:repeat(3,1fr)}
 
 /* preview card: photo, name, one-line teaser. Hover/tap opens the shared
    spotlight modal below rather than expanding the card in place — so
@@ -233,7 +234,7 @@ html.has-js .rv.in{opacity:1;transform:none}
       <div class="eyebrow">Advisors</div>
       <h2>Guided by people who have built this before</h2>
     </div>
-    <div class="people rv">
+    <div class="people people-advisors rv">
       <article class="pcard" tabindex="0">
         <div class="adv-photo" aria-hidden="true"><div class="adv-avatar"><img src="assets/adv-mahender.jpg" alt=""></div></div>
         <div class="pcard-body">
@@ -258,6 +259,19 @@ html.has-js .rv.in{opacity:1;transform:none}
         <div class="pcard-bio" hidden><div class="pcard-bio-in">
           <p>Ramesh P holds a postgraduate degree in Thermal Engineering from IIT, New Delhi and built his career in the IT industry across global delivery roles, meeting customer commitments across large accounts, projects and programs. His experience spans customer experience management, P&amp;L accountability, team development, strategy and execution &mdash; the discipline of turning a plan into something a team can actually deliver.</p>
           <p>He advises a number of IT and non-IT organisations in various capacities, including a long-standing engagement with the Saadvi team on people and financial management. As a business coach, he works to keep teams aligned to strategy and centred on the customer &mdash; bringing that same discipline to how Vonera scales.</p>
+        </div></div>
+      </article>
+      <article class="pcard" tabindex="0">
+        <div class="adv-photo" aria-hidden="true"><div class="adv-avatar">MB</div></div>
+        <div class="pcard-body">
+          <span class="pcard-role">Advisor</span>
+          <h3>Mahipal B</h3>
+          <p class="pcard-teaser">Software engineer and data architect, advising on cloud analytics and full-stack engineering.</p>
+          <p class="pcard-hint">Read more &rarr;</p>
+        </div>
+        <div class="pcard-bio" hidden><div class="pcard-bio-in">
+          <p>Mahipal B is a software engineer and data architect who has delivered enterprise solutions across the USA, Australia, South Africa and Singapore, specialising in modernising legacy data environments &mdash; migrating SQL Server and SSIS/SSAS systems to Azure Synapse Analytics and Power BI &mdash; while building scalable ELT pipelines and cloud-native architectures.</p>
+          <p>His expertise spans Azure Synapse and data engineering, Power BI and DAX, full-stack development across React, Node.js and .NET, cross-platform mobile with Flutter and React Native, and API security and architecture. He holds a Master&rsquo;s degree (M.Sc. Hons, Economics) with a Master of Management Studies (M.M.S.) from BITS, Pilani.</p>
         </div></div>
       </article>
     </div>
