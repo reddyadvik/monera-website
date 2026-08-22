@@ -399,9 +399,28 @@ html.has-js .rv.in{opacity:1;transform:none}
   .hero-cta .btn{flex:1 1 100%;min-width:0;white-space:normal}
   .roi-side b{min-width:88px;font-size:26px}
 }
+
+/* ── opening intro: VONERA resolves out of a scramble/pixelated flicker.
+   Hidden unless JS confirms it can run (and remove) it — same html.has-js
+   gate the rest of the page uses, so a no-JS visitor never gets blocked. ── */
+.preload{display:none}
+html.has-js .preload{position:fixed;inset:0;z-index:500;background:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+  transition:opacity .5s ease,visibility .5s ease}
+.preload-mark{width:34px;height:auto;opacity:.85}
+.preload-word{font-family:var(--display);font-weight:800;font-size:clamp(30px,7vw,64px);letter-spacing:.09em;color:#fff;
+  font-variant-numeric:tabular-nums;filter:blur(3px);transition:filter .5s ease}
+.preload-word.sharp{filter:blur(0)}
+.preload.done{opacity:0;visibility:hidden;pointer-events:none}
+html.preloading,html.preloading body{overflow:hidden}
+@media(prefers-reduced-motion:reduce){html.has-js .preload{transition:none}.preload-word{filter:none;transition:none}}
 </style>
 </head>
 <body>
+
+<div class="preload" id="preload" aria-hidden="true">
+  <img class="preload-mark" src="assets/logo-mark-w.png" alt="" aria-hidden="true">
+  <div class="preload-word" id="preloadWord">VONERA</div>
+</div>
 
 <header class="nav">
   <div class="nav-in">
@@ -770,6 +789,50 @@ html.has-js .rv.in{opacity:1;transform:none}
 <script>
 
 document.documentElement.classList.add('has-js');
+
+/* opening intro — scramble-reveal "VONERA", fail open no matter what */
+(function(){
+  var pre=document.getElementById('preload'), word=document.getElementById('preloadWord');
+  if(!pre||!word) return;
+  var TARGET='VONERA';
+  var CHARS='!<>-_\\/[]{}—=+*^?#$%01';
+  var reduced=false;
+  try{ reduced=window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
+
+  function finish(){
+    try{
+      pre.classList.add('done');
+      document.documentElement.classList.remove('preloading');
+      setTimeout(function(){ if(pre&&pre.parentNode) pre.parentNode.removeChild(pre); },600);
+    }catch(e){ if(pre&&pre.parentNode) pre.parentNode.removeChild(pre); }
+  }
+  /* absolute backstop: whatever else happens, the intro is gone within 2.4s */
+  var backstop=setTimeout(finish,2400);
+
+  if(reduced){ clearTimeout(backstop); finish(); return; }
+
+  try{
+    document.documentElement.classList.add('preloading');
+    var frame=0;
+    (function tick(){
+      var lockedUpTo=Math.floor(frame/3);
+      var out='';
+      for(var i=0;i<TARGET.length;i++){
+        out += (i<lockedUpTo) ? TARGET[i] : CHARS[Math.floor(Math.random()*CHARS.length)];
+      }
+      word.textContent=out;
+      frame++;
+      if(lockedUpTo>=TARGET.length){
+        word.textContent=TARGET;
+        word.classList.add('sharp');
+        clearTimeout(backstop);
+        setTimeout(finish,380);
+        return;
+      }
+      setTimeout(tick,45);
+    })();
+  }catch(e){ clearTimeout(backstop); finish(); }
+})();
 
 (function(){
   var b=document.getElementById('burger'), l=document.getElementById('navLinks');
