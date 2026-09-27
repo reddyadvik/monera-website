@@ -139,7 +139,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.62);padding:44px 0 34px;bor
       <a href="data-processing.html">Data Processing Terms</a>
     </div>
     <div class="notice">
-      <p><strong>In one paragraph:</strong> This website does not use cookies, does not run analytics or advertising trackers, and has no forms — the only way it collects anything is if you choose to email us. The Vonera platform itself, used by our pharma CDMO/CRO customers, handles more data (accounts, proposals, chemistry data) and that handling is described in Sections 3&ndash;8 below.</p>
+      <p><strong>In one paragraph:</strong> This website uses a cookie-free analytics tool to see aggregate visit counts, and has no forms — the only way it collects anything about you personally is if you choose to email us. The Vonera platform itself, used by our pharma CDMO/CRO customers, handles more data (accounts, proposals, chemistry data) and that handling is described in Sections 3&ndash;8 below.</p>
     </div>
   </div>
 </section>
@@ -171,15 +171,14 @@ footer{background:var(--ink);color:rgba(255,255,255,.62);padding:44px 0 34px;bor
     <p>This policy covers two different things, and they are not the same: <strong>this marketing website</strong> (vonera.in), and <strong>the Vonera platform</strong> used by our customers&rsquo; teams to manage proposals. Section 2 covers the former; Sections 3 onward cover the latter.</p>
 
     <h2 id="site">2. This website</h2>
-    <p>vonera.in is a static marketing site. As of the date above, it does <strong>not</strong>:</p>
+    <p>vonera.in is a static marketing site. As of the date above:</p>
     <ul>
-      <li>use cookies or any similar tracking technology;</li>
-      <li>run analytics, advertising pixels, or third-party trackers;</li>
-      <li>contain any form that collects your data;</li>
-      <li>store anything in your browser (no localStorage or session data).</li>
+      <li>we use <strong>Vercel Web Analytics</strong> to see aggregate visit counts and popular pages &mdash; it does not use cookies, does not use any persistent identifier to track you individually or across other sites, and reports only aggregated numbers (visits, page views, referring sites);</li>
+      <li>the site has no form that collects your data;</li>
+      <li>the site runs no advertising pixels or third-party trackers beyond that analytics tool.</li>
     </ul>
-    <p>The only way this site can receive your information is if you click a &ldquo;Book a walkthrough&rdquo; or &ldquo;Get a custom quote&rdquo; link and choose to send us an email. That opens your own email application; nothing is transmitted to us until you actually send the message. If you do, we receive whatever your email contains &mdash; typically your name, email address, and the content of your message &mdash; and handle it as described in Sections 4 and 8.</p>
-    <p>If this changes &mdash; for example, if we add analytics or a contact form in future &mdash; we will update this section and, where required, ask for your consent first.</p>
+    <p>The only way this site can receive information that identifies you personally is if you click a &ldquo;Book a walkthrough&rdquo; or &ldquo;Get a custom quote&rdquo; link and choose to send us an email. That opens your own email application; nothing is transmitted to us until you actually send the message. If you do, we receive whatever your email contains &mdash; typically your name, email address, and the content of your message &mdash; and handle it as described in Sections 4 and 8.</p>
+    <p>If this changes &mdash; for example, if we add a contact form, or a tool that does identify individual visitors &mdash; we will update this section and, where required, ask for your consent first.</p>
 
     <h2 id="platform-data">3. The Vonera platform</h2>
     <p>When a pharma CDMO or CRO customer uses Vonera, we process personal data belonging to that customer&rsquo;s own team &mdash; the people who log in and use the platform. This typically includes:</p>
@@ -317,5 +316,8 @@ footer{background:var(--ink);color:rgba(255,255,255,.62);padding:44px 0 34px;bor
 document.getElementById('yr').textContent=new Date().getFullYear();
 document.getElementById('upd').textContent=new Date().toLocaleDateString('en-IN',{year:'numeric',month:'long',day:'numeric'});
 </script>
+
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)}</script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
